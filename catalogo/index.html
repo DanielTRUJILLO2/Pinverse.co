@@ -3855,7 +3855,298 @@
         padding-top:0 !important;
       }
     }
-</style>
+
+
+    /* Ajuste final: bloque "Ver más pines" centrado y oculto al completar el catálogo */
+    .load-more-wrap.hidden{
+      display:none !important;
+      padding:0 !important;
+      margin:0 !important;
+    }
+
+    .load-more-wrap{
+      width:100%;
+      padding-top:38px !important;
+      padding-bottom:4px !important;
+    }
+
+    .load-more-btn{
+      width:min(100%, 500px) !important;
+      min-height:0 !important;
+      padding:20px 24px 17px !important;
+      display:flex !important;
+      flex-direction:column !important;
+      align-items:center !important;
+      justify-content:center !important;
+      gap:0 !important;
+      text-align:center !important;
+      border-radius:18px !important;
+    }
+
+    .load-more-btn > span:first-child{
+      width:100%;
+      display:flex !important;
+      flex-direction:column !important;
+      align-items:center !important;
+      justify-content:center !important;
+      text-align:center !important;
+      gap:5px !important;
+    }
+
+    .load-more-label{
+      width:100%;
+      text-align:center !important;
+      font-size:14px !important;
+      font-weight:900 !important;
+      letter-spacing:.065em !important;
+      text-transform:uppercase !important;
+    }
+
+    .load-more-count{
+      width:100%;
+      margin:0 !important;
+      text-align:center !important;
+      font-size:12px !important;
+      font-weight:700 !important;
+    }
+
+    .load-more-icon{
+      width:42px !important;
+      height:42px !important;
+      margin:14px auto 13px !important;
+      justify-self:auto !important;
+      flex:0 0 auto;
+      font-size:19px !important;
+    }
+
+    .load-progress-track{
+      width:min(82%, 340px) !important;
+      height:3px !important;
+      margin:0 auto !important;
+      flex:0 0 auto;
+      border-radius:999px !important;
+    }
+
+    @media (max-width:640px){
+      .load-more-wrap{
+        padding-top:30px !important;
+      }
+
+      .load-more-btn{
+        width:100% !important;
+        padding:18px 18px 15px !important;
+        border-radius:16px !important;
+      }
+
+      .load-more-label{
+        font-size:13px !important;
+      }
+
+      .load-more-count{
+        font-size:11.5px !important;
+      }
+
+      .load-more-icon{
+        width:40px !important;
+        height:40px !important;
+        margin:12px auto 12px !important;
+      }
+
+      .load-progress-track{
+        width:min(86%, 300px) !important;
+      }
+    }
+
+
+    /* =========================================================
+       FOOTER FINAL · PINVERSE
+       ========================================================= */
+    .site-footer{
+      width:100vw;
+      margin-left:calc(50% - 50vw);
+      background:#151b22;
+      color:#fff;
+      border-top:none;
+    }
+
+    .footer-shell{
+      width:min(calc(100% - 48px), var(--max));
+      margin:0 auto;
+      padding:54px 0 20px;
+    }
+
+    .footer-top{
+      display:grid;
+      grid-template-columns:minmax(260px, 1.25fr) minmax(430px, 1fr);
+      gap:72px;
+      align-items:start;
+      padding-bottom:42px;
+    }
+
+    .footer-brand-block{
+      max-width:500px;
+    }
+
+    .footer-brand-name{
+      display:inline-block;
+      color:#fff;
+      text-decoration:none;
+      font-size:34px;
+      line-height:1;
+      font-weight:900;
+      letter-spacing:-.055em;
+      margin-bottom:18px;
+    }
+
+    .footer-brand-block p{
+      max-width:470px;
+      color:rgba(255,255,255,.68);
+      font-size:14px;
+      line-height:1.75;
+      margin:0 0 20px;
+    }
+
+    .footer-tagline{
+      display:inline-flex;
+      align-items:center;
+      min-height:34px;
+      padding:8px 12px;
+      border:1px solid rgba(255,255,255,.13);
+      border-radius:999px;
+      color:rgba(255,255,255,.86);
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:.035em;
+    }
+
+    .footer-links-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:34px;
+    }
+
+    .footer-column{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+      gap:11px;
+    }
+
+    .footer-column h3{
+      margin:0 0 5px;
+      color:#fff;
+      font-size:11px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+    }
+
+    .footer-column a,
+    .footer-column span{
+      color:rgba(255,255,255,.61);
+      text-decoration:none;
+      font-size:12px;
+      line-height:1.45;
+      transition:color .2s ease, transform .2s ease;
+    }
+
+    .footer-column a:hover{
+      color:#fff;
+      transform:translateX(2px);
+    }
+
+    .footer-bottom{
+      min-height:58px;
+      padding:18px 0 0;
+      border-top:1px solid rgba(255,255,255,.10);
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:24px;
+      color:rgba(255,255,255,.44);
+      font-size:10px;
+      line-height:1.5;
+      letter-spacing:.015em;
+    }
+
+    @media (max-width:920px){
+      .footer-shell{
+        width:min(calc(100% - 34px), var(--max));
+        padding-top:46px;
+      }
+
+      .footer-top{
+        grid-template-columns:1fr;
+        gap:38px;
+      }
+
+      .footer-brand-block{
+        max-width:620px;
+      }
+
+      .footer-links-grid{
+        max-width:620px;
+      }
+    }
+
+    @media (max-width:640px){
+      .footer-shell{
+        width:calc(100% - 32px);
+        padding:40px 0 18px;
+      }
+
+      .footer-top{
+        gap:34px;
+        padding-bottom:30px;
+      }
+
+      .footer-brand-name{
+        font-size:31px;
+        margin-bottom:15px;
+      }
+
+      .footer-brand-block p{
+        font-size:13px;
+        line-height:1.7;
+        margin-bottom:17px;
+      }
+
+      .footer-links-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:30px 24px;
+      }
+
+      .footer-column:last-child{
+        grid-column:1 / -1;
+      }
+
+      .footer-bottom{
+        min-height:auto;
+        padding-top:18px;
+        flex-direction:column;
+        gap:5px;
+      }
+    }
+
+    @media (max-width:390px){
+      .footer-links-grid{
+        grid-template-columns:1fr 1fr;
+        gap:28px 18px;
+      }
+    }
+
+  
+    /* Ajuste final del pie de página */
+    .footer-bottom{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      gap:5px;
+    }
+
+  </style>
 </head>
 <body>
   <header class="site-header">
@@ -3909,7 +4200,7 @@
       </div>
     </section>
 
-    <section class="promo-strip" aria-label="Promociones">
+    <section class="promo-strip" id="promociones" aria-label="Promociones">
       <div class="promo-inner">
         <div class="promo-heading">
           <h2>Promociones</h2>
@@ -4017,7 +4308,7 @@
 
         <section class="products-grid" id="productGrid" aria-label="Listado de pines"></section>
 
-        <div class="load-more-wrap">
+        <div class="load-more-wrap" id="loadMoreWrap">
           <button id="loadMoreBtn" class="load-more-btn" type="button">
             <span>
               <span class="load-more-label">Ver más pines</span>
@@ -4034,12 +4325,53 @@
   </main>
 
   <footer class="site-footer">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <strong>Pin Lab Co.</strong>
-        <span>Pines para llevar un poco de tu mundo contigo.</span>
+    <div class="footer-shell">
+      <div class="footer-top">
+        <div class="footer-brand-block">
+          <a href="../index.html" class="footer-brand-name">PINVERSE</a>
+          <p>
+            Pines con diseños para todos los gustos, pensados para acompañar tu estilo
+            y darle un toque diferente a lo que llevas contigo.
+          </p>
+        </div>
+
+        <div class="footer-links-grid">
+          <div class="footer-column">
+            <h3>Navegación</h3>
+            <a href="../index.html">Inicio</a>
+            <a href="../catalogo/">Catálogo</a>
+            <a href="../preguntas/">Preguntas frecuentes</a>
+            <a href="../contacto/">Contacto</a>
+          </div>
+
+          <div class="footer-column">
+            <h3>Compra</h3>
+            <a href="#promociones">Promociones</a>
+            <a href="#productos">Ver pines</a>
+            <a
+              href="https://wa.me/573116821619?text=Hola,%20quiero%20informaci%C3%B3n%20sobre%20los%20pines%20de%20PINVERSE."
+              target="_blank"
+              rel="noopener noreferrer"
+            >Pedir por WhatsApp</a>
+          </div>
+
+          <div class="footer-column">
+            <h3>Contacto</h3>
+            <a
+              href="https://wa.me/573116821619?text=Hola,%20quiero%20informaci%C3%B3n%20sobre%20PINVERSE."
+              target="_blank"
+              rel="noopener noreferrer"
+            >WhatsApp</a>
+            <a href="../contacto/">Escríbenos</a>
+            <span>Cali, Colombia</span>
+          </div>
+        </div>
       </div>
-      <div class="footer-copy">© 2026 Pin Lab Co. · Cali, Colombia</div>
+
+      <div class="footer-bottom">
+        <span>© 2026 PINVERSE · Cali, Colombia</span>
+        <span>Pines para llevar tu estilo contigo.</span>
+      </div>
     </div>
   </footer>
 
@@ -4222,6 +4554,7 @@
     const activeFilterRow = $('#activeFilterRow');
     const activeFilterChips = $('#activeFilterChips');
     const clearFiltersBtn = $('#clearFiltersBtn');
+    const loadMoreWrap = $('#loadMoreWrap');
     const loadMoreBtn = $('#loadMoreBtn');
     const loadMoreCount = $('#loadMoreCount');
     const loadMoreProgress = $('#loadMoreProgress');
@@ -4538,13 +4871,16 @@
       const loaded = Math.min(visibleCount, filteredProducts.length);
       const remaining = Math.max(filteredProducts.length - loaded, 0);
       const progress = filteredProducts.length ? Math.round((loaded / filteredProducts.length) * 100) : 0;
+      const shouldHide = loaded >= filteredProducts.length || filteredProducts.length === 0;
 
       visibleNote.textContent = `${filteredProducts.length} ${filteredProducts.length === 1 ? 'producto' : 'productos'}`;
-      loadMoreCount.textContent = remaining ? `${remaining} por ver` : 'Colección visible completa';
+      loadMoreCount.textContent = remaining ? `${remaining} por ver` : '';
       loadMoreProgress.style.width = `${progress}%`;
       loadMoreBtn.style.setProperty('--load-progress', `${progress}%`);
-      loadMoreBtn.classList.toggle('hidden', loaded >= filteredProducts.length || filteredProducts.length === 0);
-      loadMoreBtn.setAttribute('aria-label', remaining ? `Ver más pines. Quedan ${remaining}.` : 'Todos los pines están visibles.');
+      loadMoreBtn.classList.toggle('hidden', shouldHide);
+      loadMoreWrap.classList.toggle('hidden', shouldHide);
+      loadMoreWrap.setAttribute('aria-hidden', shouldHide ? 'true' : 'false');
+      loadMoreBtn.setAttribute('aria-label', remaining ? `Ver más pines. Quedan ${remaining}.` : '');
     }
 
     function actualizarBotonesCarrito() {
