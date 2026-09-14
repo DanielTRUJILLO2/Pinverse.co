@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#ffffff" />
-  <meta name="description" content="Catálogo de pines Pin Lab Co. Compra tus diseños favoritos y realiza el pedido directamente por WhatsApp." />
-  <title>Pin Lab Co. · Catálogo</title>
+  <meta name="description" content="Catálogo de pines PINVERSE. Explora tus diseños favoritos y realiza tu pedido directamente por WhatsApp." />
+  <title>PINVERSE · Catálogo</title>
   <link rel="icon" type="image/png" href="../imagenes/favicon.png" />
 
   <style>
@@ -4153,8 +4153,8 @@
     <div class="inner navbar">
       <label for="menu-toggle" class="menu-btn" aria-label="Abrir menú">☰</label>
 
-      <a href="../index.html" class="logo-box" aria-label="Ir al inicio de Pin Lab Co.">
-        <img src="../imagenes/logo.png" alt="Pin Lab Co." onerror="this.style.display='none'" />
+      <a href="../index.html" class="logo-box" aria-label="Ir al inicio de PINVERSE">
+        <img src="../imagenes/logo.png" alt="PINVERSE" onerror="this.style.display='none'" />
       </a>
 
       <nav class="main-nav" aria-label="Navegación principal">
@@ -4177,7 +4177,7 @@
   <aside class="mobile-drawer" aria-label="Menú móvil">
     <div class="mobile-drawer-head">
       <a href="../index.html" aria-label="Ir al inicio">
-        <img src="../imagenes/logo.png" alt="Pin Lab Co." class="mobile-drawer-logo" />
+        <img src="../imagenes/logo.png" alt="PINVERSE" class="mobile-drawer-logo" />
       </a>
       <label for="menu-toggle" class="mobile-close" aria-label="Cerrar menú">×</label>
     </div>
@@ -4349,7 +4349,7 @@
             <a href="#promociones">Promociones</a>
             <a href="#productos">Ver pines</a>
             <a
-              href="https://wa.me/573116821619?text=Hola,%20quiero%20informaci%C3%B3n%20sobre%20los%20pines%20de%20PINVERSE."
+              href="https://wa.me/573116821619?text=Hola%20%F0%9F%91%8B%2C%20quiero%20hacer%20un%20pedido%20en%20PINVERSE.%20%C2%BFMe%20ayudan%20con%20la%20disponibilidad%20y%20el%20proceso%20de%20compra%3F"
               target="_blank"
               rel="noopener noreferrer"
             >Pedir por WhatsApp</a>
@@ -4358,7 +4358,7 @@
           <div class="footer-column">
             <h3>Contacto</h3>
             <a
-              href="https://wa.me/573116821619?text=Hola,%20quiero%20informaci%C3%B3n%20sobre%20PINVERSE."
+              href="https://wa.me/573116821619?text=Hola%20%F0%9F%91%8B%2C%20estoy%20visitando%20PINVERSE%20y%20quisiera%20hacer%20una%20consulta.%20%C2%BFMe%20pueden%20ayudar%3F"
               target="_blank"
               rel="noopener noreferrer"
             >WhatsApp</a>
@@ -4377,7 +4377,7 @@
 
   <a
     class="whatsapp-float"
-    href="https://wa.me/573116821619?text=Hola,%20quiero%20informaci%C3%B3n%20sobre%20los%20pines%20de%20Pin%20Lab%20Co."
+    href="https://wa.me/573116821619?text=Hola%20%F0%9F%91%8B%2C%20estoy%20viendo%20el%20cat%C3%A1logo%20de%20PINVERSE%20y%20quisiera%20recibir%20informaci%C3%B3n%20sobre%20los%20pines.%20%C2%BFMe%20pueden%20ayudar%3F"
     target="_blank"
     rel="noopener noreferrer"
     aria-label="Consultar por WhatsApp"
@@ -5097,7 +5097,12 @@
         .join('\n\n');
 
       const message = encodeURIComponent(
-        `Hola, quiero hacer un pedido en *Pin Lab Co.*\n\n*Pines seleccionados:*\n\n${productLines}\n\n*Total seleccionado:* ${pluralPines(cartProducts.length)}\n*Promoción aplicada:* ${resumenPromo(promo)}\n*Total estimado:* ${formatoPrecio(promo.total)}\n\nQuedo pendiente para confirmar disponibilidad y proceso de compra.`
+        `Hola 👋, quiero realizar un pedido en *PINVERSE*.\n\n` +
+        `*Pines seleccionados:*\n\n${productLines}\n\n` +
+        `*Cantidad:* ${pluralPines(cartProducts.length)}\n` +
+        `*Promoción aplicada:* ${resumenPromo(promo)}\n` +
+        `*Total:* ${formatoPrecio(promo.total)}\n\n` +
+        `¿Me confirman la disponibilidad y cómo continúo con el pedido? Gracias.`
       );
 
       const popup = window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank', 'noopener,noreferrer');
