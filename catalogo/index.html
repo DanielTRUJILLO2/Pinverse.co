@@ -4392,6 +4392,66 @@
       }
     }
 
+  
+    /* =========================================================
+       AJUSTE V16 · PROMOCIONES + ESPACIADO HACIA PRODUCTOS
+       ========================================================= */
+
+    /* El mensaje de empaque ahora tiene más presencia visual sin recargar */
+    .promo-packaging{
+      width:max-content !important;
+      max-width:100% !important;
+      margin:18px auto 0 !important;
+      padding:9px 15px !important;
+      border:1px solid #e2e7ec !important;
+      border-radius:999px !important;
+      background:#f7f9fb !important;
+      color:#435369 !important;
+      font-size:13px !important;
+      line-height:1.2 !important;
+      font-weight:800 !important;
+      letter-spacing:.01em !important;
+      text-align:center !important;
+      box-shadow:0 3px 10px rgba(25,42,61,.035) !important;
+    }
+
+    /* Reducimos el vacío entre promociones y el inicio del catálogo */
+    .promo-inner{
+      padding-bottom:20px !important;
+    }
+
+    .catalog-inner{
+      padding-top:24px !important;
+    }
+
+    @media (max-width:640px){
+      .promo-inner{
+        padding-top:25px !important;
+        padding-bottom:16px !important;
+      }
+
+      .promo-packaging{
+        margin-top:14px !important;
+        padding:9px 14px !important;
+        font-size:12.5px !important;
+      }
+
+      .catalog-inner{
+        padding-top:18px !important;
+      }
+    }
+
+    @media (max-width:390px){
+      .promo-packaging{
+        padding:8px 13px !important;
+        font-size:12px !important;
+      }
+
+      .catalog-inner{
+        padding-top:16px !important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -4595,7 +4655,7 @@
             <a href="#promociones">Promociones</a>
             <a href="#productos">Ver pines</a>
             <a
-              href="https://wa.me/573116821619?text=Hola%20%F0%9F%91%8B%2C%20quiero%20hacer%20un%20pedido%20en%20PINVERSE.%20%C2%BFMe%20ayudan%20con%20la%20disponibilidad%20y%20el%20proceso%20de%20compra%3F"
+              href="https://wa.me/573116821619?text=Hola%2C%20quiero%20hacer%20un%20pedido%20en%20PINVERSE.%20%C2%BFMe%20ayudan%20con%20la%20disponibilidad%20y%20el%20proceso%20de%20compra%3F"
               target="_blank"
               rel="noopener noreferrer"
             >Pedir por WhatsApp</a>
@@ -4604,7 +4664,7 @@
           <div class="footer-column">
             <h3>Contacto</h3>
             <a
-              href="https://wa.me/573116821619?text=Hola%20%F0%9F%91%8B%2C%20estoy%20visitando%20PINVERSE%20y%20quisiera%20hacer%20una%20consulta.%20%C2%BFMe%20pueden%20ayudar%3F"
+              href="https://wa.me/573116821619?text=Hola%2C%20estoy%20visitando%20PINVERSE%20y%20quisiera%20hacer%20una%20consulta.%20%C2%BFMe%20pueden%20ayudar%3F"
               target="_blank"
               rel="noopener noreferrer"
             >WhatsApp</a>
@@ -4623,7 +4683,7 @@
 
   <a
     class="whatsapp-float"
-    href="https://wa.me/573116821619?text=Hola%20%F0%9F%91%8B%2C%20estoy%20viendo%20el%20cat%C3%A1logo%20de%20PINVERSE%20y%20quisiera%20recibir%20informaci%C3%B3n%20sobre%20los%20pines.%20%C2%BFMe%20pueden%20ayudar%3F"
+    href="https://wa.me/573116821619?text=Hola%2C%20estoy%20viendo%20el%20cat%C3%A1logo%20de%20PINVERSE%20y%20quisiera%20recibir%20informaci%C3%B3n%20sobre%20los%20pines.%20%C2%BFMe%20pueden%20ayudar%3F"
     target="_blank"
     rel="noopener noreferrer"
     aria-label="Consultar por WhatsApp"
@@ -5469,20 +5529,42 @@
 
       const promo = calcularPromo(cartProducts);
       const productLines = cartProducts
-        .map((producto, index) => `${index + 1}. ${producto.nombre}\n   Ref: ${producto.referencia}`)
-        .join('\n\n');
+        .map((producto, index) => `${index + 1}. ${producto.nombre}`)
+        .join('\n');
 
       const message = encodeURIComponent(
-        `Hola 👋, quiero realizar un pedido en *PINVERSE*.\n\n` +
-        `*Pines seleccionados:*\n\n${productLines}\n\n` +
+        `Hola, quiero hacer este pedido en *PINVERSE*\n\n` +
+        `*Pines seleccionados:*\n${productLines}\n\n` +
         `*Cantidad:* ${pluralPines(cartProducts.length)}\n` +
         `*Promoción aplicada:* ${resumenPromo(promo)}\n` +
         `*Total:* ${formatoPrecio(promo.total)}\n\n` +
         `¿Me confirman la disponibilidad y cómo continúo con el pedido? Gracias.`
       );
 
-      const popup = window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank', 'noopener,noreferrer');
-      if (popup) popup.opener = null;
+      const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
+
+      /*
+        Abrimos WhatsApp primero. Solo si el navegador confirma que pudo abrir
+        la nueva ventana/pestaña limpiamos el carrito. Si un bloqueador impide
+        la apertura, la selección se conserva para que el cliente no la pierda.
+      */
+      const popup = window.open(whatsappUrl, '_blank');
+
+      if (!popup) {
+        return;
+      }
+
+      try {
+        popup.opener = null;
+      } catch (error) {
+        /* No afecta el pedido si el navegador no permite modificar opener. */
+      }
+
+      cartItems = [];
+      guardarCarrito();
+      renderCarrito();
+      ocultarAvisoCarrito();
+      cerrarCarrito();
     }
 
     function activarRevealSuave() {
