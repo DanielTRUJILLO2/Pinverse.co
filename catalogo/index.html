@@ -4146,6 +4146,252 @@
       gap:5px;
     }
 
+  
+    /* =========================================================
+       FEEDBACK AL AGREGAR AL CARRITO
+       ========================================================= */
+    .cart-added-toast{
+      position:fixed;
+      right:18px;
+      bottom:84px;
+      z-index:90;
+      width:min(390px, calc(100vw - 36px));
+      min-height:82px;
+      display:grid;
+      grid-template-columns:58px minmax(0,1fr) auto;
+      align-items:center;
+      gap:12px;
+      padding:11px 12px;
+      background:rgba(255,255,255,.98);
+      border:1px solid rgba(21,27,34,.12);
+      border-radius:19px;
+      box-shadow:
+        0 18px 45px rgba(21,27,34,.16),
+        0 3px 10px rgba(21,27,34,.06);
+      opacity:0;
+      visibility:hidden;
+      pointer-events:none;
+      transform:translateY(15px) scale(.975);
+      transform-origin:bottom right;
+      transition:
+        opacity .24s ease,
+        transform .34s cubic-bezier(.2,.8,.2,1),
+        visibility .24s ease;
+      overflow:hidden;
+      isolation:isolate;
+    }
+
+    .cart-added-toast::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:0;
+      width:100%;
+      height:3px;
+      background:var(--ink);
+      transform:scaleX(0);
+      transform-origin:left center;
+      opacity:.82;
+    }
+
+    .cart-added-toast.is-visible{
+      opacity:1;
+      visibility:visible;
+      pointer-events:auto;
+      transform:translateY(0) scale(1);
+    }
+
+    .cart-added-toast.is-visible::after{
+      animation:cartToastProgress 2.8s linear forwards;
+    }
+
+    .cart-added-image{
+      width:58px;
+      height:58px;
+      position:relative;
+      border-radius:13px;
+      overflow:hidden;
+      background:#f1f1ef;
+      border:1px solid rgba(21,27,34,.08);
+      flex-shrink:0;
+    }
+
+    .cart-added-image img{
+      width:100%;
+      height:100%;
+      display:block;
+      object-fit:cover;
+    }
+
+    .cart-added-check{
+      position:absolute;
+      right:4px;
+      bottom:4px;
+      width:19px;
+      height:19px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:var(--ink);
+      color:#fff;
+      border:2px solid #fff;
+      font-size:10px;
+      font-weight:900;
+      line-height:1;
+      box-shadow:0 2px 6px rgba(21,27,34,.18);
+    }
+
+    .cart-added-copy{
+      min-width:0;
+      display:grid;
+      gap:3px;
+      align-content:center;
+    }
+
+    .cart-added-eyebrow{
+      color:#6d7782;
+      font-size:9px;
+      line-height:1;
+      font-weight:900;
+      letter-spacing:.075em;
+      text-transform:uppercase;
+    }
+
+    .cart-added-copy strong{
+      display:block;
+      max-width:100%;
+      color:var(--ink);
+      font-size:13px;
+      line-height:1.2;
+      font-weight:850;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .cart-added-copy small{
+      color:#7a838c;
+      font-size:10px;
+      line-height:1.2;
+      font-weight:750;
+    }
+
+    .cart-added-view{
+      min-height:38px;
+      padding:0 13px;
+      border:0;
+      border-radius:11px;
+      background:var(--ink);
+      color:#fff;
+      font-size:9px;
+      font-weight:900;
+      letter-spacing:.035em;
+      white-space:nowrap;
+      cursor:pointer;
+      transition:transform .18s ease, opacity .18s ease;
+    }
+
+    .cart-added-view:hover{
+      transform:translateY(-1px);
+      opacity:.92;
+    }
+
+    .cart-added-view:active{
+      transform:translateY(0) scale(.98);
+    }
+
+    .cart-fly-image{
+      position:fixed;
+      z-index:150;
+      pointer-events:none;
+      object-fit:cover;
+      border-radius:14px;
+      border:2px solid rgba(255,255,255,.92);
+      box-shadow:0 12px 30px rgba(21,27,34,.24);
+      will-change:transform, opacity;
+    }
+
+    .btn-cart.just-added{
+      animation:addedButtonFeedback .46s cubic-bezier(.2,.8,.2,1);
+    }
+
+    @keyframes cartToastProgress{
+      from{ transform:scaleX(0); }
+      to{ transform:scaleX(1); }
+    }
+
+    @keyframes addedButtonFeedback{
+      0%{ transform:scale(1); }
+      45%{ transform:scale(.975); }
+      100%{ transform:scale(1); }
+    }
+
+    @media (max-width:640px){
+      .cart-added-toast{
+        left:12px;
+        right:12px;
+        bottom:76px;
+        width:auto;
+        min-height:76px;
+        grid-template-columns:52px minmax(0,1fr) auto;
+        gap:10px;
+        padding:10px;
+        border-radius:17px;
+        transform-origin:bottom center;
+      }
+
+      .cart-added-image{
+        width:52px;
+        height:52px;
+        border-radius:11px;
+      }
+
+      .cart-added-copy strong{
+        font-size:12px;
+      }
+
+      .cart-added-eyebrow{
+        font-size:8px;
+      }
+
+      .cart-added-view{
+        min-height:36px;
+        padding:0 10px;
+        border-radius:10px;
+        font-size:8px;
+      }
+    }
+
+    @media (max-width:390px){
+      .cart-added-toast{
+        grid-template-columns:48px minmax(0,1fr) auto;
+        gap:8px;
+        padding:9px;
+      }
+
+      .cart-added-image{
+        width:48px;
+        height:48px;
+      }
+
+      .cart-added-view{
+        padding:0 9px;
+      }
+    }
+
+    @media (prefers-reduced-motion:reduce){
+      .cart-added-toast,
+      .cart-added-toast::after,
+      .btn-cart.just-added{
+        animation:none !important;
+        transition:none !important;
+      }
+
+      .cart-fly-image{
+        display:none !important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -4387,6 +4633,30 @@
     </svg>
   </a>
 
+  <div
+    class="cart-added-toast"
+    id="cartAddedToast"
+    role="status"
+    aria-live="polite"
+    aria-atomic="true"
+    aria-hidden="true"
+  >
+    <div class="cart-added-image">
+      <img id="cartAddedToastImage" src="" alt="" />
+      <span class="cart-added-check" aria-hidden="true">✓</span>
+    </div>
+
+    <div class="cart-added-copy">
+      <span class="cart-added-eyebrow">Agregado al carrito</span>
+      <strong id="cartAddedToastName">Producto agregado</strong>
+      <small id="cartAddedToastRef"></small>
+    </div>
+
+    <button class="cart-added-view" id="cartAddedView" type="button">
+      Ver carrito
+    </button>
+  </div>
+
   <button class="cart-float" id="cartFloat" type="button" aria-label="Abrir carrito" aria-expanded="false" aria-controls="cartDrawer">
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <circle cx="8" cy="21" r="1"></circle>
@@ -4569,11 +4839,17 @@
     const cartPromoSummary = $('#cartPromoSummary');
     const cartClear = $('#cartClear');
     const cartWhatsapp = $('#cartWhatsapp');
+    const cartAddedToast = $('#cartAddedToast');
+    const cartAddedToastImage = $('#cartAddedToastImage');
+    const cartAddedToastName = $('#cartAddedToastName');
+    const cartAddedToastRef = $('#cartAddedToastRef');
+    const cartAddedView = $('#cartAddedView');
 
     let visibleCount = INITIAL_VISIBLE;
     let filteredProducts = [...productos];
     let cartItems = [];
     let lastFocusedElement = null;
+    let cartToastTimer = null;
 
     function escapeHTML(value = '') {
       return String(value)
@@ -5029,8 +5305,8 @@
 
     function agregarAlCarrito(productId) {
       const producto = productos.find(item => item.id === Number(productId));
-      if (!producto || !productoDisponible(producto)) return;
-      if (estaEnCarrito(productId)) return;
+      if (!producto || !productoDisponible(producto)) return false;
+      if (estaEnCarrito(productId)) return false;
 
       cartItems.push(Number(productId));
       guardarCarrito();
@@ -5039,6 +5315,105 @@
       cartFloat.classList.remove('cart-pulse');
       void cartFloat.offsetWidth;
       cartFloat.classList.add('cart-pulse');
+
+      return true;
+    }
+
+
+    function ocultarAvisoCarrito() {
+      if (!cartAddedToast) return;
+      window.clearTimeout(cartToastTimer);
+      cartAddedToast.classList.remove('is-visible');
+      cartAddedToast.setAttribute('aria-hidden', 'true');
+    }
+
+    function mostrarAvisoCarrito(producto) {
+      if (!producto || !cartAddedToast) return;
+
+      window.clearTimeout(cartToastTimer);
+
+      cartAddedToastImage.src = producto.foto;
+      cartAddedToastImage.alt = producto.nombre;
+      cartAddedToastName.textContent = producto.nombre;
+      cartAddedToastRef.textContent = `Ref. ${producto.referencia}`;
+
+      /* Reinicia también la pequeña barra de tiempo del aviso. */
+      cartAddedToast.classList.remove('is-visible');
+      void cartAddedToast.offsetWidth;
+      cartAddedToast.classList.add('is-visible');
+      cartAddedToast.setAttribute('aria-hidden', 'false');
+
+      cartToastTimer = window.setTimeout(() => {
+        ocultarAvisoCarrito();
+      }, 2800);
+    }
+
+    function animarProductoHaciaCarrito(button, producto) {
+      if (!button || !producto || !cartFloat) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      const card = button.closest('.product-card');
+      const sourceImage = card?.querySelector('[data-product-image]');
+      if (!sourceImage || !sourceImage.getBoundingClientRect) return;
+
+      const sourceRect = sourceImage.getBoundingClientRect();
+      const cartRect = cartFloat.getBoundingClientRect();
+
+      if (!sourceRect.width || !sourceRect.height || !cartRect.width || !cartRect.height) return;
+
+      const flyImage = document.createElement('img');
+      const startSize = Math.min(82, Math.max(58, sourceRect.width * .28));
+
+      flyImage.src = producto.foto;
+      flyImage.alt = '';
+      flyImage.className = 'cart-fly-image';
+      flyImage.setAttribute('aria-hidden', 'true');
+
+      const startLeft = sourceRect.left + (sourceRect.width / 2) - (startSize / 2);
+      const startTop = sourceRect.top + (sourceRect.height / 2) - (startSize / 2);
+      const targetX = cartRect.left + (cartRect.width / 2);
+      const targetY = cartRect.top + (cartRect.height / 2);
+      const currentX = startLeft + (startSize / 2);
+      const currentY = startTop + (startSize / 2);
+      const moveX = targetX - currentX;
+      const moveY = targetY - currentY;
+
+      Object.assign(flyImage.style, {
+        left: `${startLeft}px`,
+        top: `${startTop}px`,
+        width: `${startSize}px`,
+        height: `${startSize}px`
+      });
+
+      document.body.appendChild(flyImage);
+
+      const animation = flyImage.animate(
+        [
+          {
+            transform:'translate3d(0,0,0) scale(1) rotate(0deg)',
+            opacity:1,
+            offset:0
+          },
+          {
+            transform:`translate3d(${moveX * .56}px,${moveY * .48}px,0) scale(.76) rotate(2deg)`,
+            opacity:.96,
+            offset:.48
+          },
+          {
+            transform:`translate3d(${moveX}px,${moveY}px,0) scale(.18) rotate(7deg)`,
+            opacity:.12,
+            offset:1
+          }
+        ],
+        {
+          duration:720,
+          easing:'cubic-bezier(.2,.78,.2,1)',
+          fill:'forwards'
+        }
+      );
+
+      animation.addEventListener('finish', () => flyImage.remove(), { once:true });
+      animation.addEventListener('cancel', () => flyImage.remove(), { once:true });
     }
 
     function quitarDelCarrito(productId) {
@@ -5048,6 +5423,7 @@
     }
 
     function abrirCarrito() {
+      ocultarAvisoCarrito();
       lastFocusedElement = document.activeElement;
       cartOverlay.classList.add('is-open');
       cartDrawer.classList.add('is-open');
@@ -5162,15 +5538,29 @@
     productGrid.addEventListener('click', event => {
       const button = event.target.closest('[data-cart-id]');
       if (!button) return;
-      const productId = Number(button.dataset.cartId);
 
+      const productId = Number(button.dataset.cartId);
+      const producto = productos.find(item => item.id === productId);
+
+      /* Si ya está agregado, el mismo botón sirve como acceso rápido al carrito. */
       if (estaEnCarrito(productId)) {
+        ocultarAvisoCarrito();
         abrirCarrito();
         return;
       }
 
-      agregarAlCarrito(productId);
-      abrirCarrito();
+      if (agregarAlCarrito(productId)) {
+        animarProductoHaciaCarrito(button, producto);
+        mostrarAvisoCarrito(producto);
+
+        button.classList.remove('just-added');
+        void button.offsetWidth;
+        button.classList.add('just-added');
+
+        window.setTimeout(() => {
+          button.classList.remove('just-added');
+        }, 520);
+      }
     });
 
     cartBody.addEventListener('click', event => {
@@ -5179,7 +5569,15 @@
       quitarDelCarrito(Number(button.dataset.removeId));
     });
 
-    cartFloat.addEventListener('click', abrirCarrito);
+    cartAddedView.addEventListener('click', () => {
+      ocultarAvisoCarrito();
+      abrirCarrito();
+    });
+
+    cartFloat.addEventListener('click', () => {
+      ocultarAvisoCarrito();
+      abrirCarrito();
+    });
     cartClose.addEventListener('click', () => cerrarCarrito());
     cartOverlay.addEventListener('click', () => cerrarCarrito());
 
