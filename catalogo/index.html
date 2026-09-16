@@ -4468,6 +4468,284 @@
       }
     }
 
+  
+    /* =========================================================
+       V22 · BUSCADOR VISIBLE + FILTROS COMPACTOS
+       ========================================================= */
+
+    .catalog-inner{
+      padding-top:24px !important;
+    }
+
+    .section-heading{
+      margin-bottom:18px !important;
+    }
+
+    /* Buscador siempre visible */
+    .catalog-search{
+      width:100%;
+      margin:0 0 12px;
+    }
+
+    .catalog-search-box{
+      width:100%;
+      height:50px;
+      position:relative;
+      display:flex;
+      align-items:center;
+      border:1px solid #dfe5ea;
+      border-radius:14px;
+      background:#fff;
+      transition:border-color .2s ease, box-shadow .2s ease;
+    }
+
+    .catalog-search-box:focus-within{
+      border-color:#aebbc7;
+      box-shadow:0 0 0 4px rgba(47,120,189,.07);
+    }
+
+    .catalog-search-icon{
+      position:absolute;
+      left:16px;
+      width:19px;
+      height:19px;
+      stroke:#6d7883;
+      pointer-events:none;
+    }
+
+    .catalog-search-box input{
+      width:100%;
+      height:100%;
+      border:0;
+      outline:0;
+      background:transparent;
+      color:#17202a;
+      padding:0 48px 0 47px;
+      font-size:14px;
+      font-weight:600;
+    }
+
+    .catalog-search-box input::placeholder{
+      color:#99a2aa;
+      font-weight:500;
+    }
+
+    .catalog-search-box input::-webkit-search-cancel-button{
+      display:none;
+    }
+
+    .search-clear-btn{
+      position:absolute;
+      right:9px;
+      top:50%;
+      transform:translateY(-50%);
+      width:32px;
+      height:32px;
+      border:0;
+      border-radius:50%;
+      background:#f1f3f5;
+      color:#4f5b66;
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      font-size:20px;
+      line-height:1;
+      transition:background .18s ease, color .18s ease;
+    }
+
+    .search-clear-btn:hover{
+      background:#e6eaed;
+      color:#17202a;
+    }
+
+    .search-clear-btn[hidden]{
+      display:none !important;
+    }
+
+    /* Fila pequeña para filtros y contador */
+    .catalog-tools{
+      min-height:42px;
+      padding:0 !important;
+      margin:0 0 10px !important;
+      border:0 !important;
+      display:flex !important;
+      align-items:center !important;
+      justify-content:space-between !important;
+      gap:16px !important;
+    }
+
+    .filter-trigger{
+      min-height:38px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:0 2px !important;
+      border:0 !important;
+      border-radius:0 !important;
+      background:transparent !important;
+      color:#25303a;
+      font-size:12px !important;
+      font-weight:850;
+    }
+
+    .filter-trigger svg{
+      width:18px;
+      height:18px;
+    }
+
+    .filter-badge{
+      min-width:20px;
+      height:20px;
+      padding:0 6px;
+      display:grid;
+      place-items:center;
+      border-radius:999px;
+      background:#17202a;
+      color:#fff;
+      font-size:9px;
+      font-weight:900;
+    }
+
+    .filter-badge[hidden]{
+      display:none !important;
+    }
+
+    .visible-note{
+      font-size:12px !important;
+      color:#73808b !important;
+      font-weight:650 !important;
+    }
+
+    /* El panel ahora solo contiene Categoría, Disponibilidad y Orden */
+    .filter-panel-wrap{
+      max-height:210px;
+      border:0 !important;
+    }
+
+    .filter-panel{
+      grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+      gap:10px !important;
+      padding:12px !important;
+      margin:0 0 12px;
+      border:1px solid #e4e8ec !important;
+      border-radius:14px !important;
+      background:#f8f9fa !important;
+    }
+
+    .field{
+      gap:6px;
+    }
+
+    .field label{
+      font-size:9px;
+      color:#6f7b85;
+    }
+
+    .field select{
+      min-height:43px !important;
+      border-radius:10px !important;
+      border-color:#dce2e7 !important;
+      background:#fff !important;
+      font-size:12px !important;
+    }
+
+    .active-filter-row{
+      padding:2px 0 14px !important;
+      border-bottom:0 !important;
+      gap:7px !important;
+    }
+
+    .active-filter-label{
+      font-size:9px;
+    }
+
+    .active-filter-chip{
+      min-height:30px;
+      border-radius:9px;
+      border-color:#e0e5e9;
+      background:#f7f8f9;
+      font-size:10px;
+    }
+
+    .clear-filters-btn{
+      font-size:10px;
+    }
+
+    .products-grid{
+      margin-top:6px !important;
+    }
+
+    @media (max-width:640px){
+      .section-heading{
+        margin-bottom:14px !important;
+      }
+
+      .catalog-search{
+        margin-bottom:9px;
+      }
+
+      .catalog-search-box{
+        height:47px;
+        border-radius:12px;
+      }
+
+      .catalog-search-icon{
+        left:13px;
+        width:18px;
+        height:18px;
+      }
+
+      .catalog-search-box input{
+        padding-left:41px;
+        padding-right:43px;
+        font-size:13px;
+      }
+
+      .search-clear-btn{
+        right:7px;
+        width:30px;
+        height:30px;
+        font-size:18px;
+      }
+
+      .catalog-tools{
+        min-height:38px;
+        margin-bottom:8px !important;
+      }
+
+      .filter-trigger{
+        min-height:34px;
+        font-size:11.5px !important;
+      }
+
+      .visible-note{
+        font-size:11px !important;
+      }
+
+      .filter-panel-wrap{
+        max-height:330px;
+      }
+
+      .filter-panel{
+        grid-template-columns:1fr !important;
+        gap:9px !important;
+        padding:10px !important;
+        border-radius:12px !important;
+      }
+
+      .field select{
+        min-height:41px !important;
+      }
+
+      .active-filter-row{
+        padding-bottom:10px !important;
+      }
+
+      .products-grid{
+        margin-top:4px !important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -4561,6 +4839,24 @@
 
         <div class="category-rail" id="categoryRail" hidden aria-hidden="true"></div>
 
+        <div class="catalog-search">
+          <label class="sr-only" for="searchInputPanel">Buscar pines por nombre</label>
+          <div class="catalog-search-box">
+            <svg class="catalog-search-icon" viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="7"></circle>
+              <path d="m20 20-4-4"></path>
+            </svg>
+            <input
+              type="search"
+              id="searchInputPanel"
+              placeholder="Buscar por nombre: Snoopy, avión, gato..."
+              autocomplete="off"
+              spellcheck="false"
+            />
+            <button class="search-clear-btn" id="searchClearBtn" type="button" aria-label="Limpiar búsqueda" hidden>×</button>
+          </div>
+        </div>
+
         <div class="catalog-tools">
           <button type="button" class="filter-trigger" id="filterTrigger" aria-expanded="false" aria-controls="filterPanelWrap">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -4571,20 +4867,15 @@
               <line x1="4" y1="18" x2="20" y2="18"></line>
               <circle cx="11" cy="18" r="2"></circle>
             </svg>
-            Buscar y ordenar
-            <span class="tool-state" id="filterToolState">· filtros cerrados</span>
+            Filtros
+            <span class="filter-badge" id="filterBadge" hidden>0</span>
           </button>
 
-          <p class="visible-note" id="visibleNote">79 productos</p>
+          <p class="visible-note" id="visibleNote">142 productos</p>
         </div>
 
         <div class="filter-panel-wrap hidden" id="filterPanelWrap">
           <div class="filter-panel">
-            <div class="field">
-              <label for="searchInputPanel">Buscar</label>
-              <input type="search" id="searchInputPanel" placeholder="Ej. gato, Snoopy, 032..." autocomplete="off" />
-            </div>
-
             <div class="field">
               <label for="categorySelectPanel">Categoría</label>
               <select id="categorySelectPanel">
@@ -4634,7 +4925,7 @@
         <div class="active-filter-row hidden" id="activeFilterRow" aria-live="polite">
           <span class="active-filter-label">Filtros activos</span>
           <div id="activeFilterChips" style="display:contents"></div>
-          <button type="button" class="clear-filters-btn" id="clearFiltersBtn">Limpiar todo</button>
+          <button type="button" class="clear-filters-btn" id="clearFiltersBtn">Limpiar filtros</button>
         </div>
 
         <section class="products-grid" id="productGrid" aria-label="Listado de pines"></section>
@@ -4983,7 +5274,8 @@
     const sortSelectPanel = $('#sortSelectPanel');
     const filterTrigger = $('#filterTrigger');
     const filterPanelWrap = $('#filterPanelWrap');
-    const filterToolState = $('#filterToolState');
+    const filterBadge = $('#filterBadge');
+    const searchClearBtn = $('#searchClearBtn');
     const activeFilterRow = $('#activeFilterRow');
     const activeFilterChips = $('#activeFilterChips');
     const clearFiltersBtn = $('#clearFiltersBtn');
@@ -5174,7 +5466,6 @@
     function setFilterPanelState(show) {
       filterPanelWrap.classList.toggle('hidden', !show);
       filterTrigger.setAttribute('aria-expanded', String(show));
-      filterToolState.textContent = show ? '· filtros abiertos' : '· filtros cerrados';
     }
 
     function filtrosActivos() {
@@ -5186,13 +5477,15 @@
       };
     }
 
+    function actualizarEstadoBusqueda() {
+      const hasSearch = searchInputPanel.value.trim().length > 0;
+      searchClearBtn.hidden = !hasSearch;
+    }
+
     function actualizarFiltrosActivos() {
       const filters = filtrosActivos();
       const chips = [];
 
-      if (filters.search) {
-        chips.push({ key:'search', label:`Búsqueda: ${filters.search}` });
-      }
       if (filters.category) {
         chips.push({ key:'category', label:`Categoría: ${categoriaBonita(filters.category)}` });
       }
@@ -5210,6 +5503,11 @@
         </button>
       `).join('');
 
+      const activeSecondaryFilters = chips.length;
+      filterBadge.hidden = activeSecondaryFilters === 0;
+      filterBadge.textContent = String(activeSecondaryFilters);
+
+      actualizarEstadoBusqueda();
       renderCategoryRail();
     }
 
@@ -5222,6 +5520,18 @@
       if (key !== 'category') aplicarFiltros(true);
     }
 
+    function limpiarFiltrosSecundarios() {
+      categorySelectPanel.value = '';
+      availabilitySelectPanel.value = '';
+      sortSelectPanel.value = 'default';
+
+      const url = new URL(window.location.href);
+      url.searchParams.delete('categoria');
+      window.history.replaceState({}, '', url);
+
+      aplicarFiltros(true);
+    }
+
     function limpiarTodosLosFiltros() {
       searchInputPanel.value = '';
       categorySelectPanel.value = '';
@@ -5232,6 +5542,7 @@
       url.searchParams.delete('categoria');
       window.history.replaceState({}, '', url);
 
+      actualizarEstadoBusqueda();
       aplicarFiltros(true);
     }
 
@@ -5392,11 +5703,23 @@
       const disponibilidad = availabilitySelectPanel.value;
       const orden = sortSelectPanel.value;
 
+      const terminosBusqueda = termino.split(/\s+/).filter(Boolean);
+
       let lista = productos.filter(producto => {
-        const searchHaystack = normalizeText(`${producto.nombre} ${producto.referencia} ${producto.descripcion} ${producto.categorias}`);
-        const coincideTexto = !termino || searchHaystack.includes(termino);
+        const nombreNormalizado = normalizeText(producto.nombre);
+
+        /*
+          La búsqueda se realiza únicamente sobre el nombre real del pin.
+          Cada palabra escrita debe estar presente en el nombre.
+          Ej.: "snoopy surf" encuentra "Pin Snoopy Surf".
+        */
+        const coincideTexto = !termino || terminosBusqueda.every(
+          palabra => nombreNormalizado.includes(palabra)
+        );
+
         const coincideCategoria = !categoria || getCategorias(producto).includes(categoria);
         const coincideDisponibilidad = !disponibilidad || producto.estado === disponibilidad;
+
         return coincideTexto && coincideCategoria && coincideDisponibilidad;
       });
 
@@ -5696,7 +6019,17 @@
       setFilterPanelState(filterPanelWrap.classList.contains('hidden'));
     });
 
-    searchInputPanel.addEventListener('input', () => aplicarFiltros(true));
+    searchInputPanel.addEventListener('input', () => {
+      actualizarEstadoBusqueda();
+      aplicarFiltros(true);
+    });
+
+    searchClearBtn.addEventListener('click', () => {
+      searchInputPanel.value = '';
+      actualizarEstadoBusqueda();
+      aplicarFiltros(true);
+      searchInputPanel.focus();
+    });
 
     categorySelectPanel.addEventListener('change', () => {
       setCategory(categorySelectPanel.value, { syncUrl:true });
@@ -5716,7 +6049,7 @@
       if (chip) limpiarFiltro(chip.dataset.clearFilter);
     });
 
-    clearFiltersBtn.addEventListener('click', limpiarTodosLosFiltros);
+    clearFiltersBtn.addEventListener('click', limpiarFiltrosSecundarios);
 
     loadMoreBtn.addEventListener('click', agregarProductos);
 
