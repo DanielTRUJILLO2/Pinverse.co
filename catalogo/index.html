@@ -4452,6 +4452,22 @@
       }
     }
 
+  
+    /* V21 · acceso directo desde categorías del Inicio */
+    .filter-panel-wrap:not(.hidden){
+      scroll-margin-top:96px;
+    }
+
+    #productos{
+      scroll-margin-top:94px;
+    }
+
+    @media (max-width:640px){
+      #productos{
+        scroll-margin-top:18px;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -5777,7 +5793,8 @@
     cartItems = cargarCarrito();
 
     const categoriaInicial = new URLSearchParams(window.location.search).get('categoria');
-    const categoriaInicialValida = [...categorySelectPanel.options].some(option => option.value === categoriaInicial);
+    const categoriaInicialValida = [...categorySelectPanel.options]
+      .some(option => option.value === categoriaInicial);
 
     if (categoriaInicial && categoriaInicialValida) {
       categorySelectPanel.value = categoriaInicial;
@@ -5790,6 +5807,17 @@
     renderCarrito();
     aplicarFiltros(true);
     activarRevealSuave();
+
+    /* Si se entra desde una categoría del Inicio, dejamos al usuario
+       directamente en la sección de productos ya filtrada. */
+    if (categoriaInicial && categoriaInicialValida && window.location.hash === '#productos') {
+      window.requestAnimationFrame(() => {
+        document.querySelector('#productos')?.scrollIntoView({
+          behavior: 'auto',
+          block: 'start'
+        });
+      });
+    }
   </script>
 </body>
 </html>
