@@ -27,9 +27,8 @@
       padding:12px 0;
       margin:0 0 6px;
     }
-    .toolbar-row{ display:flex; gap:10px; align-items:center; }
     .search-box{
-      flex:1; position:relative;
+      position:relative;
       display:flex; align-items:center;
       background:var(--paper);
       border:2px solid var(--line);
@@ -52,24 +51,6 @@
       background:var(--cream); color:var(--navy);
       font-size:20px; font-weight:800;
       display:grid; place-items:center;
-    }
-    .filter-trigger{
-      position:relative;
-      height:52px; padding:0 20px;
-      display:inline-flex; align-items:center; gap:8px;
-      background:var(--navy); color:#fff;
-      border-radius:999px;
-      font-weight:900; font-size:15px;
-      transition:background .2s;
-    }
-    .filter-trigger:hover{ background:var(--navy-deep); }
-    .filter-trigger svg{ width:20px; height:20px; stroke:currentColor; }
-    .filter-badge{
-      position:absolute; top:-4px; right:-4px;
-      min-width:22px; height:22px; padding:0 6px; border-radius:999px;
-      background:var(--coral); color:#fff; font-size:12px; font-weight:900;
-      display:grid; place-items:center;
-      border:2px solid var(--cream);
     }
 
     .category-rail{
@@ -106,37 +87,11 @@
     .category-chip.is-active{ background:var(--navy); border-color:var(--navy); color:#fff; }
     .category-chip.is-active .category-chip-count{ background:var(--sun); color:var(--navy); }
 
-    .filter-panel-wrap{ margin-top:12px; }
-    .filter-panel{
-      display:grid; grid-template-columns:repeat(3, 1fr); gap:12px;
-      background:var(--paper);
-      border:2px solid var(--line);
-      border-radius:18px;
-      padding:14px;
-    }
-    .field label{ display:block; font-size:12px; font-weight:900; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); margin:0 0 6px 4px; }
-    .field select{
-      width:100%; height:46px;
-      border:2px solid var(--line); border-radius:14px;
-      background:var(--cream) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2301265a' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") right 12px center/18px no-repeat;
-      padding:0 38px 0 14px;
-      font-weight:800; color:var(--navy);
-      appearance:none; cursor:pointer;
-    }
-    .field select:focus{ outline:0; border-color:var(--navy); }
-
-    .active-filter-row{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:12px; }
-    .active-filter-label{ font-size:13px; font-weight:900; color:var(--muted); }
-    .active-filter-chip{
-      background:var(--sun); color:var(--navy);
-      font-weight:900; font-size:13px;
-      padding:7px 12px; border-radius:999px;
-    }
-    .clear-filters-btn{ font-weight:900; font-size:13px; color:var(--coral); text-decoration:underline; padding:6px; }
 
     /* =========================
        GRILLA DE PRODUCTOS
        ========================= */
+    #productos{ padding-top:24px; }
     .products-grid{
       display:grid;
       grid-template-columns:repeat(4, minmax(0, 1fr));
@@ -168,6 +123,15 @@
     .load-more-btn > span:first-child{ display:flex; flex-direction:column; align-items:flex-start; line-height:1.2; }
     .load-more-count{ font-size:12px; font-weight:800; opacity:.7; }
     .load-more-icon{ font-size:20px; }
+    .load-more-loader{ display:none; align-items:center; gap:10px; font-weight:800; font-size:14px; color:var(--muted); padding:10px 16px; border-radius:999px; }
+    .spinner{
+      width:20px; height:20px; border-radius:50%;
+      border:3px solid var(--line); border-top-color:var(--navy);
+      animation:spin .8s linear infinite;
+    }
+    @keyframes spin{ to{ transform:rotate(360deg); } }
+    .load-more-wrap.auto .load-more-loader{ display:inline-flex; }
+    .load-more-wrap.auto .load-more-btn{ display:none; }
     .load-progress-track{ position:absolute; left:0; right:0; bottom:0; height:5px; background:rgba(1,38,90,.1); }
     .load-more-progress{ display:block; height:100%; width:0; background:linear-gradient(90deg, var(--sun), var(--coral)); transition:width .5s var(--ease); }
 
@@ -409,18 +373,11 @@
     @media (max-width:1024px){
       .products-grid{ grid-template-columns:repeat(3, minmax(0, 1fr)); }
     }
-    @media (max-width:900px){
-      .filter-panel{ grid-template-columns:1fr 1fr; }
-    }
     @media (max-width:640px){
       body{ padding-bottom:90px; }
       .toolbar{ padding:10px 0; }
-      .search-box, .filter-trigger{ height:48px; }
-      .search-box{ padding-left:42px; }
+      .search-box{ height:48px; padding-left:42px; }
       .search-icon{ left:15px; }
-      .filter-trigger{ padding:0 14px; }
-      .filter-trigger .label{ display:none; }
-      .filter-panel{ grid-template-columns:1fr; }
       .products-grid{ grid-template-columns:repeat(2, minmax(0, 1fr)); gap:12px; }
       .combo-bar{ gap:10px; padding:9px; bottom:12px; border-radius:20px; }
       .slot{ width:34px; height:34px; flex-basis:34px; }
@@ -532,86 +489,43 @@
     </section>
 
     <section class="section wrap" id="productos">
-      <div class="section-head">
-        <div>
-          <span class="eyebrow">Encuentra el tuyo</span>
-          <h2>Todos los pines</h2>
-          <span id="productCount" hidden aria-hidden="true">0</span>
-        </div>
-        <p class="section-note" id="visibleNote">0 productos</p>
-      </div>
-
       <div class="toolbar">
-        <div class="toolbar-row">
-          <label class="sr-only" for="searchInputPanel">Buscar pines por nombre</label>
-          <div class="search-box">
-            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
-            <input type="search" id="searchInputPanel" placeholder="Busca: Snoopy, gato, Yoshi…" autocomplete="off" spellcheck="false" />
-            <button class="search-clear-btn" id="searchClearBtn" type="button" aria-label="Limpiar búsqueda" hidden>×</button>
-          </div>
-          <button type="button" class="filter-trigger" id="filterTrigger" aria-expanded="false" aria-controls="filterPanelWrap">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
-            <span class="label">Filtros</span>
-            <span class="filter-badge" id="filterBadge" hidden>0</span>
-          </button>
+        <label class="sr-only" for="searchInputPanel">Buscar pines por nombre</label>
+        <div class="search-box">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
+          <input type="search" id="searchInputPanel" placeholder="Busca tu pin: Snoopy, gato, Yoshi…" autocomplete="off" spellcheck="false" />
+          <button class="search-clear-btn" id="searchClearBtn" type="button" aria-label="Limpiar búsqueda" hidden>×</button>
         </div>
 
         <div class="category-rail" id="categoryRail" aria-label="Categorías"></div>
 
-        <div class="filter-panel-wrap hidden" id="filterPanelWrap">
-          <div class="filter-panel">
-            <div class="field">
-              <label for="categorySelectPanel">Categoría</label>
-              <select id="categorySelectPanel">
-                <option value="">Todas</option>
-                <option value="snoopy">Snoopy</option>
-                <option value="religiosos">Religiosos</option>
-                <option value="harry-potter">Harry Potter</option>
-                <option value="animales">Animales</option>
-                <option value="gatos">Gatos</option>
-                <option value="medicina">Medicina</option>
-                <option value="anime">Anime y Ghibli</option>
-                <option value="videojuegos">Videojuegos</option>
-                <option value="vehiculos">Vehículos</option>
-                <option value="deportes">Deportes</option>
-                <option value="marvel">Marvel</option>
-                <option value="sanrio">Sanrio</option>
-                <option value="cine-series">Cine y series</option>
-                <option value="caricaturas">Caricaturas</option>
-                <option value="musica">Música</option>
-                <option value="halloween">Halloween</option>
-                <option value="amor">Amor y amistad</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="availabilitySelectPanel">Disponibilidad</label>
-              <select id="availabilitySelectPanel">
-                <option value="">Todos</option>
-                <option value="disponible">Disponibles</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="sortSelectPanel">Orden</label>
-              <select id="sortSelectPanel">
-                <option value="default">Orden original</option>
-                <option value="name">Nombre A–Z</option>
-                <option value="reference">Referencia</option>
-                <option value="available">Disponibles primero</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div class="active-filter-row hidden" id="activeFilterRow" aria-live="polite">
-          <span class="active-filter-label">Filtros activos:</span>
-          <div id="activeFilterChips" style="display:contents"></div>
-          <button type="button" class="clear-filters-btn" id="clearFiltersBtn">Limpiar filtros</button>
-        </div>
+        <!-- Lista de categorías: alimenta los chips de arriba (no se muestra) -->
+        <select id="categorySelectPanel" hidden aria-hidden="true" tabindex="-1">
+          <option value="">Todas</option>
+          <option value="snoopy">Snoopy</option>
+          <option value="religiosos">Religiosos</option>
+          <option value="harry-potter">Harry Potter</option>
+          <option value="animales">Animales</option>
+          <option value="gatos">Gatos</option>
+          <option value="medicina">Medicina</option>
+          <option value="anime">Anime y Ghibli</option>
+          <option value="videojuegos">Videojuegos</option>
+          <option value="vehiculos">Vehículos</option>
+          <option value="deportes">Deportes</option>
+          <option value="marvel">Marvel</option>
+          <option value="sanrio">Sanrio</option>
+          <option value="cine-series">Cine y series</option>
+          <option value="caricaturas">Caricaturas</option>
+          <option value="musica">Música</option>
+          <option value="halloween">Halloween</option>
+          <option value="amor">Amor y amistad</option>
+        </select>
       </div>
 
       <div class="products-grid" id="productGrid" aria-label="Listado de pines"></div>
 
       <div class="load-more-wrap" id="loadMoreWrap">
+        <button class="load-more-loader" id="loadMoreAuto" type="button" aria-label="Cargar más pines"><span class="spinner" aria-hidden="true"></span>Cargando más pines…</button>
         <button id="loadMoreBtn" class="load-more-btn" type="button">
           <span>
             <span class="load-more-label">Ver más pines</span>
@@ -916,20 +830,10 @@
 
     const $ = selector => document.querySelector(selector);
     const productGrid = $('#productGrid');
-    const productCount = $('#productCount');
-    const visibleNote = $('#visibleNote');
     const categoryRail = $('#categoryRail');
     const searchInputPanel = $('#searchInputPanel');
     const categorySelectPanel = $('#categorySelectPanel');
-    const availabilitySelectPanel = $('#availabilitySelectPanel');
-    const sortSelectPanel = $('#sortSelectPanel');
-    const filterTrigger = $('#filterTrigger');
-    const filterPanelWrap = $('#filterPanelWrap');
-    const filterBadge = $('#filterBadge');
     const searchClearBtn = $('#searchClearBtn');
-    const activeFilterRow = $('#activeFilterRow');
-    const activeFilterChips = $('#activeFilterChips');
-    const clearFiltersBtn = $('#clearFiltersBtn');
     const loadMoreWrap = $('#loadMoreWrap');
     const loadMoreBtn = $('#loadMoreBtn');
     const loadMoreCount = $('#loadMoreCount');
@@ -1134,79 +1038,19 @@
       aplicarFiltros(true);
     }
 
-    function setFilterPanelState(show) {
-      filterPanelWrap.classList.toggle('hidden', !show);
-      filterTrigger.setAttribute('aria-expanded', String(show));
-    }
-
-    function filtrosActivos() {
-      return {
-        search:searchInputPanel.value.trim(),
-        category:categorySelectPanel.value,
-        availability:availabilitySelectPanel.value,
-        sort:sortSelectPanel.value
-      };
-    }
-
     function actualizarEstadoBusqueda() {
       const hasSearch = searchInputPanel.value.trim().length > 0;
       searchClearBtn.hidden = !hasSearch;
     }
 
     function actualizarFiltrosActivos() {
-      const filters = filtrosActivos();
-      const chips = [];
-
-      if (filters.category) {
-        chips.push({ key:'category', label:`Categoría: ${categoriaBonita(filters.category)}` });
-      }
-      if (filters.availability) {
-        chips.push({ key:'availability', label:'Disponibles' });
-      }
-      if (filters.sort !== 'default') {
-        chips.push({ key:'sort', label:`Orden: ${sortSelectPanel.options[sortSelectPanel.selectedIndex]?.text || ''}` });
-      }
-
-      activeFilterRow.classList.toggle('hidden', chips.length === 0);
-      activeFilterChips.innerHTML = chips.map(chip => `
-        <button type="button" class="active-filter-chip" data-clear-filter="${chip.key}" aria-label="Quitar ${escapeHTML(chip.label)}">
-          ${escapeHTML(chip.label)} ×
-        </button>
-      `).join('');
-
-      filterBadge.hidden = chips.length === 0;
-      filterBadge.textContent = String(chips.length);
-
       actualizarEstadoBusqueda();
       renderCategoryRail();
-    }
-
-    function limpiarFiltro(key) {
-      if (key === 'search') searchInputPanel.value = '';
-      if (key === 'category') setCategory('', { syncUrl:true });
-      if (key === 'availability') availabilitySelectPanel.value = '';
-      if (key === 'sort') sortSelectPanel.value = 'default';
-
-      if (key !== 'category') aplicarFiltros(true);
-    }
-
-    function limpiarFiltrosSecundarios() {
-      categorySelectPanel.value = '';
-      availabilitySelectPanel.value = '';
-      sortSelectPanel.value = 'default';
-
-      const url = new URL(window.location.href);
-      url.searchParams.delete('categoria');
-      window.history.replaceState({}, '', url);
-
-      aplicarFiltros(true);
     }
 
     function limpiarTodosLosFiltros() {
       searchInputPanel.value = '';
       categorySelectPanel.value = '';
-      availabilitySelectPanel.value = '';
-      sortSelectPanel.value = 'default';
 
       const url = new URL(window.location.href);
       url.searchParams.delete('categoria');
@@ -1322,7 +1166,6 @@
       const progress = filteredProducts.length ? Math.round((loaded / filteredProducts.length) * 100) : 0;
       const shouldHide = loaded >= filteredProducts.length || filteredProducts.length === 0;
 
-      visibleNote.textContent = `${filteredProducts.length} ${filteredProducts.length === 1 ? 'diseño' : 'diseños'}`;
       loadMoreCount.textContent = remaining ? `${remaining} por ver` : '';
       loadMoreProgress.style.width = `${progress}%`;
       loadMoreWrap.classList.toggle('hidden', shouldHide);
@@ -1360,7 +1203,6 @@
           </div>
         `;
 
-      productCount.textContent = filteredProducts.length;
       actualizarBotonVerMas();
       actualizarFiltrosActivos();
       activarImagenes(productGrid);
@@ -1368,6 +1210,7 @@
       observarBrillo();
 
       $('#clearEmptyStateBtn')?.addEventListener('click', limpiarTodosLosFiltros);
+      vigilarFinal();
     }
 
     function agregarProductos() {
@@ -1389,13 +1232,48 @@
       actualizarBotonVerMas();
       actualizarBotonesCarrito();
       observarBrillo();
+      vigilarFinal();
+    }
+
+    /* Carga automática: cuando el final de la lista se acerca a la pantalla, se agregan más pines */
+    const MARGEN_AUTOCARGA = 700;
+    let revisionPendiente = false;
+
+    function revisarAutoCarga() {
+      if (revisionPendiente) return;
+      revisionPendiente = true;
+      window.setTimeout(() => {
+        revisionPendiente = false;
+        if (visibleCount >= filteredProducts.length) return;
+        if (loadMoreWrap.getBoundingClientRect().top < window.innerHeight + MARGEN_AUTOCARGA) {
+          agregarProductos();
+          revisarAutoCarga();
+        }
+      }, 80);
+    }
+
+    const vigiaFinal = 'IntersectionObserver' in window
+      ? new IntersectionObserver(entries => {
+          if (entries.some(entry => entry.isIntersecting)) revisarAutoCarga();
+        }, { rootMargin:`0px 0px ${MARGEN_AUTOCARGA}px 0px` })
+      : null;
+
+    /* Se reinicia tras cada tanda para que vuelva a medir con la lista ya crecida */
+    function vigilarFinal() {
+      if (!vigiaFinal) return;
+      vigiaFinal.unobserve(loadMoreWrap);
+      vigiaFinal.observe(loadMoreWrap);
+    }
+
+    if (vigiaFinal) {
+      loadMoreWrap.classList.add('auto');
+      vigilarFinal();
+      window.addEventListener('scroll', revisarAutoCarga, { passive:true });
     }
 
     function aplicarFiltros(resetVisible = true) {
       const termino = normalizeText(searchInputPanel.value);
       const categoria = categorySelectPanel.value;
-      const disponibilidad = availabilitySelectPanel.value;
-      const orden = sortSelectPanel.value;
 
       const terminosBusqueda = termino.split(/\s+/).filter(Boolean);
 
@@ -1412,21 +1290,9 @@
         );
 
         const coincideCategoria = !categoria || getCategorias(producto).includes(categoria);
-        const coincideDisponibilidad = !disponibilidad || producto.estado === disponibilidad;
 
-        return coincideTexto && coincideCategoria && coincideDisponibilidad;
+        return coincideTexto && coincideCategoria;
       });
-
-      if (orden === 'name') {
-        lista.sort((a,b) => a.nombre.localeCompare(b.nombre, 'es', { sensitivity:'base' }));
-      } else if (orden === 'reference') {
-        lista.sort((a,b) => String(a.referencia).localeCompare(String(b.referencia), 'es', { numeric:true }));
-      } else if (orden === 'available') {
-        lista.sort((a,b) => {
-          if (a.estado === b.estado) return a.id - b.id;
-          return a.estado === 'disponible' ? -1 : 1;
-        });
-      }
 
       if (resetVisible) visibleCount = INITIAL_VISIBLE;
       renderProductos(lista, 0);
@@ -1852,7 +1718,7 @@
     }
 
     function activarRevealSuave() {
-      const items = document.querySelectorAll('#productos .section-head, .load-more-wrap');
+      const items = document.querySelectorAll('#promociones .section-head');
 
       if (!('IntersectionObserver' in window) || reduceMotion) {
         items.forEach(item => item.classList.add('is-visible'));
@@ -1873,10 +1739,6 @@
     }
 
     /* events */
-    filterTrigger.addEventListener('click', () => {
-      setFilterPanelState(filterPanelWrap.classList.contains('hidden'));
-    });
-
     searchInputPanel.addEventListener('input', () => {
       actualizarEstadoBusqueda();
       aplicarFiltros(true);
@@ -1893,23 +1755,15 @@
       setCategory(categorySelectPanel.value, { syncUrl:true });
     });
 
-    availabilitySelectPanel.addEventListener('change', () => aplicarFiltros(true));
-    sortSelectPanel.addEventListener('change', () => aplicarFiltros(true));
-
     categoryRail.addEventListener('click', event => {
       const button = event.target.closest('[data-category-chip]');
       if (!button) return;
       setCategory(button.dataset.categoryChip || '', { syncUrl:true });
     });
 
-    activeFilterRow.addEventListener('click', event => {
-      const chip = event.target.closest('[data-clear-filter]');
-      if (chip) limpiarFiltro(chip.dataset.clearFilter);
-    });
-
-    clearFiltersBtn.addEventListener('click', limpiarFiltrosSecundarios);
-
     loadMoreBtn.addEventListener('click', agregarProductos);
+    /* Red de seguridad: si la carga automática no arrancara, tocar el aviso carga más */
+    $('#loadMoreAuto').addEventListener('click', agregarProductos);
 
     productGrid.addEventListener('click', event => {
       const area = event.target.closest('[data-view-id]');
@@ -2035,7 +1889,7 @@
     if (categoriaInicial && categoriaInicialValida) {
       categorySelectPanel.value = categoriaInicial;
     }
-    setFilterPanelState(false);
+    searchInputPanel.placeholder = `Busca entre ${productos.length} pines…`;
 
     renderCarrito();
     aplicarFiltros(true);
