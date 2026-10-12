@@ -99,6 +99,10 @@
       margin-top:18px;
     }
 
+    .skel{ display:block; height:14px; border-radius:8px; background:linear-gradient(110deg, #ece7df 30%, #f6f2ec 50%, #ece7df 70%) 0 0/200% 100%; animation:skeleton 1.4s linear infinite; }
+    .skel.corto{ width:55%; }
+    .skel.boton{ height:40px; border-radius:999px; margin-top:4px; }
+
     .empty-state{
       grid-column:1 / -1;
       background:var(--paper); border:2px dashed var(--line); border-radius:var(--radius);
@@ -274,76 +278,101 @@
     .product-card.is-active .zoom-hint{ transform:scale(1.12); opacity:1; }
 
     /* =========================
-       VISTA AMPLIADA DEL PIN
+       VISTA AMPLIADA DEL PIN (tarjeta flotante que crece desde la foto)
        ========================= */
-    .viewer{ position:fixed; inset:0; z-index:90; display:grid; place-items:center; visibility:hidden; }
+    .viewer{
+      position:fixed; inset:0; z-index:90;
+      display:grid; place-items:center;
+      padding:16px;
+      visibility:hidden;
+    }
     .viewer.is-open{ visibility:visible; }
-    .viewer-backdrop{ position:absolute; inset:0; background:rgba(13,27,51,.72); backdrop-filter:blur(6px); opacity:0; transition:opacity .3s ease; }
-    .viewer.is-open .viewer-backdrop{ opacity:1; }
+    .viewer-backdrop{
+      position:absolute; inset:0;
+      background:rgba(13,27,51,.55);
+      backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+      opacity:0; transition:opacity .35s ease;
+    }
+    .viewer.is-open .viewer-backdrop{ opacity:var(--backdrop, 1); }
+    .viewer.is-dragging .viewer-backdrop{ transition:none; }
     .viewer-panel{
       position:relative;
-      width:min(calc(100% - 32px), 900px);
-      max-height:calc(100dvh - 40px);
-      display:grid; grid-template-columns:1.15fr 1fr;
+      width:min(100%, 780px);
+      display:grid; grid-template-columns:1.1fr 1fr;
       background:var(--paper);
       border-radius:28px;
       overflow:hidden;
-      box-shadow:0 30px 60px rgba(0,0,0,.35);
-      opacity:0; transform:translateY(24px) scale(.97);
-      transition:opacity .3s ease, transform .35s var(--ease);
-    }
-    .viewer.is-open .viewer-panel{ opacity:1; transform:none; }
-    .viewer-close{
-      position:absolute; top:12px; right:12px; z-index:5;
-      width:42px; height:42px; border-radius:50%;
-      background:rgba(255,255,255,.95); color:var(--navy);
-      font-size:26px; display:grid; place-items:center;
-      box-shadow:0 4px 12px rgba(0,0,0,.15);
+      box-shadow:0 30px 70px rgba(0,0,0,.35);
+      transform-origin:0 0;
+      will-change:transform;
+      outline:none;
     }
     .viewer-stage{
       position:relative; aspect-ratio:1/1;
       overflow:hidden; background:#d9d9d9;
-      cursor:zoom-in; touch-action:pan-y;
-      user-select:none;
+      cursor:zoom-in; touch-action:none; user-select:none; -webkit-user-select:none;
     }
-    .viewer-stage.zoomed{ cursor:zoom-out; touch-action:none; }
+    .viewer-stage.zoomed{ cursor:zoom-out; }
     .viewer-stage img{
-      width:100%; height:100%; object-fit:cover;
-      transition:transform .35s var(--ease), opacity .2s ease;
-      pointer-events:none;
+      width:100%; height:100%; object-fit:cover; display:block;
+      transition:transform .35s var(--ease);
+      pointer-events:none; -webkit-user-drag:none;
     }
-    .viewer-stage.zoomed img{ transform:scale(2.4); transition:transform .35s var(--ease); }
+    .viewer-stage.zoomed img{ transform:scale(2.4); }
     .viewer-stage.is-panning img{ transition:none; }
-    .viewer-stage img.is-swapping{ opacity:0; }
+    .viewer-close{
+      position:absolute; top:12px; right:12px; z-index:5;
+      width:38px; height:38px; border-radius:50%;
+      background:rgba(255,255,255,.94); color:var(--navy);
+      font-size:24px; line-height:1; display:grid; place-items:center;
+      box-shadow:0 4px 12px rgba(0,0,0,.15);
+      transition:transform .2s var(--ease);
+    }
+    .viewer-close:hover{ transform:rotate(90deg); }
+    .viewer-count{
+      position:absolute; top:16px; left:14px; z-index:4;
+      background:rgba(13,27,51,.62); color:#fff;
+      backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
+      font-size:12px; font-weight:800; padding:5px 10px; border-radius:999px;
+    }
     .viewer-nav{
       position:absolute; top:50%; z-index:3;
-      width:44px; height:44px; margin-top:-22px; border-radius:50%;
+      width:40px; height:40px; margin-top:-20px; border-radius:50%;
       background:rgba(255,255,255,.92); color:var(--navy);
-      font-size:28px; line-height:1; display:grid; place-items:center;
+      font-size:26px; line-height:1; display:grid; place-items:center;
       box-shadow:0 4px 12px rgba(0,0,0,.15);
       transition:transform .2s var(--ease), opacity .2s;
     }
-    .viewer-nav:hover{ transform:scale(1.08); }
-    .viewer-nav.prev{ left:12px; }
-    .viewer-nav.next{ right:12px; }
-    .viewer-stage.zoomed .viewer-nav, .viewer-stage.zoomed .viewer-hint{ opacity:0; pointer-events:none; }
+    .viewer-nav:hover{ transform:scale(1.1); }
+    .viewer-nav.prev{ left:10px; }
+    .viewer-nav.next{ right:10px; }
     .viewer-hint{
       position:absolute; left:50%; bottom:12px; transform:translateX(-50%); z-index:3;
       background:rgba(13,27,51,.7); color:#fff;
       font-size:12px; font-weight:800; white-space:nowrap;
       padding:6px 12px; border-radius:999px;
-      transition:opacity .2s;
+      pointer-events:none;
+      animation:hintOut .4s 2.4s forwards;
     }
-    .viewer-info{ padding:30px 26px 26px; display:flex; flex-direction:column; gap:12px; }
-    .viewer-meta{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; padding-right:44px; }
+    @keyframes hintOut{ to{ opacity:0; transform:translate(-50%, 6px); } }
+    .viewer-stage.zoomed .viewer-nav,
+    .viewer-stage.zoomed .viewer-count,
+    .viewer-stage.zoomed .viewer-hint{ opacity:0; pointer-events:none; }
+
+    .viewer-info{ padding:26px 24px 24px; display:flex; flex-direction:column; gap:10px; }
+    .viewer-info > *{ opacity:0; transform:translateY(12px); transition:opacity .3s ease, transform .4s var(--ease); }
+    .viewer.is-ready .viewer-info > *{ opacity:1; transform:none; }
+    .viewer.is-ready .viewer-info > :nth-child(2){ transition-delay:.05s; }
+    .viewer.is-ready .viewer-info > :nth-child(3){ transition-delay:.1s; }
+    .viewer.is-ready .viewer-info > :nth-child(4){ transition-delay:.15s; }
+    .viewer-meta{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
     .viewer-meta .product-tag{ position:static; transform:none; box-shadow:none; }
     .viewer-ref{ background:var(--cream); color:var(--navy); font-size:12px; font-weight:900; padding:6px 12px; border-radius:999px; }
-    .viewer-info h3{ font-family:var(--display); font-weight:800; font-size:30px; line-height:1.1; color:var(--navy); letter-spacing:-.02em; }
+    .viewer-info h3{ font-family:var(--display); font-weight:800; font-size:28px; line-height:1.1; color:var(--navy); letter-spacing:-.02em; }
     .viewer-note{ color:var(--muted); font-weight:600; font-size:15px; line-height:1.5; }
-    .viewer-buy{ margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:12px; padding-top:8px; }
-    .viewer-buy .product-price{ font-size:28px; }
-    .viewer-buy .btn-cart{ min-height:52px; padding:0 24px; font-size:16px; }
-    .viewer-count{ font-size:13px; font-weight:800; color:var(--muted); }
+    .viewer-buy{ margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:12px; padding-top:6px; }
+    .viewer-buy .product-price{ font-size:26px; }
+    .viewer-buy .btn-cart{ min-height:50px; padding:0 22px; font-size:15px; }
 
     /* =========================
        COMBO SUGERIDO EN EL CARRITO
@@ -389,21 +418,16 @@
       .zoom-hint{ width:28px; height:28px; right:8px; bottom:8px; }
       .zoom-hint svg{ width:14px; height:14px; }
 
-      .viewer{ place-items:end center; }
-      .viewer-panel{
-        width:100%; max-height:100dvh;
-        grid-template-columns:1fr;
-        border-radius:26px 26px 0 0;
-        transform:translateY(100%);
-        overflow-y:auto;
-      }
-      .viewer.is-open .viewer-panel{ transform:none; }
-      .viewer-info{ padding:16px 18px 22px; gap:8px; }
-      .viewer-info h3{ font-size:23px; }
-      .viewer-note{ font-size:14px; }
-      .viewer-buy .product-price{ font-size:24px; }
-      .viewer-buy .btn-cart{ flex:1; }
-      .viewer-nav{ width:38px; height:38px; margin-top:-19px; font-size:24px; }
+      .viewer{ padding:18px; }
+      .viewer-panel{ width:min(100%, 400px); grid-template-columns:1fr; border-radius:24px; }
+      .viewer-info{ padding:14px 16px 16px; gap:8px; }
+      .viewer-info h3{ font-size:20px; }
+      .viewer-note{ display:none; }
+      .viewer-buy{ padding-top:2px; }
+      .viewer-buy .product-price{ font-size:22px; }
+      .viewer-buy .btn-cart{ flex:1; min-height:46px; font-size:14px; }
+      .viewer-nav{ width:34px; height:34px; margin-top:-17px; font-size:22px; }
+      .viewer-close{ width:34px; height:34px; font-size:22px; }
 
       .cart-suggest-row{ grid-template-columns:repeat(4, minmax(0, 1fr)); gap:6px; }
       .suggest-name{ font-size:10.5px; }
@@ -614,13 +638,14 @@
 
   <div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-labelledby="viewerTitle" aria-hidden="true">
     <div class="viewer-backdrop" data-viewer-close></div>
-    <div class="viewer-panel">
-      <button class="viewer-close" type="button" data-viewer-close aria-label="Cerrar">×</button>
+    <div class="viewer-panel" id="viewerPanel" tabindex="-1">
       <div class="viewer-stage" id="viewerStage">
-        <img id="viewerImg" src="" alt="" />
+        <img id="viewerImg" src="" alt="" draggable="false" />
+        <span class="viewer-count" id="viewerCount"></span>
+        <button class="viewer-close" type="button" data-viewer-close aria-label="Cerrar">×</button>
         <button class="viewer-nav prev" id="viewerPrev" type="button" aria-label="Pin anterior">‹</button>
         <button class="viewer-nav next" id="viewerNext" type="button" aria-label="Pin siguiente">›</button>
-        <span class="viewer-hint">Toca la foto para acercar</span>
+        <span class="viewer-hint" id="viewerHint">Toca para acercar · desliza para ver más</span>
       </div>
       <div class="viewer-info">
         <div class="viewer-meta">
@@ -633,13 +658,17 @@
           <span class="product-price" id="viewerPrice"></span>
           <button class="btn-cart" id="viewerAdd" type="button"></button>
         </div>
-        <span class="viewer-count" id="viewerCount"></span>
       </div>
     </div>
   </div>
 
+  <script src="../recursos/productos.js"></script>
   <script>
-    const productos = [
+    /*
+      Lista de respaldo. Si recursos/productos.js tiene el enlace de Google Sheets,
+      al abrir la página se reemplaza por lo que diga la hoja.
+    */
+    let productos = [
 { id: 1, foto: '../imagenes/pin1.jpeg', nombre: 'Pin Jesús Brazos Abiertos', referencia: '001', precio: 9000, estado: 'disponible', categorias: 'religiosos' },
 { id: 2, foto: '../imagenes/pin2.jpeg', nombre: 'Pin Jesús Buen Pastor', referencia: '002', precio: 9000, estado: 'disponible', categorias: 'religiosos' },
 { id: 3, foto: '../imagenes/pin3.jpeg', nombre: 'Pin Jesús con Flores', referencia: '003', precio: 9000, estado: 'disponible', categorias: 'religiosos' },
@@ -803,10 +832,11 @@
     const THREE_PIN_PROMO = 24000;
 
     /*
-      Etiquetas de las tarjetas. Para marcar un pin, agrega su id aquí:
+      Etiquetas de respaldo (con Google Sheets se usan las de la columna "etiqueta").
+      Para marcar un pin, agrega su id aquí:
       'nuevo' → "Nuevo"   ·   'mas-vendido' → "🔥 Más vendido"
     */
-    const ETIQUETAS = {
+    let ETIQUETAS = {
       126:'nuevo', 130:'nuevo', 119:'nuevo', 18:'nuevo',
       45:'nuevo', 138:'nuevo', 109:'nuevo', 103:'nuevo',
     };
@@ -1479,10 +1509,12 @@
       renderCarrito();
     }
 
-    /* ---------- Vista ampliada ---------- */
+    /* ---------- Vista ampliada (tarjeta flotante que crece desde la foto) ---------- */
     const viewer = $('#viewer');
+    const viewerPanel = $('#viewerPanel');
     const viewerStage = $('#viewerStage');
     const viewerImg = $('#viewerImg');
+    const viewerHint = $('#viewerHint');
     const viewerRef = $('#viewerRef');
     const viewerTag = $('#viewerTag');
     const viewerTitle = $('#viewerTitle');
@@ -1491,6 +1523,19 @@
     const viewerCount = $('#viewerCount');
     let viewerId = null;
     let viewerFocus = null;
+    let viewerAnimando = false;
+    let viewerAnimTimer = null;
+
+    function marcarAnimando(ms) {
+      viewerAnimando = true;
+      window.clearTimeout(viewerAnimTimer);
+      viewerAnimTimer = window.setTimeout(() => { viewerAnimando = false; }, ms + 120);
+    }
+
+    function finAnimacion() {
+      window.clearTimeout(viewerAnimTimer);
+      viewerAnimando = false;
+    }
 
     function listaVisor() {
       return filteredProducts.length ? filteredProducts : productos;
@@ -1512,15 +1557,8 @@
       viewerId = producto.id;
       quitarZoom();
 
-      viewerImg.classList.add('is-swapping');
-      const img = new Image();
-      img.onload = img.onerror = () => {
-        viewerImg.src = producto.foto;
-        viewerImg.alt = `${producto.nombre} · referencia ${producto.referencia}`;
-        viewerImg.classList.remove('is-swapping');
-      };
-      img.src = producto.foto;
-
+      viewerImg.src = producto.foto;
+      viewerImg.alt = `${producto.nombre} · referencia ${producto.referencia}`;
       viewerRef.textContent = `Ref. ${producto.referencia}`;
       const tipo = ETIQUETAS[producto.id];
       viewerTag.hidden = !tipo;
@@ -1531,34 +1569,142 @@
 
       const lista = listaVisor();
       const posicion = lista.findIndex(item => item.id === producto.id);
-      viewerCount.textContent = posicion >= 0 ? `${posicion + 1} de ${lista.length}` : '';
+      viewerCount.textContent = posicion >= 0 ? `${posicion + 1} / ${lista.length}` : '';
       actualizarBotonVisor();
     }
 
-    function moverVisor(paso) {
+    /* Foto de la tarjeta en la grilla (si está a la vista) para animar desde/hacia ella */
+    function rectTarjeta(id) {
+      const area = productGrid.querySelector(`[data-view-id="${id}"]`);
+      if (!area) return null;
+      const r = area.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > window.innerHeight || !r.width) return null;
+      return r;
+    }
+
+    /* Transformación que lleva la tarjeta flotante a ocupar exactamente la foto de la grilla */
+    function fotogramaDesde(r) {
+      const panel = viewerPanel.getBoundingClientRect();
+      const stage = viewerStage.getBoundingClientRect();
+      const escala = r.width / stage.width;
+      const ox = stage.left - panel.left;
+      const oy = stage.top - panel.top;
+      const x = r.left - panel.left - ox * escala;
+      const y = r.top - panel.top - oy * escala;
+      const derecha = panel.width - (ox + stage.width);
+      const abajo = panel.height - (oy + stage.height);
+      return {
+        transform:`translate(${x}px, ${y}px) scale(${escala})`,
+        clipPath:`inset(${oy}px ${derecha}px ${abajo}px ${ox}px round ${22 / escala}px)`,
+        boxShadow:'0 0 0 rgba(0,0,0,0)'
+      };
+    }
+
+    const FOTOGRAMA_FINAL = { transform:'translate(0px, 0px) scale(1)', clipPath:'inset(0px 0px 0px 0px round 28px)', boxShadow:'0 30px 70px rgba(0,0,0,.35)' };
+
+    function abrirVisor(id) {
+      if (viewerAnimando) return;
+      viewerFocus = document.activeElement;
+      mostrarEnVisor(id);
+      viewerHint.style.animation = 'none';
+      void viewerHint.offsetWidth;
+      viewerHint.style.animation = '';
+
+      viewer.style.setProperty('--backdrop', 1);
+      viewer.classList.add('is-open');
+      viewer.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('is-locked');
+
+      const origen = rectTarjeta(id);
+      if (origen && !reduceMotion) {
+        marcarAnimando(480);
+        const anim = viewerPanel.animate([fotogramaDesde(origen), FOTOGRAMA_FINAL], {
+          duration:480, easing:'cubic-bezier(.2,.9,.25,1.06)'
+        });
+        window.setTimeout(() => viewer.classList.add('is-ready'), 180);
+        anim.onfinish = anim.oncancel = finAnimacion;
+      } else {
+        viewerPanel.animate([{ opacity:0, transform:'scale(.92)' }, { opacity:1, transform:'scale(1)' }], { duration:reduceMotion ? 1 : 260, easing:'ease-out' });
+        viewer.classList.add('is-ready');
+      }
+      window.setTimeout(() => viewerPanel.focus({ preventScroll:true }), 80);
+    }
+
+    function terminarCierre() {
+      viewer.classList.remove('is-open', 'is-ready', 'is-dragging');
+      viewer.setAttribute('aria-hidden', 'true');
+      viewer.style.removeProperty('--backdrop');
+      viewerPanel.style.transform = '';
+      viewerPanel.style.transition = '';
+      viewerPanel.getAnimations().forEach(a => a.cancel());
+      if (!cartDrawer.classList.contains('is-open')) document.body.classList.remove('is-locked');
+      quitarZoom();
+      viewerId = null;
+      finAnimacion();
+      if (viewerFocus instanceof HTMLElement) viewerFocus.focus({ preventScroll:true });
+    }
+
+    let cerrando = false;
+
+    function cerrarVisor({ desdeArrastre = 0 } = {}) {
+      if (!viewer.classList.contains('is-open') || cerrando) return;
+      cerrando = true;
+      viewerPanel.getAnimations().forEach(a => a.cancel());
+      viewerImg.getAnimations().forEach(a => a.cancel());
+      marcarAnimando(400);
+      viewer.classList.remove('is-ready');
+      viewer.style.setProperty('--backdrop', 0);
+
+      const actual = viewerPanel.style.transform || 'translate(0px, 0px) scale(1)';
+      viewerPanel.style.transform = '';
+      const destino = desdeArrastre ? null : rectTarjeta(viewerId);
+      let anim;
+      if (reduceMotion) {
+        anim = viewerPanel.animate([{ opacity:1 }, { opacity:0 }], { duration:1, fill:'forwards' });
+      } else if (destino) {
+        quitarZoom();
+        anim = viewerPanel.animate([{ ...FOTOGRAMA_FINAL, transform:actual }, fotogramaDesde(destino)], {
+          duration:360, easing:'cubic-bezier(.4,0,.2,1)', fill:'forwards'
+        });
+      } else {
+        anim = viewerPanel.animate([
+          { transform:actual, opacity:1 },
+          { transform:`translate(0px, ${desdeArrastre ? window.innerHeight * .5 : 40}px) scale(.9)`, opacity:0 }
+        ], { duration:280, easing:'cubic-bezier(.4,0,1,1)', fill:'forwards' });
+      }
+      let terminado = false;
+      const terminar = () => { if (terminado) return; terminado = true; cerrando = false; terminarCierre(); };
+      anim.onfinish = terminar;
+      window.setTimeout(terminar, 450);
+    }
+
+    /* Pasar de pin con una transición lateral */
+    function moverVisor(paso, desdeX = 0) {
+      if (viewerAnimando) return;
       const lista = listaVisor();
       const posicion = lista.findIndex(item => item.id === viewerId);
       if (posicion < 0) return;
       const siguiente = lista[(posicion + paso + lista.length) % lista.length];
-      mostrarEnVisor(siguiente.id);
-    }
+      const ancho = viewerStage.clientWidth;
 
-    function abrirVisor(id) {
-      viewerFocus = document.activeElement;
-      mostrarEnVisor(id);
-      viewer.classList.add('is-open');
-      viewer.setAttribute('aria-hidden', 'false');
-      document.body.classList.add('is-locked');
-      window.setTimeout(() => viewer.querySelector('.viewer-close').focus(), 60);
-    }
-
-    function cerrarVisor() {
-      viewer.classList.remove('is-open');
-      viewer.setAttribute('aria-hidden', 'true');
-      if (!cartDrawer.classList.contains('is-open')) document.body.classList.remove('is-locked');
-      quitarZoom();
-      viewerId = null;
-      if (viewerFocus instanceof HTMLElement) viewerFocus.focus();
+      if (reduceMotion) {
+        mostrarEnVisor(siguiente.id);
+        return;
+      }
+      marcarAnimando(450);
+      const salida = viewerImg.animate([
+        { transform:`translateX(${desdeX}px)`, opacity:1 },
+        { transform:`translateX(${-paso * ancho * .6}px)`, opacity:0 }
+      ], { duration:170, easing:'ease-in', fill:'forwards' });
+      salida.onfinish = () => {
+        mostrarEnVisor(siguiente.id);
+        salida.cancel();
+        const entrada = viewerImg.animate([
+          { transform:`translateX(${paso * ancho * .6}px)`, opacity:0 },
+          { transform:'translateX(0)', opacity:1 }
+        ], { duration:260, easing:'cubic-bezier(.2,.9,.3,1)' });
+        entrada.onfinish = entrada.oncancel = finAnimacion;
+      };
     }
 
     /* Zoom: un toque acerca en ese punto; moviendo el dedo o el mouse se recorre la foto */
@@ -1573,58 +1719,91 @@
       viewerStage.classList.remove('zoomed', 'is-panning');
     }
 
-    let toqueInicio = null;
+    /* Gestos sobre la foto: tocar = zoom · deslizar de lado = otro pin · deslizar abajo = cerrar */
+    let gesto = null;
+
     viewerStage.addEventListener('pointerdown', event => {
-      if (event.target.closest('.viewer-nav')) return;
-      toqueInicio = { x:event.clientX, y:event.clientY, t:Date.now() };
-      if (viewerStage.classList.contains('zoomed')) viewerStage.setPointerCapture(event.pointerId);
+      if (event.target.closest('button') || viewerAnimando) return;
+      gesto = { x:event.clientX, y:event.clientY, eje:null, dx:0, dy:0 };
+      viewerStage.setPointerCapture(event.pointerId);
     });
 
     viewerStage.addEventListener('pointermove', event => {
-      if (!viewerStage.classList.contains('zoomed')) return;
-      if (event.pointerType === 'mouse' || toqueInicio) {
+      const zoomed = viewerStage.classList.contains('zoomed');
+      if (zoomed && (event.pointerType === 'mouse' || gesto)) {
         viewerStage.classList.add('is-panning');
         ubicarZoom(event);
+        return;
+      }
+      if (!gesto) return;
+      gesto.dx = event.clientX - gesto.x;
+      gesto.dy = event.clientY - gesto.y;
+      if (!gesto.eje && Math.hypot(gesto.dx, gesto.dy) > 8) {
+        gesto.eje = Math.abs(gesto.dx) > Math.abs(gesto.dy) ? 'x' : 'y';
+      }
+      if (gesto.eje === 'x') {
+        viewerImg.style.transform = `translateX(${gesto.dx}px)`;
+        viewerImg.style.opacity = String(1 - Math.min(Math.abs(gesto.dx) / 400, .5));
+      } else if (gesto.eje === 'y') {
+        const dy = Math.max(gesto.dy, 0);
+        viewer.classList.add('is-dragging');
+        viewerPanel.style.transform = `translate(0px, ${dy}px) scale(${1 - Math.min(dy / 1600, .12)})`;
+        viewer.style.setProperty('--backdrop', String(1 - Math.min(dy / 380, .9)));
       }
     });
 
-    viewerStage.addEventListener('pointerup', event => {
-      if (!toqueInicio) return;
-      const dx = event.clientX - toqueInicio.x;
-      const dy = event.clientY - toqueInicio.y;
-      const fueToque = Math.abs(dx) < 10 && Math.abs(dy) < 10;
-      const zoomed = viewerStage.classList.contains('zoomed');
-      toqueInicio = null;
+    function soltarGesto(event, cancelado = false) {
+      if (!gesto) return;
+      const { eje, dx, dy } = gesto;
+      gesto = null;
       viewerStage.classList.remove('is-panning');
 
-      if (!zoomed && Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
-        moverVisor(dx < 0 ? 1 : -1);
+      if (eje === 'x') {
+        viewerImg.style.transform = '';
+        viewerImg.style.opacity = '';
+        if (!cancelado && Math.abs(dx) > 60) {
+          moverVisor(dx < 0 ? 1 : -1, dx);
+        } else {
+          viewerImg.animate([{ transform:`translateX(${dx}px)` }, { transform:'translateX(0)' }], { duration:220, easing:'cubic-bezier(.2,.9,.3,1)' });
+        }
         return;
       }
-      if (fueToque) {
-        if (zoomed) {
+
+      if (eje === 'y') {
+        viewer.classList.remove('is-dragging');
+        if (!cancelado && dy > 90) {
+          cerrarVisor({ desdeArrastre:dy });
+        } else {
+          viewerPanel.style.transition = 'transform .3s cubic-bezier(.2,.9,.3,1)';
+          viewerPanel.style.transform = 'translate(0px, 0px) scale(1)';
+          viewer.style.setProperty('--backdrop', 1);
+          window.setTimeout(() => { viewerPanel.style.transition = ''; viewerPanel.style.transform = ''; }, 320);
+        }
+        return;
+      }
+
+      if (!cancelado && event) {
+        if (viewerStage.classList.contains('zoomed')) {
           quitarZoom();
         } else {
           ubicarZoom(event);
           viewerStage.classList.add('zoomed');
         }
       }
-    });
+    }
 
-    viewerStage.addEventListener('pointercancel', () => {
-      toqueInicio = null;
-      viewerStage.classList.remove('is-panning');
-    });
+    viewerStage.addEventListener('pointerup', event => soltarGesto(event));
+    viewerStage.addEventListener('pointercancel', () => soltarGesto(null, true));
 
     $('#viewerPrev').addEventListener('click', () => moverVisor(-1));
     $('#viewerNext').addEventListener('click', () => moverVisor(1));
-    viewer.querySelectorAll('[data-viewer-close]').forEach(el => el.addEventListener('click', cerrarVisor));
+    viewer.querySelectorAll('[data-viewer-close]').forEach(el => el.addEventListener('click', () => cerrarVisor()));
 
     viewerAdd.addEventListener('click', () => {
       if (viewerId === null) return;
       if (estaEnCarrito(viewerId)) {
         cerrarVisor();
-        abrirCarrito();
+        window.setTimeout(abrirCarrito, 380);
         return;
       }
       if (agregarAlCarrito(viewerId)) {
@@ -1880,31 +2059,63 @@
     });
 
     /* init */
-    cartItems = cargarCarrito();
-
-    const categoriaInicial = new URLSearchParams(window.location.search).get('categoria');
-    const categoriaInicialValida = [...categorySelectPanel.options]
-      .some(option => option.value === categoriaInicial);
-
-    if (categoriaInicial && categoriaInicialValida) {
-      categorySelectPanel.value = categoriaInicial;
+    function mostrarCargando() {
+      productGrid.innerHTML = Array.from({ length:INITIAL_VISIBLE }, () => `
+        <article class="product-card" aria-hidden="true">
+          <div class="card-inner">
+            <div class="image-area"></div>
+            <div class="product-body"><span class="skel"></span><span class="skel corto"></span><span class="skel boton"></span></div>
+          </div>
+        </article>`).join('');
     }
-    searchInputPanel.placeholder = `Busca entre ${productos.length} pines…`;
 
-    renderCarrito();
-    aplicarFiltros(true);
-    activarRevealSuave();
+    /* Toma la lista de Google Sheets: quita los ocultos y deja los agotados al final */
+    function usarListaDeHoja(lista) {
+      const visibles = lista.filter(item => item.estado !== 'oculto');
+      if (!visibles.length) return;
+      productos = [
+        ...visibles.filter(item => item.estado === 'disponible'),
+        ...visibles.filter(item => item.estado !== 'disponible')
+      ];
+      ETIQUETAS = Object.fromEntries(visibles.filter(item => item.etiqueta).map(item => [item.id, item.etiqueta]));
+    }
 
-    /* Si se entra desde una categoría del Inicio, dejamos al usuario
-       directamente en la sección de productos ya filtrada. */
-    if (categoriaInicial && categoriaInicialValida && window.location.hash === '#productos') {
-      window.requestAnimationFrame(() => {
-        document.querySelector('#productos')?.scrollIntoView({
-          behavior: 'instant',
-          block: 'start'
+    async function iniciar() {
+      const categoriaInicial = new URLSearchParams(window.location.search).get('categoria');
+      const categoriaInicialValida = [...categorySelectPanel.options]
+        .some(option => option.value === categoriaInicial);
+
+      if (categoriaInicial && categoriaInicialValida) {
+        categorySelectPanel.value = categoriaInicial;
+      }
+
+      if (window.PinverseProductos?.activa()) {
+        mostrarCargando();
+        const lista = await window.PinverseProductos.cargar({ carpetaFotos:'../imagenes/' });
+        if (lista) usarListaDeHoja(lista);
+      }
+
+      cartItems = cargarCarrito();
+      filteredProducts = [...productos];
+      searchInputPanel.placeholder = `Busca entre ${productos.length} pines…`;
+
+      renderCarrito();
+      aplicarFiltros(true);
+      activarRevealSuave();
+
+      /* Si se entra desde una categoría del Inicio, dejamos al usuario
+         directamente en la sección de productos ya filtrada. */
+      if (categoriaInicial && categoriaInicialValida && window.location.hash === '#productos') {
+        window.requestAnimationFrame(() => {
+          document.querySelector('#productos')?.scrollIntoView({
+            behavior: 'instant',
+            block: 'start'
+          });
         });
-      });
+      }
     }
+
+    iniciar();
   </script>
   <script src="../recursos/pinverse.js"></script>
 </body>

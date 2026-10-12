@@ -259,9 +259,13 @@
     <span class="order-go">Ver pedido →</span>
   </a>
 
+  <script src="recursos/productos.js"></script>
   <script>
-    /* Novedades: deben coincidir con productos del catálogo (mismo id, foto y referencia) */
-    const novedades = [
+    /*
+      Novedades de respaldo. Con Google Sheets se muestran los pines con etiqueta "nuevo".
+      Deben coincidir con productos del catálogo (mismo id, foto y referencia).
+    */
+    let novedades = [
       { id: 126, nombre: 'Pin Panda Bailando de Osos Escandalosos', referencia: '126' },
       { id: 130, nombre: 'Pin Bellota como Luigi', referencia: '130' },
       { id: 119, nombre: 'Pin Yoshi Sentado', referencia: '119' },
@@ -314,22 +318,24 @@
 
     let carrito = leerCarrito();
     const grid = document.getElementById('novedades');
+    novedades = novedades.map(p => ({ ...p, foto:foto(p.id), precio:PIN_PRICE }));
 
     function textoBoton(id) {
       return carrito.includes(id) ? '✓ En tu pedido' : '+ Agregar';
     }
 
+    function renderNovedades() {
     grid.innerHTML = novedades.map((p, i) => `
       <article class="product-card product-card-enter" style="animation-delay:${Math.min(i * 40, 280)}ms">
         <div class="card-inner">
           <div class="image-area">
             <span class="product-ref">Ref. ${p.referencia}</span>
-            <img src="${foto(p.id)}" alt="${p.nombre} · referencia ${p.referencia}" width="640" height="640" loading="lazy" decoding="async" data-product-image />
+            <img src="${p.foto}" alt="${p.nombre} · referencia ${p.referencia}" width="640" height="640" loading="lazy" decoding="async" data-product-image />
           </div>
           <div class="product-body">
             <h3 class="product-title">${nombreCorto(p.nombre)}</h3>
             <div class="product-buyrow">
-              <span class="product-price">${formatoPrecio(PIN_PRICE)}</span>
+              <span class="product-price">${formatoPrecio(p.precio)}</span>
               <button class="btn-cart ${carrito.includes(p.id) ? 'is-added' : ''}" type="button" data-cart-id="${p.id}">${textoBoton(p.id)}</button>
             </div>
           </div>
@@ -342,6 +348,8 @@
       if (img.complete && img.naturalWidth) show();
       else img.addEventListener('load', show, { once:true });
     });
+      activarBrilloCelular();
+    }
 
     document.getElementById('stickers').innerHTML = categorias.map(c => `
       <a class="sticker" href="catalogo/?categoria=${c.slug}#productos">
@@ -409,15 +417,31 @@
         card.style.setProperty('--rx', '0deg');
         card.style.setProperty('--ry', '0deg');
       });
-    } else if ('IntersectionObserver' in window && !reduceMotion) {
-      const io = new IntersectionObserver(entries => entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        setTimeout(() => brillar(entry.target), 300);
-        io.unobserve(entry.target);
-      }), { threshold:.6 });
-      grid.querySelectorAll('.product-card').forEach(card => io.observe(card));
     }
 
+    const brilloIO = (!finePointer && 'IntersectionObserver' in window && !reduceMotion)
+      ? new IntersectionObserver(entries => entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          setTimeout(() => brillar(entry.target), 300);
+          brilloIO.unobserve(entry.target);
+        }), { threshold:.6 })
+      : null;
+
+    function activarBrilloCelular() {
+      if (brilloIO) grid.querySelectorAll('.product-card').forEach(card => brilloIO.observe(card));
+    }
+
+    /* Si hay hoja de Google Sheets, las novedades son los pines disponibles con etiqueta "nuevo" */
+    async function iniciarNovedades() {
+      if (window.PinverseProductos?.activa()) {
+        const lista = await window.PinverseProductos.cargar({ carpetaFotos:'imagenes/' });
+        const nuevos = (lista || []).filter(p => p.etiqueta === 'nuevo' && p.estado === 'disponible').slice(0, 8);
+        if (nuevos.length) novedades = nuevos;
+      }
+      renderNovedades();
+    }
+
+    iniciarNovedades();
     renderPedido();
   </script>
   <script src="recursos/pinverse.js"></script>
