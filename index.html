@@ -10,2157 +10,416 @@
     }
   </script>
 
+  <meta name="theme-color" content="#01265a" />
+  <meta name="description" content="PINVERSE: pines metálicos para todos los gustos. Explora el catálogo, arma tu combo y compra directamente por WhatsApp." />
   <title>PINVERSE · Inicio</title>
-  <meta name="theme-color" content="#ffffff" />
-  <meta name="description" content="PINVERSE: pines para todos los gustos. Explora el catálogo, novedades y compra directamente por WhatsApp." />
   <link rel="icon" type="image/png" href="imagenes/favicon.png" />
-  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="recursos/pinverse.css" />
   <style>
-    :root{
-      --ink:#17202a;
-      --ink-soft:#344454;
-      --muted:#6f7a83;
-      --surface:#ffffff;
-      --surface-soft:#f7f8f9;
-      --line:#dfe4e8;
-      --line-soft:#edf0f2;
-      --blue:#2f78bd;
-      --blue-deep:#214f7a;
-      --green:#24735a;
-      --black:#161a1e;
-      --max:1420px;
-      --header-h:86px;
-      --shadow:0 16px 38px rgba(24,32,42,.08);
-      --shadow-soft:0 8px 22px rgba(24,32,42,.055);
-      --ease:cubic-bezier(.2,.72,.22,1);
-    }
+    /* Novedades: grilla en computador, carrusel en celular */
+    .novedades{ display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); gap:22px; }
 
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-    }
-
-    html{
-      scroll-behavior:smooth;
-    }
-
-    body{
-      min-height:100vh;
-      background:#fff;
-      color:var(--ink);
-      font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      -webkit-font-smoothing:antialiased;
-      text-rendering:optimizeLegibility;
-      overflow-x:hidden;
-    }
-
-    button,
-    input,
-    select{
-      font:inherit;
-    }
-
-    button,
-    a{
-      -webkit-tap-highlight-color:transparent;
-    }
-
-    img{
-      max-width:100%;
-    }
-
-    a{
-      color:inherit;
-    }
-
-    .container{
-      width:100%;
-      margin:0;
-      padding:0;
-    }
-
-    .inner{
-      width:min(calc(100% - 48px), var(--max));
-      margin:0 auto;
-    }
-
-    /* =========================
-       HEADER · mismo lenguaje del catálogo
-       ========================= */
-    .site-header{
-      width:100%;
-      min-height:var(--header-h);
-      background:rgba(255,255,255,.96);
-      border-bottom:1px solid var(--line-soft);
-      position:sticky;
-      top:0;
-      z-index:60;
-      backdrop-filter:blur(14px);
-    }
-
-    .navbar{
-      min-height:var(--header-h);
-      display:grid;
-      grid-template-columns:auto 1fr auto;
-      align-items:center;
-      gap:34px;
-    }
-
-    .logo-box{
-      width:90px;
-      height:74px;
-      display:flex;
-      align-items:center;
-      justify-content:flex-start;
-      text-decoration:none;
-      overflow:visible;
-    }
-
-    .logo-box img{
-      width:86px;
-      height:86px;
-      object-fit:contain;
-      display:block;
-      transform:scale(1.08);
-      transition:transform .25s var(--ease);
-    }
-
-    .logo-box:hover img{
-      transform:scale(1.12);
-    }
-
-    .main-nav{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:32px;
-      min-width:0;
-    }
-
-    .main-nav a{
-      text-decoration:none;
-      font-size:12px;
-      line-height:1;
-      font-weight:800;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      color:var(--ink-soft);
-      position:relative;
-      padding:10px 0;
-    }
-
-    .main-nav a::after{
-      content:"";
-      position:absolute;
-      left:0;
-      right:0;
-      bottom:4px;
-      height:1px;
-      background:var(--ink);
-      transform:scaleX(0);
-      transform-origin:left;
-      transition:transform .25s var(--ease);
-    }
-
-    .main-nav a:hover::after,
-    .main-nav a[aria-current="page"]::after{
-      transform:scaleX(1);
-    }
-
-    .header-note{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      color:var(--muted);
-      font-size:12px;
-      font-weight:750;
-      white-space:nowrap;
-    }
-
-    .header-note-dot{
-      width:7px;
-      height:7px;
-      border-radius:50%;
-      background:var(--green);
-      box-shadow:0 0 0 4px rgba(36,115,90,.10);
-    }
-
-    .menu-toggle,
-    .mobile-drawer,
-    .mobile-overlay,
-    .menu-btn{
-      display:none;
-    }
-
-    /* =========================
-       HERO INICIO
-       ========================= */
-    .hero{
-      width:100vw;
-      min-height:445px;
-      margin:0;
-      position:relative;
-      isolation:isolate;
-      overflow:hidden;
-      display:flex;
-      align-items:flex-end;
-      color:#fff;
-      background:
-        linear-gradient(90deg, rgba(12,18,24,.78) 0%, rgba(12,18,24,.54) 42%, rgba(12,18,24,.20) 78%, rgba(12,18,24,.10) 100%),
-        linear-gradient(180deg, rgba(12,18,24,.02) 0%, rgba(12,18,24,.44) 100%),
-        url("imagenes/banner-principal.jpg") center/cover no-repeat;
-    }
-
-    .hero::after{
-      content:"";
-      position:absolute;
-      inset:auto 0 0;
-      height:1px;
-      background:rgba(255,255,255,.25);
-      z-index:2;
-    }
-
-    .hero-content{
-      width:min(calc(100% - 48px), var(--max));
-      max-width:none;
-      margin:0 auto;
-      padding:58px 0 44px;
-      position:relative;
-      z-index:3;
-    }
-
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      min-height:32px;
-      padding:7px 12px;
-      margin-bottom:16px;
-      border:1px solid rgba(255,255,255,.28);
-      border-radius:999px;
-      background:rgba(17,24,31,.36);
-      color:rgba(255,255,255,.92);
-      backdrop-filter:blur(8px);
-      font-size:10px;
-      font-weight:850;
-      letter-spacing:.09em;
-      text-transform:uppercase;
-    }
-
-    .hero h1{
-      max-width:800px;
-      margin:0 0 16px;
-      color:#fff;
-      font-size:clamp(42px,5.4vw,72px);
-      line-height:.96;
-      letter-spacing:-.055em;
-      font-weight:780;
-      text-wrap:balance;
-      text-shadow:0 8px 26px rgba(0,0,0,.18);
-    }
-
-    .hero p{
-      max-width:650px;
-      margin:0 0 24px;
-      color:rgba(255,255,255,.90);
-      font-size:16px;
-      line-height:1.65;
-      text-shadow:0 3px 12px rgba(0,0,0,.15);
-    }
-
-    .hero-actions{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-    }
-
-    .btn{
-      min-height:46px;
-      padding:0 18px;
-      border:1px solid transparent;
-      border-radius:11px;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      text-decoration:none;
-      font-size:11px;
-      font-weight:900;
-      letter-spacing:.065em;
-      text-transform:uppercase;
-      transition:transform .22s var(--ease), background .22s ease, border-color .22s ease, box-shadow .22s ease;
-    }
-
-    .btn-primary{
-      background:#fff;
-      color:var(--ink);
-      border-color:#fff;
-      box-shadow:0 10px 24px rgba(0,0,0,.12);
-    }
-
-    .btn-primary:hover{
-      transform:translateY(-2px);
-      box-shadow:0 14px 28px rgba(0,0,0,.17);
-    }
-
-    .btn-light{
-      background:rgba(18,24,31,.46);
-      color:#fff;
-      border-color:rgba(255,255,255,.38);
-      backdrop-filter:blur(8px);
-    }
-
-    .btn-light:hover{
-      transform:translateY(-2px);
-      background:rgba(18,24,31,.62);
-    }
-
-    /* =========================
-       FRANJA INFORMATIVA
-       ========================= */
-    .promo-strip{
-      width:100vw;
-      min-height:62px;
-      background:#fff;
-      border-bottom:1px solid var(--line-soft);
-      color:var(--ink);
+    /* Categorías tipo sticker */
+    .stickers{ display:flex; flex-wrap:wrap; justify-content:center; gap:26px 18px; }
+    .sticker{ width:116px; text-align:center; display:flex; flex-direction:column; align-items:center; gap:10px; }
+    .sticker-img{
+      width:116px; height:116px; border-radius:50%;
+      padding:5px; background:var(--paper);
+      box-shadow:0 0 0 2px var(--line), 0 10px 22px rgba(1,38,90,.12);
+      transform:rotate(var(--r, -3deg));
+      transition:transform .35s var(--ease), box-shadow .35s;
       overflow:hidden;
     }
+    .sticker-img img{ width:100%; height:100%; object-fit:cover; border-radius:50%; transform:scale(1.4); }
+    .sticker:hover .sticker-img{ transform:rotate(0deg) scale(1.08) translateY(-6px); box-shadow:0 0 0 3px var(--sun), 0 18px 28px rgba(1,38,90,.18); }
+    .sticker-name{ font-family:var(--display); font-weight:700; font-size:16px; color:var(--navy); line-height:1.1; }
 
-    .promo-slider{
-      width:min(calc(100% - 48px), var(--max));
-      height:62px;
-      margin:0 auto;
-      position:relative;
-    }
+    .faq-home{ max-width:860px; }
+    .section-foot{ margin-top:16px; }
 
-    .promo-message{
-      position:absolute;
-      inset:0;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:0 18px;
-      color:var(--ink-soft);
-      text-align:center;
-      font-size:11px;
-      line-height:1.35;
-      font-weight:850;
-      letter-spacing:.09em;
-      text-transform:uppercase;
-      opacity:0;
-      transform:translateY(8px);
-      transition:opacity .35s ease, transform .35s ease;
-    }
-
-    .promo-message.active{
-      opacity:1;
-      transform:none;
-    }
-
-    /* =========================
-       SECCIONES
-       ========================= */
-    .section{
-      width:100vw;
-      margin:0;
-      padding:58px max(24px, calc((100vw - var(--max))/2));
-      background:#fff;
-      border-bottom:1px solid var(--line-soft);
-      position:relative;
-      overflow:hidden;
-    }
-
-    .section-head{
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:18px;
-      flex-wrap:wrap;
-      margin-bottom:28px;
-    }
-
-    .section-head h2{
-      color:var(--ink);
-      font-size:clamp(30px,3.3vw,46px);
-      line-height:1;
-      letter-spacing:-.045em;
-      font-weight:820;
-    }
-
-    .section-head p{
-      color:var(--muted);
-      font-size:12px;
-      font-weight:700;
-    }
-
-    /* =========================
-       NOVEDADES
-       ========================= */
-    .novedades-wrap{
-      position:relative;
-    }
-
-    .novedades-scroll{
-      display:flex;
-      gap:18px;
-      overflow-x:auto;
-      padding:2px 2px 12px;
-      scroll-snap-type:x mandatory;
-      scrollbar-width:thin;
-      scrollbar-color:#cfd6dc transparent;
-    }
-
-    .novedades-scroll::-webkit-scrollbar{
-      height:6px;
-    }
-
-    .novedades-scroll::-webkit-scrollbar-track{
-      background:transparent;
-    }
-
-    .novedades-scroll::-webkit-scrollbar-thumb{
-      background:#cfd6dc;
-      border-radius:999px;
-    }
-
-    .novedad-card{
-      width:280px;
-      min-width:280px;
-      flex:0 0 280px;
-      overflow:hidden;
-      scroll-snap-align:start;
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:18px;
-      box-shadow:0 8px 24px rgba(23,36,48,.05);
-      transition:transform .24s var(--ease), box-shadow .24s ease, border-color .24s ease;
-    }
-
-    .novedad-card:hover{
-      transform:translateY(-3px);
-      border-color:#cfd7dd;
-      box-shadow:0 14px 30px rgba(23,36,48,.09);
-    }
-
-    .novedad-image{
-      position:relative;
-      aspect-ratio:1/1;
-      overflow:hidden;
-      background:#f2f3f3;
-    }
-
-    .novedad-image img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
+    /* Aviso flotante cuando hay pines en el pedido */
+    .order-bar{
+      position:fixed; left:50%; bottom:16px; z-index:60;
+      width:min(calc(100% - 24px), 520px);
+      transform:translate(-50%, 160%);
       transition:transform .45s var(--ease);
+      background:var(--ink); color:#fff;
+      border-radius:20px;
+      padding:10px 10px 10px 16px;
+      display:flex; align-items:center; gap:12px;
+      box-shadow:0 20px 40px rgba(13,27,51,.35);
     }
-
-    .novedad-card:hover .novedad-image img{
-      transform:scale(1.025);
+    .order-bar.visible{ transform:translate(-50%, 0); }
+    .order-bar.bump{ animation:orderBump .5s var(--ease); }
+    @keyframes orderBump{ 30%{ transform:translate(-50%, -8px) scale(1.02); } }
+    .order-count{
+      flex:0 0 38px; height:38px; border-radius:50%;
+      display:grid; place-items:center;
+      background:var(--coral); font-weight:900; font-size:16px;
     }
+    .order-text{ flex:1; min-width:0; font-weight:800; font-size:14px; line-height:1.3; }
+    .order-text em{ font-style:normal; color:var(--sun); }
+    .order-go{ background:var(--sun); color:var(--navy); font-weight:900; font-size:14px; padding:12px 16px; border-radius:14px; white-space:nowrap; }
 
-    .novedad-badge{
-      position:absolute;
-      top:11px;
-      left:11px;
-      z-index:2;
-      min-height:29px;
-      padding:0 10px;
-      border-radius:999px;
-      display:flex;
-      align-items:center;
-      background:rgba(22,26,30,.92);
-      color:#fff;
-      font-size:9px;
-      font-weight:900;
-      letter-spacing:.04em;
-      text-transform:uppercase;
-      box-shadow:0 6px 14px rgba(0,0,0,.12);
+    @media (max-width:1024px){
+      .novedades{ grid-template-columns:repeat(3, minmax(0, 1fr)); }
     }
-
-    .novedad-body{
-      min-height:151px;
-      padding:16px;
-      display:flex;
-      flex-direction:column;
-      gap:7px;
-    }
-
-    .novedad-title{
-      color:var(--ink);
-      font-size:16px;
-      line-height:1.25;
-      font-weight:820;
-    }
-
-    .novedad-ref{
-      color:#87919a;
-      font-size:9px;
-      font-weight:850;
-      letter-spacing:.07em;
-      text-transform:uppercase;
-    }
-
-    .novedad-desc{
-      display:none;
-    }
-
-    .novedad-btn{
-      width:100%;
-      min-height:42px;
-      margin-top:auto;
-      padding:0 12px;
-      border-radius:10px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:var(--ink);
-      color:#fff;
-      text-decoration:none;
-      font-size:10px;
-      font-weight:900;
-      letter-spacing:.045em;
-      text-transform:uppercase;
-      transition:transform .2s ease, background .2s ease;
-    }
-
-    .novedad-btn:hover{
-      transform:translateY(-1px);
-      background:#0d141a;
-    }
-
-    .slider-hint{
-      margin-top:9px;
-      color:#8b949c;
-      font-size:10px;
-      font-weight:700;
-    }
-
-    /* =========================
-       CATEGORÍAS
-       ========================= */
-    .categories-grid{
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:16px;
-    }
-
-    .category-card{
-      min-height:230px;
-      position:relative;
-      overflow:hidden;
-      display:flex;
-      align-items:flex-end;
-      isolation:isolate;
-      border:1px solid var(--line);
-      border-radius:18px;
-      background:#e8ebed;
-      color:#fff;
-      text-decoration:none;
-      box-shadow:0 8px 24px rgba(23,36,48,.055);
-      transition:transform .24s var(--ease), box-shadow .24s ease;
-    }
-
-    .category-card:hover{
-      transform:translateY(-3px);
-      box-shadow:0 15px 30px rgba(23,36,48,.10);
-    }
-
-    .category-bg{
-      position:absolute;
-      inset:0;
-      background-size:cover;
-      background-position:center;
-      transform:scale(1.01);
-      transition:transform .5s var(--ease);
-    }
-
-    .category-bg::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:linear-gradient(180deg, rgba(10,15,20,.08) 12%, rgba(10,15,20,.74) 100%);
-    }
-
-    .category-card:hover .category-bg{
-      transform:scale(1.045);
-    }
-
-    .category-content{
-      position:relative;
-      z-index:2;
-      width:100%;
-      padding:20px;
-    }
-
-    .category-chip{
-      display:inline-flex;
-      min-height:26px;
-      align-items:center;
-      padding:0 9px;
-      margin-bottom:10px;
-      border:1px solid rgba(255,255,255,.28);
-      border-radius:999px;
-      background:rgba(10,15,20,.28);
-      color:rgba(255,255,255,.92);
-      font-size:8px;
-      font-weight:900;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      backdrop-filter:blur(7px);
-    }
-
-    .category-card h3{
-      margin:0 0 6px;
-      font-size:24px;
-      line-height:1;
-      letter-spacing:-.035em;
-      font-weight:850;
-    }
-
-    .category-card p{
-      max-width:340px;
-      color:rgba(255,255,255,.82);
-      font-size:11px;
-      line-height:1.5;
-    }
-
-    .category-gatos .category-bg{ background-image:url("imagenes/pin3.jpeg"); }
-    .category-medicina .category-bg{ background-image:url("imagenes/pin20.jpeg"); }
-    .category-marvel .category-bg{ background-image:url("imagenes/pin30.jpeg"); }
-    .category-animales .category-bg{ background-image:url("imagenes/pin21.jpeg"); }
-    .category-perros .category-bg{ background-image:url("imagenes/pin46.jpeg"); }
-    .category-anime .category-bg{ background-image:url("imagenes/pin32.jpeg"); }
-    .category-caricaturas .category-bg{ background-image:url("imagenes/pin16.jpeg"); }
-    .category-videojuegos .category-bg{ background-image:url("imagenes/pin23.jpeg"); }
-    .category-frases .category-bg{ background-image:url("imagenes/pin56.jpeg"); }
-
-    /* =========================
-       FAQ
-       ========================= */
-    .faq-layout{
-      display:grid;
-      grid-template-columns:.86fr 1.14fr;
-      gap:46px;
-      align-items:start;
-    }
-
-    .faq-intro{
-      display:grid;
-      align-content:start;
-      gap:16px;
-    }
-
-    .faq-kicker{
-      width:max-content;
-      color:#6d7881;
-      font-size:9px;
-      font-weight:900;
-      letter-spacing:.11em;
-      text-transform:uppercase;
-    }
-
-    .faq-intro h2{
-      max-width:560px;
-      color:var(--ink);
-      font-size:clamp(34px,4vw,52px);
-      line-height:.98;
-      letter-spacing:-.05em;
-      font-weight:820;
-    }
-
-    .faq-intro p{
-      max-width:560px;
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.7;
-    }
-
-    .faq-image{
-      width:100%;
-      min-height:300px;
-      overflow:hidden;
-      border:1px solid var(--line);
-      border-radius:18px;
-      background:
-        linear-gradient(180deg, rgba(17,24,31,.04), rgba(17,24,31,.16)),
-        url("imagenes/imagen-preguntas.jpg") center/cover no-repeat;
-    }
-
-    .faq-list{
-      display:grid;
-      gap:16px;
-    }
-
-    .faq-group{
-      display:grid;
-      gap:9px;
-    }
-
-    .faq-group + .faq-group{
-      margin-top:6px;
-    }
-
-    .faq-group-title{
-      padding:0 2px 4px;
-      color:#7b858e;
-      font-size:9px;
-      font-weight:900;
-      letter-spacing:.11em;
-      text-transform:uppercase;
-    }
-
-    .faq-item{
-      overflow:hidden;
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:14px;
-      transition:border-color .2s ease, box-shadow .2s ease;
-    }
-
-    .faq-item[open]{
-      border-color:#ccd5dc;
-      box-shadow:0 8px 22px rgba(23,36,48,.05);
-    }
-
-    .faq-question{
-      min-height:58px;
-      padding:14px 16px;
-      list-style:none;
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:18px;
-      color:var(--ink);
-      font-size:14px;
-      line-height:1.35;
-      font-weight:800;
-    }
-
-    .faq-question::-webkit-details-marker{
-      display:none;
-    }
-
-    .faq-icon{
-      width:29px;
-      height:29px;
-      flex:0 0 29px;
-      border:1px solid var(--line);
-      border-radius:50%;
-      display:grid;
-      place-items:center;
-      color:var(--ink-soft);
-      font-size:18px;
-      font-weight:500;
-      transition:transform .2s ease;
-    }
-
-    .faq-item[open] .faq-icon{
-      transform:rotate(45deg);
-    }
-
-    .faq-answer{
-      padding:0 16px 16px;
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.7;
-    }
-
-    .faq-answer p + p{
-      margin-top:8px;
-    }
-
-    /* =========================
-       FOOTER · igual al catálogo
-       ========================= */
-    .site-footer{
-      width:100vw;
-      background:#151b22;
-      color:#fff;
-    }
-
-    .footer-shell{
-      width:min(calc(100% - 48px), var(--max));
-      margin:0 auto;
-      padding:54px 0 20px;
-    }
-
-    .footer-top{
-      display:grid;
-      grid-template-columns:minmax(260px,1.25fr) minmax(430px,1fr);
-      gap:72px;
-      align-items:start;
-      padding-bottom:42px;
-    }
-
-    .footer-brand-block{
-      max-width:500px;
-    }
-
-    .footer-brand-name{
-      display:inline-block;
-      margin-bottom:18px;
-      color:#fff;
-      text-decoration:none;
-      font-size:34px;
-      line-height:1;
-      font-weight:900;
-      letter-spacing:-.055em;
-    }
-
-    .footer-brand-block p{
-      max-width:470px;
-      color:rgba(255,255,255,.68);
-      font-size:14px;
-      line-height:1.75;
-    }
-
-    .footer-links-grid{
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:34px;
-    }
-
-    .footer-column{
-      display:flex;
-      flex-direction:column;
-      align-items:flex-start;
-      gap:11px;
-    }
-
-    .footer-column h3{
-      margin:0 0 5px;
-      color:#fff;
-      font-size:11px;
-      font-weight:900;
-      text-transform:uppercase;
-      letter-spacing:.12em;
-    }
-
-    .footer-column a,
-    .footer-column span{
-      color:rgba(255,255,255,.61);
-      text-decoration:none;
-      font-size:12px;
-      line-height:1.45;
-      transition:color .2s ease, transform .2s ease;
-    }
-
-    .footer-column a:hover{
-      color:#fff;
-      transform:translateX(2px);
-    }
-
-    .footer-bottom{
-      min-height:58px;
-      padding:18px 0 0;
-      border-top:1px solid rgba(255,255,255,.10);
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      gap:5px;
-      color:rgba(255,255,255,.44);
-      text-align:center;
-      font-size:10px;
-      line-height:1.5;
-    }
-
-    /* =========================
-       WHATSAPP FLOTANTE
-       ========================= */
-    .whatsapp-float{
-      position:fixed;
-      left:16px;
-      bottom:16px;
-      z-index:80;
-      width:58px;
-      height:58px;
-      border:0;
-      border-radius:50%;
-      display:grid;
-      place-items:center;
-      background:#25d366;
-      color:#fff;
-      text-decoration:none;
-      box-shadow:0 12px 28px rgba(37,211,102,.22), 0 5px 14px rgba(0,0,0,.10);
-      transition:transform .22s var(--ease), box-shadow .22s ease;
-    }
-
-    .whatsapp-float:hover{
-      transform:translateY(-2px) scale(1.025);
-      box-shadow:0 16px 34px rgba(37,211,102,.28), 0 7px 18px rgba(0,0,0,.12);
-    }
-
-    .whatsapp-icon{
-      width:100%;
-      height:100%;
-      display:grid;
-      place-items:center;
-      line-height:0;
-    }
-
-    .whatsapp-icon svg,
-    .whatsapp-float > svg{
-      width:29px;
-      height:29px;
-      display:block;
-      fill:#fff;
-    }
-
-    /* REVEAL */
-    .soft-reveal{
-      opacity:0;
-      transform:translateY(14px);
-      transition:opacity .55s ease, transform .55s var(--ease);
-    }
-
-    .soft-reveal.is-visible{
-      opacity:1;
-      transform:none;
-    }
-
-    @media (prefers-reduced-motion:reduce){
-      *,
-      *::before,
-      *::after{
-        scroll-behavior:auto !important;
-      }
-
-      .soft-reveal{
-        opacity:1;
-        transform:none;
-        transition:none;
-      }
-    }
-
-    /* =========================
-       RESPONSIVE
-       ========================= */
-    @media (max-width:920px){
-      :root{
-        --header-h:82px;
-      }
-
-      .inner{
-        width:min(calc(100% - 34px), var(--max));
-      }
-
-      .navbar{
-        grid-template-columns:auto 1fr;
-      }
-
-      .header-note{
-        display:none;
-      }
-
-      .main-nav{
-        justify-content:flex-end;
-        gap:18px;
-      }
-
-      .main-nav a{
-        font-size:10px;
-      }
-
-      .hero-content{
-        width:min(calc(100% - 34px), var(--max));
-      }
-
-      .categories-grid{
-        grid-template-columns:repeat(2,minmax(0,1fr));
-      }
-
-      .faq-layout{
-        grid-template-columns:1fr;
-        gap:30px;
-      }
-
-      .footer-shell{
-        width:min(calc(100% - 34px), var(--max));
-        padding-top:46px;
-      }
-
-      .footer-top{
-        grid-template-columns:1fr;
-        gap:38px;
-      }
-
-      .footer-brand-block,
-      .footer-links-grid{
-        max-width:620px;
-      }
-    }
-
     @media (max-width:640px){
-      :root{
-        --header-h:78px;
+      .novedades{
+        display:flex; overflow-x:auto; scroll-snap-type:x mandatory;
+        margin:0 -16px; padding:4px 16px 14px; gap:12px;
+        scrollbar-width:none;
       }
-
-      .inner{
-        width:calc(100% - 28px);
+      .novedades::-webkit-scrollbar{ display:none; }
+      .novedades .product-card{ flex:0 0 46%; scroll-snap-align:start; }
+      .stickers{
+        flex-wrap:nowrap; justify-content:flex-start; overflow-x:auto;
+        margin:0 -16px; padding:6px 16px 10px; gap:14px;
+        scrollbar-width:none;
       }
-
-      .site-header{
-        position:relative;
-      }
-
-      .navbar{
-        min-height:var(--header-h);
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        position:relative;
-      }
-
-      .logo-box{
-        width:96px;
-        height:74px;
-        justify-content:center;
-      }
-
-      .logo-box img{
-        width:92px;
-        height:92px;
-      }
-
-      .main-nav{
-        display:none;
-      }
-
-      .menu-toggle{
-        display:block;
-        position:absolute;
-        opacity:0;
-        pointer-events:none;
-      }
-
-      .menu-btn{
-        display:grid;
-        place-items:center;
-        position:absolute;
-        left:0;
-        top:50%;
-        transform:translateY(-50%);
-        width:42px;
-        height:42px;
-        border:0;
-        background:transparent;
-        color:var(--ink);
-        font-size:28px;
-        cursor:pointer;
-        z-index:62;
-      }
-
-      .mobile-overlay{
-        display:block;
-        position:fixed;
-        inset:0;
-        background:rgba(10,15,20,.45);
-        opacity:0;
-        visibility:hidden;
-        pointer-events:none;
-        transition:.24s ease;
-        z-index:70;
-      }
-
-      .mobile-drawer{
-        display:flex;
-        flex-direction:column;
-        position:fixed;
-        top:0;
-        left:0;
-        width:min(86vw,340px);
-        height:100dvh;
-        background:#fff;
-        border-right:1px solid var(--line);
-        transform:translateX(-104%);
-        transition:transform .28s var(--ease);
-        z-index:71;
-      }
-
-      .mobile-drawer-head{
-        height:94px;
-        display:flex;
-        align-items:center;
-        justify-content:space-between;
-        padding:12px 16px;
-        border-bottom:1px solid var(--line);
-      }
-
-      .mobile-drawer-logo{
-        width:78px;
-        height:78px;
-        object-fit:contain;
-      }
-
-      .mobile-close{
-        width:40px;
-        height:40px;
-        border:1px solid var(--line);
-        background:transparent;
-        color:var(--ink);
-        display:grid;
-        place-items:center;
-        font-size:22px;
-        cursor:pointer;
-      }
-
-      .mobile-drawer-nav{
-        display:flex;
-        flex-direction:column;
-      }
-
-      .mobile-drawer-nav a{
-        min-height:60px;
-        display:flex;
-        align-items:center;
-        padding:0 18px;
-        border-bottom:1px solid var(--line-soft);
-        color:var(--ink);
-        text-decoration:none;
-        font-size:13px;
-        font-weight:850;
-        letter-spacing:.07em;
-        text-transform:uppercase;
-      }
-
-      .menu-toggle:checked ~ .mobile-overlay{
-        opacity:1;
-        visibility:visible;
-        pointer-events:auto;
-      }
-
-      .menu-toggle:checked ~ .mobile-drawer{
-        transform:none;
-      }
-
-      .hero{
-        min-height:390px;
-        background-position:center;
-      }
-
-      .hero-content{
-        width:calc(100% - 28px);
-        padding:42px 0 26px;
-      }
-
-      .pill{
-        min-height:29px;
-        margin-bottom:13px;
-        font-size:8.5px;
-      }
-
-      .hero h1{
-        max-width:520px;
-        margin-bottom:12px;
-        font-size:clamp(37px,11.5vw,52px);
-        line-height:.97;
-      }
-
-      .hero p{
-        max-width:520px;
-        margin-bottom:18px;
-        font-size:13px;
-        line-height:1.6;
-      }
-
-      .hero-actions{
-        display:grid;
-        grid-template-columns:1fr;
-        gap:8px;
-        max-width:360px;
-      }
-
-      .btn{
-        width:100%;
-        min-height:44px;
-        font-size:9.5px;
-      }
-
-      .promo-strip,
-      .promo-slider{
-        min-height:56px;
-        height:56px;
-      }
-
-      .promo-slider{
-        width:calc(100% - 24px);
-      }
-
-      .promo-message{
-        padding:0 8px;
-        font-size:9px;
-        letter-spacing:.06em;
-      }
-
-      .section{
-        padding:38px 14px;
-      }
-
-      .section-head{
-        margin-bottom:20px;
-        align-items:flex-start;
-      }
-
-      .section-head h2{
-        font-size:31px;
-      }
-
-      .section-head p{
-        font-size:10px;
-      }
-
-      .novedades-scroll{
-        gap:12px;
-      }
-
-      .novedad-card{
-        width:238px;
-        min-width:238px;
-        flex-basis:238px;
-        border-radius:16px;
-      }
-
-      .novedad-body{
-        min-height:143px;
-        padding:13px;
-      }
-
-      .novedad-title{
-        font-size:14px;
-      }
-
-      .categories-grid{
-        grid-template-columns:1fr 1fr;
-        gap:10px;
-      }
-
-      .category-card{
-        min-height:170px;
-        border-radius:15px;
-      }
-
-      .category-content{
-        padding:14px;
-      }
-
-      .category-chip{
-        min-height:23px;
-        padding:0 8px;
-        margin-bottom:8px;
-        font-size:7px;
-      }
-
-      .category-card h3{
-        font-size:18px;
-      }
-
-      .category-card p{
-        display:none;
-      }
-
-      .faq-layout{
-        gap:24px;
-      }
-
-      .faq-intro{
-        gap:13px;
-      }
-
-      .faq-intro h2{
-        font-size:34px;
-      }
-
-      .faq-intro p{
-        font-size:12px;
-      }
-
-      .faq-image{
-        min-height:220px;
-        border-radius:15px;
-      }
-
-      .faq-list{
-        gap:13px;
-      }
-
-      .faq-question{
-        min-height:55px;
-        padding:13px 14px;
-        font-size:13px;
-      }
-
-      .faq-answer{
-        padding:0 14px 14px;
-        font-size:11px;
-      }
-
-      .footer-shell{
-        width:calc(100% - 32px);
-        padding:40px 0 18px;
-      }
-
-      .footer-top{
-        gap:34px;
-        padding-bottom:30px;
-      }
-
-      .footer-brand-name{
-        font-size:31px;
-        margin-bottom:15px;
-      }
-
-      .footer-brand-block p{
-        font-size:13px;
-        line-height:1.7;
-      }
-
-      .footer-links-grid{
-        grid-template-columns:repeat(2,minmax(0,1fr));
-        gap:30px 24px;
-      }
-
-      .footer-column:last-child{
-        grid-column:1 / -1;
-      }
-
-      .whatsapp-float{
-        left:14px;
-        bottom:14px;
-        width:56px;
-        height:56px;
-      }
+      .stickers::-webkit-scrollbar{ display:none; }
+      .sticker{ flex:0 0 84px; width:84px; gap:8px; }
+      .sticker-img{ width:84px; height:84px; padding:4px; }
+      .sticker-name{ font-size:13.5px; }
+      .order-bar{ bottom:12px; padding:9px 9px 9px 12px; }
+      .order-text{ font-size:13px; }
     }
-
-    @media (max-width:390px){
-      .footer-links-grid{
-        grid-template-columns:1fr 1fr;
-        gap:28px 18px;
-      }
-
-      .categories-grid{
-        gap:8px;
-      }
-    }
-  
-    /* =========================================================
-       V2 · HERO CENTRADO
-       ========================================================= */
-    .hero{
-      align-items:center;
-      text-align:center;
-    }
-
-    .hero-content{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      padding-top:48px;
-      padding-bottom:48px;
-    }
-
-    .hero h1{
-      max-width:900px;
-      margin-left:auto;
-      margin-right:auto;
-      text-align:center;
-    }
-
-    .hero p{
-      max-width:690px;
-      margin-left:auto;
-      margin-right:auto;
-      text-align:center;
-    }
-
-    .hero-actions{
-      justify-content:center;
-      align-items:center;
-    }
-
-    /* La píldora ya no se usa en el hero */
-    .pill{
-      display:none !important;
-    }
-
-    /* =========================================================
-       V2 · CATEGORÍAS ACTUALIZADAS
-       ========================================================= */
-    .categories-grid{
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:16px;
-    }
-
-    .category-card{
-      min-height:245px;
-    }
-
-    .category-content{
-      display:flex;
-      flex-direction:column;
-      align-items:flex-start;
-    }
-
-    .category-card h3{
-      max-width:92%;
-    }
-
-    .category-card p{
-      max-width:90%;
-    }
-
-    .category-religiosos .category-bg{
-      background-image:url("imagenes/pin105.jpeg");
-    }
-
-    .category-snoopy .category-bg{
-      background-image:url("imagenes/pin89.jpeg");
-    }
-
-    .category-harry .category-bg{
-      background-image:url("imagenes/pin5.jpeg");
-    }
-
-    .category-animales .category-bg{
-      background-image:url("imagenes/pin122.jpeg");
-    }
-
-    .category-medicina .category-bg{
-      background-image:url("imagenes/pin85.jpeg");
-    }
-
-    .category-anime .category-bg{
-      background-image:url("imagenes/pin107.jpeg");
-    }
-
-    .category-videojuegos .category-bg{
-      background-image:url("imagenes/pin112.jpeg");
-    }
-
-    .category-vehiculos .category-bg{
-      background-image:url("imagenes/pin94.jpeg");
-    }
-
-    .category-caricaturas .category-bg{
-      background-image:url("imagenes/pin138.jpeg");
-    }
-
-    @media (max-width:920px){
-      .hero-content{
-        padding-top:42px;
-        padding-bottom:42px;
-      }
-    }
-
-    @media (max-width:640px){
-      .hero{
-        min-height:365px;
-      }
-
-      .hero-content{
-        width:calc(100% - 30px);
-        padding-top:34px;
-        padding-bottom:30px;
-      }
-
-      .hero h1{
-        max-width:100%;
-        font-size:clamp(36px,11vw,48px);
-        line-height:.98;
-      }
-
-      .hero p{
-        max-width:94%;
-        font-size:13px;
-        line-height:1.6;
-      }
-
-      .hero-actions{
-        width:min(100%,360px);
-        margin-left:auto;
-        margin-right:auto;
-      }
-
-      .categories-grid{
-        grid-template-columns:1fr 1fr;
-        gap:10px;
-      }
-
-      .category-card{
-        min-height:178px;
-      }
-
-      .category-card p{
-        display:none;
-      }
-    }
-
-  
-    /* =========================================================
-       V3 · CATEGORÍAS MÁS COMPACTAS Y MEJOR CENTRADAS
-       ========================================================= */
-    .categories-section{
-      padding-top:48px;
-      padding-bottom:52px;
-    }
-
-    .categories-section .section-head,
-    .categories-section .categories-grid{
-      width:min(100%, 1260px);
-      margin-left:auto;
-      margin-right:auto;
-    }
-
-    .categories-section .section-head{
-      margin-bottom:24px;
-    }
-
-    .categories-section .categories-grid{
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:15px;
-    }
-
-    .categories-section .category-card{
-      min-height:205px;
-      border-radius:16px;
-    }
-
-    .categories-section .category-content{
-      padding:17px;
-    }
-
-    .categories-section .category-card h3{
-      font-size:21px;
-    }
-
-    .categories-section .category-card p{
-      font-size:10.5px;
-      line-height:1.45;
-    }
-
-    .categories-section .category-chip{
-      min-height:24px;
-      padding:0 8px;
-      margin-bottom:8px;
-      font-size:7.5px;
-    }
-
-    /* =========================================================
-       V3 · FAQ CON BANNER HORIZONTAL DE BORDE A BORDE
-       ========================================================= */
-    .faq-section{
-      padding:0;
-      border-bottom:0;
-    }
-
-    .faq-section .faq-layout{
-      display:flex;
-      flex-direction:column;
-      gap:0;
-    }
-
-    .faq-section .faq-intro{
-      display:grid;
-      grid-template-columns:minmax(280px, 470px) minmax(0, 1fr);
-      gap:38px;
-      align-items:center;
-      width:min(calc(100% - 48px), var(--max));
-      margin:0 auto;
-      padding:52px 0 34px;
-    }
-
-    .faq-section .faq-image{
-      grid-column:1 / -1;
-      order:3;
-      width:100vw;
-      min-height:310px;
-      margin-left:calc(50% - 50vw);
-      margin-right:calc(50% - 50vw);
-      border:0;
-      border-radius:0;
-      background:
-        linear-gradient(180deg, rgba(17,24,31,.03), rgba(17,24,31,.12)),
-        url("imagenes/imagen-preguntas.jpg") center/cover no-repeat;
-    }
-
-    .faq-section .faq-intro > .faq-kicker,
-    .faq-section .faq-intro > h2,
-    .faq-section .faq-intro > p{
-      grid-column:1;
-    }
-
-    .faq-section .faq-intro > .faq-kicker{
-      align-self:end;
-    }
-
-    .faq-section .faq-intro > h2{
-      margin-top:-8px;
-    }
-
-    .faq-section .faq-intro > p{
-      margin-top:-5px;
-    }
-
-    .faq-section .faq-list{
-      width:min(calc(100% - 48px), 1120px);
-      margin:0 auto;
-      padding:38px 0 56px;
-    }
-
-    @media (max-width:920px){
-      .categories-section .section-head,
-      .categories-section .categories-grid{
-        width:min(100%, 1040px);
-      }
-
-      .categories-section .category-card{
-        min-height:190px;
-      }
-
-      .faq-section .faq-intro{
-        grid-template-columns:1fr;
-        gap:12px;
-        width:min(calc(100% - 34px), var(--max));
-        padding:42px 0 28px;
-      }
-
-      .faq-section .faq-intro > .faq-kicker,
-      .faq-section .faq-intro > h2,
-      .faq-section .faq-intro > p{
-        grid-column:1;
-      }
-
-      .faq-section .faq-image{
-        grid-column:1;
-        min-height:260px;
-        margin-top:14px;
-      }
-
-      .faq-section .faq-list{
-        width:min(calc(100% - 34px), 980px);
-        padding:32px 0 46px;
-      }
-    }
-
-    @media (max-width:640px){
-      .categories-section{
-        padding:34px 20px 40px;
-      }
-
-      .categories-section .section-head{
-        width:100%;
-        margin-bottom:18px;
-      }
-
-      .categories-section .categories-grid{
-        width:100%;
-        grid-template-columns:1fr 1fr;
-        gap:11px;
-      }
-
-      .categories-section .category-card{
-        min-height:150px;
-        border-radius:14px;
-      }
-
-      .categories-section .category-content{
-        padding:12px;
-      }
-
-      .categories-section .category-card h3{
-        font-size:16px;
-      }
-
-      .categories-section .category-chip{
-        min-height:22px;
-        padding:0 7px;
-        margin-bottom:7px;
-        font-size:6.7px;
-      }
-
-      .faq-section .faq-intro{
-        width:calc(100% - 28px);
-        padding:36px 0 22px;
-      }
-
-      .faq-section .faq-intro h2{
-        font-size:32px;
-      }
-
-      .faq-section .faq-intro p{
-        font-size:12px;
-        line-height:1.65;
-      }
-
-      .faq-section .faq-image{
-        min-height:210px;
-        margin-top:10px;
-        background-position:center;
-      }
-
-      .faq-section .faq-list{
-        width:calc(100% - 28px);
-        padding:26px 0 40px;
-      }
-    }
-
-    @media (max-width:390px){
-      .categories-section{
-        padding-left:16px;
-        padding-right:16px;
-      }
-
-      .categories-section .categories-grid{
-        gap:9px;
-      }
-
-      .categories-section .category-card{
-        min-height:142px;
-      }
-
-      .faq-section .faq-image{
-        min-height:190px;
-      }
-    }
-
-  
-    /* V4 · Categorías sin etiquetas superiores */
-    .categories-section .category-content{
-      justify-content:flex-end;
-    }
-
-    .categories-section .category-card h3{
-      margin-bottom:0;
-    }
-
   </style>
-
 </head>
 <body>
-  <header class="site-header">
-    <div class="inner navbar">
-      <label for="menu-toggle" class="menu-btn" aria-label="Abrir menú">☰</label>
-
-      <a href="index.html" class="logo-box" aria-label="Ir al inicio de PINVERSE">
-        <img src="imagenes/logo.png" alt="PINVERSE" onerror="this.style.display='none'" />
-      </a>
-
-      <nav class="main-nav" aria-label="Navegación principal">
-        <a href="index.html" aria-current="page">Inicio</a>
-        <a href="catalogo/">Catálogo</a>
-        <a href="preguntas/">Preguntas frecuentes</a>
-        <a href="contacto/">Contacto</a>
-      </nav>
-
-      <div class="header-note" aria-label="Pedidos disponibles">
-        <span class="header-note-dot" aria-hidden="true"></span>
-        Pedidos por WhatsApp
-      </div>
-    </div>
-  </header>
-
   <input type="checkbox" id="menu-toggle" class="menu-toggle" aria-hidden="true" />
   <label for="menu-toggle" class="mobile-overlay" aria-label="Cerrar menú"></label>
-
   <aside class="mobile-drawer" aria-label="Menú móvil">
     <div class="mobile-drawer-head">
-      <a href="index.html" aria-label="Ir al inicio">
-        <img src="imagenes/logo.png" alt="PINVERSE" class="mobile-drawer-logo" />
-      </a>
+      <a href="index.html" aria-label="Ir al inicio"><img src="imagenes/logo.png" alt="PINVERSE" /></a>
       <label for="menu-toggle" class="mobile-close" aria-label="Cerrar menú">×</label>
     </div>
-
     <nav class="mobile-drawer-nav">
       <a href="index.html" aria-current="page">Inicio</a>
       <a href="catalogo/">Catálogo</a>
+      <a href="catalogo/#promociones">Promociones</a>
       <a href="preguntas/">Preguntas frecuentes</a>
       <a href="contacto/">Contacto</a>
     </nav>
   </aside>
 
-  <div class="container">
-    <section class="hero">
-      <div class="hero-content">
-        <h1>Tu universo de pines en un solo lugar</h1>
-        <p>Encuentra diseños para todos los gustos, explora nuestras referencias y pide tus favoritos directamente por WhatsApp.</p>
+  <header class="header">
+    <div class="wrap nav">
+      <div class="nav-left">
+        <label for="menu-toggle" class="menu-btn" aria-label="Abrir menú">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+        </label>
+        <nav class="nav-links" aria-label="Navegación principal">
+          <a href="index.html" aria-current="page">Inicio</a>
+          <a href="catalogo/">Catálogo</a>
+          <a href="preguntas/">Preguntas</a>
+          <a href="contacto/">Contacto</a>
+        </nav>
+      </div>
+      <a href="index.html" class="nav-logo" aria-label="Ir al inicio de PINVERSE"><img src="imagenes/logo.png" alt="PINVERSE" /></a>
+      <div class="nav-right">
+        <a class="nav-cta" href="https://wa.me/573116821619?text=Hola%2C%20estoy%20visitando%20PINVERSE%20y%20quisiera%20recibir%20informaci%C3%B3n%20sobre%20los%20pines.%20%C2%BFMe%20pueden%20ayudar%3F" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.52 3.48A11.8 11.8 0 0 0 12.07 0C5.5 0 .15 5.35.15 11.92c0 2.1.55 4.15 1.59 5.95L0 24l6.31-1.65a11.9 11.9 0 0 0 5.76 1.47h.01c6.57 0 11.92-5.35 11.92-11.92 0-3.18-1.24-6.17-3.48-8.42Zm-8.45 18.3a9.9 9.9 0 0 1-5.05-1.39l-.36-.21-3.74.98 1-3.65-.23-.37a9.86 9.86 0 0 1-1.52-5.24c0-5.45 4.44-9.89 9.9-9.89 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.9 6.99c0 5.46-4.44 9.89-9.88 9.89Zm5.43-7.42c-.3-.15-1.77-.87-2.04-.96-.27-.1-.47-.15-.66.15-.2.3-.76.96-.93 1.16-.17.2-.34.22-.64.08-.3-.15-1.25-.46-2.38-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.34.45-.5.15-.17.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.66-.51h-.57c-.2 0-.52.08-.8.38-.27.3-1.04 1.02-1.04 2.49s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.48.71.31 1.26.49 1.69.63.71.23 1.36.2 1.88.12.57-.08 1.77-.72 2.02-1.42.25-.7.25-1.29.17-1.42-.08-.13-.27-.2-.57-.35Z"/></svg>
+          Ayuda
+        </a>
+      </div>
+    </div>
+  </header>
 
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="catalogo/">Ver catálogo</a>
-          <a class="btn btn-light" href="https://wa.me/573116821619?text=Hola%2C%20quiero%20hacer%20un%20pedido%20en%20PINVERSE.%20%C2%BFMe%20ayudan%20con%20la%20disponibilidad%20y%20el%20proceso%20de%20compra%3F" target="_blank" rel="noopener noreferrer">Comprar por WhatsApp</a>
-        </div>
+  <main>
+    <section class="hero" style="--hero-pos:50%">
+      <div class="hero-bg" style="background-image:url('imagenes/banner-principal.jpg')" aria-hidden="true"></div>
+      <div class="wrap hero-content">
+        <h1>Tu universo de <span class="hl">pines<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M3 14 C 50 4, 100 4, 197 12"/></svg></span></h1>
+        <p>Pines metálicos para todos los gustos. Elige tus favoritos y pídelos por WhatsApp.</p>
+        <div class="hero-cta"><a class="btn btn-sun" href="catalogo/">Ver catálogo →</a></div>
       </div>
     </section>
 
-    <section class="promo-strip">
-      <div class="promo-slider">
-        <span class="promo-message active">TODOS LOS PINES TRAEN BOLSITA DE EMPAQUE</span>
-        <span class="promo-message">PROMOCIONES A PARTIR DE LA COMPRA DE 2 PINES O MÁS</span>
-        <span class="promo-message">PÍDENOS POR WHATSAPP Y ARMA TU SURTIDO</span>
-        <span class="promo-message">COMPRAS A PARTIR DE 3 UNIDADES</span>
+    <section class="section wrap">
+      <div class="section-head" data-reveal>
+        <div>
+          <span class="eyebrow">Recién llegados</span>
+          <h2>Novedades</h2>
+        </div>
+        <a class="link-arrow" href="catalogo/">Ver todo →</a>
       </div>
+      <div class="novedades" id="novedades"></div>
     </section>
 
-    <section class="section">
-      <div class="section-head">
-        <h2>Novedades</h2>
-        <p>Desliza para ver los pines nuevos</p>
-      </div>
-
-      <div class="novedades-wrap">
-        <div class="novedades-scroll">
-          <article class="novedad-card">
-            <div class="novedad-image">
-              <span class="novedad-badge">Nuevo</span>
-              <img src="imagenes/pin126.jpeg" alt="Pin Panda Bailando de Osos Escandalosos">
-            </div>
-            <div class="novedad-body">
-              <h3 class="novedad-title">Pin Panda Bailando de Osos Escandalosos</h3>
-              <p class="novedad-ref">Ref: 126</p>
-              <a class="novedad-btn" href="https://wa.me/573116821619?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20Pin%20Panda%20Bailando%20de%20Osos%20Escandalosos%20Ref.%20126%20de%20PINVERSE." target="_blank" rel="noopener noreferrer">Pedir por WhatsApp</a>
-            </div>
-          </article>
-
-          <article class="novedad-card">
-            <div class="novedad-image">
-              <span class="novedad-badge">Nuevo</span>
-              <img src="imagenes/pin130.jpeg" alt="Pin Buttercup como Luigi">
-            </div>
-            <div class="novedad-body">
-              <h3 class="novedad-title">Pin Buttercup como Luigi</h3>
-              <p class="novedad-ref">Ref: 130</p>
-              <a class="novedad-btn" href="https://wa.me/573116821619?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20Pin%20Buttercup%20como%20Luigi%20Ref.%20130%20de%20PINVERSE." target="_blank" rel="noopener noreferrer">Pedir por WhatsApp</a>
-            </div>
-          </article>
-
-          <article class="novedad-card">
-            <div class="novedad-image">
-              <span class="novedad-badge">Nuevo</span>
-              <img src="imagenes/pin119.jpeg" alt="Pin Yoshi Sentado">
-            </div>
-            <div class="novedad-body">
-              <h3 class="novedad-title">Pin Yoshi Sentado</h3>
-              <p class="novedad-ref">Ref: 119</p>
-              <a class="novedad-btn" href="https://wa.me/573116821619?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20Pin%20Yoshi%20Sentado%20Ref.%20119%20de%20PINVERSE." target="_blank" rel="noopener noreferrer">Pedir por WhatsApp</a>
-            </div>
-          </article>
-
-          <article class="novedad-card">
-            <div class="novedad-image">
-              <span class="novedad-badge">Nuevo</span>
-              <img src="imagenes/pin18.jpeg" alt="Pin Concho Bad Bunny DTMF">
-            </div>
-            <div class="novedad-body">
-              <h3 class="novedad-title">Pin Concho Bad Bunny DTMF</h3>
-              <p class="novedad-ref">Ref: 018</p>
-              <a class="novedad-btn" href="https://wa.me/573116821619?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20Pin%20Concho%20Bad%20Bunny%20DTMF%20Ref.%20018%20de%20PINVERSE." target="_blank" rel="noopener noreferrer">Pedir por WhatsApp</a>
-            </div>
-          </article>
-
-          <article class="novedad-card">
-            <div class="novedad-image">
-              <span class="novedad-badge">Nuevo</span>
-              <img src="imagenes/pin45.jpeg" alt="Pin Escudo Atlético Nacional">
-            </div>
-            <div class="novedad-body">
-              <h3 class="novedad-title">Pin Escudo Atlético Nacional</h3>
-              <p class="novedad-ref">Ref: 045</p>
-              <a class="novedad-btn" href="https://wa.me/573116821619?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20Pin%20Escudo%20Atl%C3%A9tico%20Nacional%20Ref.%20045%20de%20PINVERSE." target="_blank" rel="noopener noreferrer">Pedir por WhatsApp</a>
-            </div>
-          </article>
+    <section class="section wrap">
+      <div class="section-head" data-reveal>
+        <div>
+          <span class="eyebrow">Encuentra el tuyo</span>
+          <h2>Categorías</h2>
         </div>
-
-        <p class="slider-hint">Desliza hacia la derecha para ver más novedades.</p>
       </div>
+      <div class="stickers" id="stickers" data-reveal></div>
     </section>
 
-    <section class="section categories-section">
-      <div class="section-head">
-        <h2>Categorías</h2>
-        <p>Encuentra diseños según lo que más te gusta</p>
+    <section class="section wrap">
+      <div class="section-head" data-reveal>
+        <div>
+          <span class="eyebrow">Entre más, mejor</span>
+          <h2>Arma tu combo</h2>
+        </div>
       </div>
-
-      <div class="categories-grid">
-        <a class="category-card category-snoopy" href="catalogo/?categoria=snoopy#productos">
-          <div class="category-bg"></div>
-          <div class="category-content">
-            <h3>Snoopy</h3>
-            <p>Diseños clásicos, deportivos, tiernos y divertidos de Snoopy.</p>
-          </div>
-        </a>
-
-        <a class="category-card category-religiosos" href="catalogo/?categoria=religiosos#productos">
-          <div class="category-bg"></div>
-          <div class="category-content">
-            <h3>Religiosos</h3>
-            <p>Jesús, Virgen María y diseños con inspiración religiosa.</p>
-          </div>
-        </a>
-
-        <a class="category-card category-harry" href="catalogo/?categoria=harry-potter#productos">
-          <div class="category-bg"></div>
-          <div class="category-content">
-            <h3>Harry Potter</h3>
-            <p>Referencias inspiradas en Harry Potter y su universo.</p>
-          </div>
-        </a>
-
-        <a class="category-card category-animales" href="catalogo/?categoria=animales#productos">
-          <div class="category-bg"></div>
-          <div class="category-content">
-            <h3>Animales</h3>
-            <p>Gatos, patos, mapaches, nutrias y muchos personajes adorables.</p>
-          </div>
-        </a>
-
-        <a class="category-card category-medicina" href="catalogo/?categoria=medicina#productos">
-          <div class="category-bg"></div>
-          <div class="category-content">
-            <h3>Medicina</h3>
-            <p>Diseños médicos, enfermería, animales doctores y temática de salud.</p>
-          </div>
-        </a>
-
-        <a class="category-card category-anime" href="catalogo/?categoria=anime#productos">
-          <div class="category-bg"></div>
-          <div class="category-content">
-            <h3>Anime y Ghibli</h3>
-            <p>One Piece, Sailor Moon, Totoro, Chihiro, Ponyo y más.</p>
-          </div>
-        </a>
-
-        <a class="category-card category-videojuegos" href="catalogo/?categoria=videojuegos#productos">
-          <div class="category-bg"></div>
-          <div class="category-content">
-            <h3>Videojuegos</h3>
-            <p>Yoshi, Bowser y diseños inspirados en personajes de videojuegos.</p>
-          </div>
-        </a>
-
-        <a class="category-card category-vehiculos" href="catalogo/?categoria=vehiculos#productos">
-          <div class="category-bg"></div>
-          <div class="category-content">
-            <h3>Vehículos</h3>
-            <p>Aviones, motos y autos de Fórmula 1 en diferentes estilos.</p>
-          </div>
-        </a>
-
-        <a class="category-card category-caricaturas" href="catalogo/?categoria=caricaturas#productos">
-          <div class="category-bg"></div>
-          <div class="category-content">
-            <h3>Caricaturas</h3>
-            <p>Las Chicas Superpoderosas, Osos Escandalosos, Sanrio y más.</p>
-          </div>
-        </a>
+      <div class="combos" data-reveal>
+        <div class="combo">
+          <div class="combo-pins"><span><img src="imagenes/pin23.jpeg" alt="" /></span></div>
+          <h3>1 pin</h3>
+          <div class="combo-price">$9.000</div>
+          <small>Por unidad</small>
+        </div>
+        <div class="combo">
+          <div class="combo-pins"><span><img src="imagenes/pin81.jpeg" alt="" /></span><span><img src="imagenes/pin57.jpeg" alt="" /></span></div>
+          <h3>2 pines</h3>
+          <div class="combo-price">$16.000</div>
+          <small>Ahorras $2.000</small>
+        </div>
+        <div class="combo featured">
+          <span class="combo-flag">⭐ Favorito</span>
+          <div class="combo-pins"><span><img src="imagenes/pin112.jpeg" alt="" /></span><span><img src="imagenes/pin126.jpeg" alt="" /></span><span><img src="imagenes/pin62.jpeg" alt="" /></span></div>
+          <h3>3 pines</h3>
+          <div class="combo-price">$24.000</div>
+          <small>Ahorras $3.000</small>
+        </div>
       </div>
+      <p class="promo-note">🎁 Todos traen bolsita de empaque · Puedes mezclar diseños</p>
     </section>
 
-    <section class="section faq-section">
-      <div class="faq-layout">
-        <div class="faq-intro">
-          <span class="faq-kicker">Preguntas frecuentes</span>
-          <h2>Resolvemos tus dudas antes de comprar</h2>
-          <p>Aquí puedes revisar información importante sobre pedidos, materiales, empaque y promociones. Así la experiencia se siente más clara, más cómoda y mucho más confiable para el cliente.</p>
-          <div class="faq-image"></div>
-        </div>
-
-        <div class="faq-list">
-          <div class="faq-group">
-            <div class="faq-group-title">Sobre los pines</div>
-
-            <details class="faq-item" open>
-              <summary class="faq-question">
-                <span>¿Los pines incluyen empaque?</span>
-                <span class="faq-icon">+</span>
-              </summary>
-              <div class="faq-answer">
-                <p>Sí, cada pin incluye su bolsita de empaque para que llegue protegido y listo para usar o regalar.</p>
-                <p>Es un detalle simple, pero hace que todo se vea mucho más bonito.</p>
-              </div>
-            </details>
-
-            <details class="faq-item">
-              <summary class="faq-question">
-                <span>¿De qué material son?</span>
-                <span class="faq-icon">+</span>
-              </summary>
-              <div class="faq-answer">
-                <p>Son pines metálicos, lo que les da mayor calidad, durabilidad y un acabado mucho más bonito.</p>
-              </div>
-            </details>
-
-            <details class="faq-item">
-              <summary class="faq-question">
-                <span>¿Puedo mezclar diseños?</span>
-                <span class="faq-icon">+</span>
-              </summary>
-              <div class="faq-answer">
-                <p>Sí, puedes elegir diferentes referencias en un mismo pedido sin problema.</p>
-              </div>
-            </details>
-          </div>
-
-          <div class="faq-group">
-            <div class="faq-group-title">Sobre pedidos</div>
-
-            <details class="faq-item">
-              <summary class="faq-question">
-                <span>¿Cómo hago mi pedido?</span>
-                <span class="faq-icon">+</span>
-              </summary>
-              <div class="faq-answer">
-                <p>Solo escríbenos por WhatsApp con los pines que quieres y te ayudamos con todo el proceso.</p>
-              </div>
-            </details>
-
-            <details class="faq-item">
-              <summary class="faq-question">
-                <span>¿Hay promociones?</span>
-                <span class="faq-icon">+</span>
-              </summary>
-              <div class="faq-answer">
-                <p>Sí, manejamos promociones dependiendo de la cantidad que compres.</p>
-              </div>
-            </details>
-
-            <details class="faq-item">
-              <summary class="faq-question">
-                <span>¿Puedo preguntar antes de comprar?</span>
-                <span class="faq-icon">+</span>
-              </summary>
-              <div class="faq-answer">
-                <p>Claro, puedes escribirnos sin compromiso y resolver cualquier duda.</p>
-              </div>
-            </details>
+    <section class="section wrap">
+      <div class="faq-home">
+        <div class="section-head" data-reveal>
+          <div>
+            <span class="eyebrow">Resolvemos tus dudas</span>
+            <h2>Preguntas frecuentes</h2>
           </div>
         </div>
+        <div class="faq" data-reveal>
+          <details open>
+            <summary>¿Los pines incluyen empaque?</summary>
+            <p>Sí, cada pin incluye su bolsita de empaque para que llegue protegido y listo para usar o regalar.</p>
+          </details>
+          <details>
+            <summary>¿De qué material son?</summary>
+            <p>Son pines metálicos, lo que les da mayor calidad, durabilidad y un acabado mucho más bonito.</p>
+          </details>
+          <details>
+            <summary>¿Puedo mezclar diseños?</summary>
+            <p>Sí, puedes elegir diferentes referencias en un mismo pedido sin problema.</p>
+          </details>
+          <details>
+            <summary>¿Cómo hago mi pedido?</summary>
+            <p>Agrega tus pines favoritos en el catálogo y envíanos el pedido por WhatsApp. Te ayudamos con todo el proceso.</p>
+          </details>
+        </div>
+        <div class="section-foot"><a class="link-arrow" href="preguntas/">Ver todas las preguntas →</a></div>
       </div>
     </section>
-    <footer class="site-footer">
-      <div class="footer-shell">
-        <div class="footer-top">
-          <div class="footer-brand-block">
-            <a href="index.html" class="footer-brand-name">PINVERSE</a>
-            <p>
-              Pines con diseños para todos los gustos, pensados para acompañar tu estilo
-              y darle un toque diferente a lo que llevas contigo.
-            </p>
-          </div>
+  </main>
 
-          <div class="footer-links-grid">
-            <div class="footer-column">
-              <h3>Navegación</h3>
-              <a href="index.html">Inicio</a>
-              <a href="catalogo/">Catálogo</a>
-              <a href="preguntas/">Preguntas frecuentes</a>
-              <a href="contacto/">Contacto</a>
-            </div>
-
-            <div class="footer-column">
-              <h3>Compra</h3>
-              <a href="catalogo/#promociones">Promociones</a>
-              <a href="catalogo/#productos">Ver pines</a>
-              <a
-                href="https://wa.me/573116821619?text=Hola%2C%20quiero%20hacer%20un%20pedido%20en%20PINVERSE.%20%C2%BFMe%20ayudan%20con%20la%20disponibilidad%20y%20el%20proceso%20de%20compra%3F"
-                target="_blank"
-                rel="noopener noreferrer"
-              >Pedir por WhatsApp</a>
-            </div>
-
-            <div class="footer-column">
-              <h3>Contacto</h3>
-              <a
-                href="https://wa.me/573116821619?text=Hola%2C%20estoy%20visitando%20PINVERSE%20y%20quisiera%20recibir%20informaci%C3%B3n%20sobre%20los%20pines.%20%C2%BFMe%20pueden%20ayudar%3F"
-                target="_blank"
-                rel="noopener noreferrer"
-              >WhatsApp</a>
-              <a href="contacto/">Escríbenos</a>
-              <span>Cali, Colombia</span>
-            </div>
-          </div>
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">PINVERSE</div>
+          <p>Pines con diseños para todos los gustos, pensados para acompañar tu estilo y darle un toque diferente a lo que llevas contigo.</p>
         </div>
-
-        <div class="footer-bottom">
-          <span>© 2026 PINVERSE · Cali, Colombia</span>
-          <span>Pines para llevar tu estilo contigo.</span>
+        <div class="footer-col">
+          <h3>Navegación</h3>
+          <a href="index.html">Inicio</a>
+          <a href="catalogo/">Catálogo</a>
+          <a href="preguntas/">Preguntas frecuentes</a>
+          <a href="contacto/">Contacto</a>
+        </div>
+        <div class="footer-col">
+          <h3>Compra</h3>
+          <a href="catalogo/#promociones">Promociones</a>
+          <a href="catalogo/#productos">Ver pines</a>
+          <a href="https://wa.me/573116821619?text=Hola%2C%20quiero%20hacer%20un%20pedido%20en%20PINVERSE.%20%C2%BFMe%20ayudan%20con%20la%20disponibilidad%20y%20el%20proceso%20de%20compra%3F" target="_blank" rel="noopener noreferrer">Pedir por WhatsApp</a>
+        </div>
+        <div class="footer-col">
+          <h3>Contacto</h3>
+          <a href="https://wa.me/573116821619?text=Hola%2C%20estoy%20visitando%20PINVERSE%20y%20quisiera%20hacer%20una%20consulta.%20%C2%BFMe%20pueden%20ayudar%3F" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <a href="contacto/">Escríbenos</a>
+          <span>Cali, Colombia</span>
         </div>
       </div>
-    </footer>
-  </div>
+      <div class="footer-bottom">© 2026 PINVERSE · Cali, Colombia · Pines para llevar tu estilo contigo.</div>
+    </div>
+  </footer>
 
-  <a
-    class="whatsapp-float"
-    href="https://wa.me/573116821619?text=Hola%2C%20estoy%20visitando%20PINVERSE%20y%20quisiera%20recibir%20informaci%C3%B3n%20sobre%20los%20pines.%20%C2%BFMe%20pueden%20ayudar%3F"
-    target="_blank" rel="noopener noreferrer"
-    aria-label="Consultar por WhatsApp"
-  >
-    <span class="whatsapp-icon">
-      <svg viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-        <path fill="#ffffff" d="M20.52 3.48A11.8 11.8 0 0 0 12.07 0C5.5 0 .15 5.35.15 11.92c0 2.1.55 4.15 1.59 5.95L0 24l6.31-1.65a11.9 11.9 0 0 0 5.76 1.47h.01c6.57 0 11.92-5.35 11.92-11.92 0-3.18-1.24-6.17-3.48-8.42Zm-8.45 18.3h-.01a9.9 9.9 0 0 1-5.05-1.39l-.36-.21-3.74.98 1-3.65-.23-.37a9.86 9.86 0 0 1-1.52-5.24c0-5.45 4.44-9.89 9.9-9.89 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.9 6.99c0 5.46-4.44 9.89-9.88 9.89Zm5.43-7.42c-.3-.15-1.77-.87-2.04-.96-.27-.1-.47-.15-.66.15-.2.3-.76.96-.93 1.16-.17.2-.34.22-.64.08-.3-.15-1.25-.46-2.38-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.34.45-.5.15-.17.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.66-.51h-.57c-.2 0-.52.08-.8.38-.27.3-1.04 1.02-1.04 2.49s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.48.71.31 1.26.49 1.69.63.71.23 1.36.2 1.88.12.57-.08 1.77-.72 2.02-1.42.25-.7.25-1.29.17-1.42-.08-.13-.27-.2-.57-.35Z"/>
-      </svg>
-    </span>
+  <a class="order-bar" id="orderBar" href="catalogo/#productos" aria-live="polite">
+    <span class="order-count" id="orderCount">0</span>
+    <span class="order-text" id="orderText"></span>
+    <span class="order-go">Ver pedido →</span>
   </a>
 
   <script>
-    const promoMessages = document.querySelectorAll('.promo-message');
-    let promoIndex = 0;
+    /* Novedades: deben coincidir con productos del catálogo (mismo id, foto y referencia) */
+    const novedades = [
+      { id: 126, nombre: 'Pin Panda Bailando de Osos Escandalosos', referencia: '126' },
+      { id: 130, nombre: 'Pin Bellota como Luigi', referencia: '130' },
+      { id: 119, nombre: 'Pin Yoshi Sentado', referencia: '119' },
+      { id: 18,  nombre: 'Pin Concho Bad Bunny DTMF', referencia: '018' },
+      { id: 45,  nombre: 'Pin Escudo Atlético Nacional', referencia: '045' },
+      { id: 138, nombre: 'Pin Chicas Superpoderosas', referencia: '138' },
+      { id: 109, nombre: 'Pin Ponyo', referencia: '109' },
+      { id: 103, nombre: 'Pin Mapache con Taza de Corazón', referencia: '103' },
+    ];
+    const PIN_PRICE = 9000;
 
-    function rotatePromoMessages() {
-      if (!promoMessages.length) return;
-      promoMessages[promoIndex].classList.remove('active');
-      promoIndex = (promoIndex + 1) % promoMessages.length;
-      promoMessages[promoIndex].classList.add('active');
+    /* Categorías destacadas: enlazan al catálogo ya filtrado */
+    const categorias = [
+      { slug: 'snoopy',       nombre: 'Snoopy',       img: 23,  r: '-4deg' },
+      { slug: 'caricaturas',  nombre: 'Caricaturas',  img: 138, r: '3deg' },
+      { slug: 'animales',     nombre: 'Animales',     img: 122, r: '-2deg' },
+      { slug: 'anime',        nombre: 'Anime',        img: 108, r: '4deg' },
+      { slug: 'harry-potter', nombre: 'Harry Potter', img: 5,   r: '-5deg' },
+      { slug: 'videojuegos',  nombre: 'Videojuegos',  img: 112, r: '2deg' },
+      { slug: 'medicina',     nombre: 'Medicina',     img: 86,  r: '-3deg' },
+      { slug: 'vehiculos',    nombre: 'Vehículos',    img: 94,  r: '5deg' },
+      { slug: 'religiosos',   nombre: 'Religiosos',   img: 105, r: '-2deg' },
+    ];
+
+    /* Mismo carrito que usa el catálogo, para que lo agregado aquí aparezca allá */
+    const CART_STORAGE_KEY = 'pinlab_cart';
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const finePointer = window.matchMedia('(pointer: fine)').matches;
+
+    const foto = id => `imagenes/pin${id}.jpeg`;
+    const formatoPrecio = n => `$${Number(n).toLocaleString('es-CO')}`;
+    const nombreCorto = nombre => nombre.replace(/^Pin\s+/i, '');
+
+    function leerCarrito() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(CART_STORAGE_KEY) || '[]');
+        return Array.isArray(saved) ? saved.map(Number) : [];
+      } catch (error) {
+        return [];
+      }
     }
 
-    setInterval(rotatePromoMessages, 3000);
+    function guardarCarrito(items) {
+      try {
+        localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
+      } catch (error) {
+        console.warn('No fue posible guardar el carrito.', error);
+      }
+    }
 
-    const faqItems = document.querySelectorAll('.faq-item');
-    faqItems.forEach(item => {
-      item.addEventListener('toggle', () => {
-        if (item.open) {
-          faqItems.forEach(other => {
-            if (other !== item) other.removeAttribute('open');
-          });
-        }
-      });
+    let carrito = leerCarrito();
+    const grid = document.getElementById('novedades');
+
+    function textoBoton(id) {
+      return carrito.includes(id) ? '✓ En tu pedido' : '+ Agregar';
+    }
+
+    grid.innerHTML = novedades.map((p, i) => `
+      <article class="product-card product-card-enter" style="animation-delay:${Math.min(i * 40, 280)}ms">
+        <div class="card-inner">
+          <div class="image-area">
+            <span class="product-ref">Ref. ${p.referencia}</span>
+            <img src="${foto(p.id)}" alt="${p.nombre} · referencia ${p.referencia}" width="640" height="640" loading="lazy" decoding="async" data-product-image />
+          </div>
+          <div class="product-body">
+            <h3 class="product-title">${nombreCorto(p.nombre)}</h3>
+            <div class="product-buyrow">
+              <span class="product-price">${formatoPrecio(PIN_PRICE)}</span>
+              <button class="btn-cart ${carrito.includes(p.id) ? 'is-added' : ''}" type="button" data-cart-id="${p.id}">${textoBoton(p.id)}</button>
+            </div>
+          </div>
+        </div>
+      </article>`).join('');
+
+    grid.querySelectorAll('[data-product-image]').forEach(img => {
+      const area = img.closest('.image-area');
+      const show = () => { img.classList.add('is-loaded'); area.classList.add('is-loaded'); };
+      if (img.complete && img.naturalWidth) show();
+      else img.addEventListener('load', show, { once:true });
     });
 
-    function activarRevealSuave() {
-      const revealItems = document.querySelectorAll('.hero, .promo-strip, .section');
+    document.getElementById('stickers').innerHTML = categorias.map(c => `
+      <a class="sticker" href="catalogo/?categoria=${c.slug}#productos">
+        <span class="sticker-img" style="--r:${c.r}"><img src="${foto(c.img)}" alt="" loading="lazy" /></span>
+        <span class="sticker-name">${c.nombre}</span>
+      </a>`).join('');
 
-      if (!('IntersectionObserver' in window)) {
-        revealItems.forEach(item => item.classList.add('is-visible'));
+    /* Aviso del pedido */
+    const orderBar = document.getElementById('orderBar');
+    function renderPedido(animar = false) {
+      const count = carrito.length;
+      orderBar.classList.toggle('visible', count > 0);
+      document.getElementById('orderCount').textContent = count;
+      const faltan = 3 - (count % 3 || 3);
+      document.getElementById('orderText').innerHTML = count % 3 === 0
+        ? `¡Combo completo! <em>Ve al catálogo para pedir</em>`
+        : `Agrega ${faltan} más y <em>completa tu combo de 3</em>`;
+      if (animar) { orderBar.classList.remove('bump'); void orderBar.offsetWidth; orderBar.classList.add('bump'); }
+    }
+
+    function brillar(card) {
+      if (!card || reduceMotion) return;
+      card.classList.remove('shine'); void card.offsetWidth; card.classList.add('shine');
+    }
+
+    grid.addEventListener('click', event => {
+      const button = event.target.closest('[data-cart-id]');
+      if (!button) return;
+      const id = Number(button.dataset.cartId);
+      if (carrito.includes(id)) {
+        window.location.href = 'catalogo/#productos';
         return;
       }
+      carrito.push(id);
+      guardarCarrito(carrito);
+      button.classList.add('is-added', 'just-added');
+      button.textContent = textoBoton(id);
+      setTimeout(() => button.classList.remove('just-added'), 520);
+      brillar(button.closest('.product-card'));
+      renderPedido(true);
+    });
 
-      revealItems.forEach(item => item.classList.add('soft-reveal'));
-
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: .14, rootMargin: '0px 0px -40px 0px' });
-
-      revealItems.forEach(item => observer.observe(item));
+    /* Inclinación 3D + reflejo con el mouse; en celular el brillo pasa solo */
+    if (finePointer && !reduceMotion) {
+      grid.addEventListener('pointermove', event => {
+        const card = event.target.closest('.product-card');
+        if (!card || event.pointerType !== 'mouse') return;
+        const r = card.getBoundingClientRect();
+        const x = (event.clientX - r.left) / r.width;
+        const y = (event.clientY - r.top) / r.height;
+        card.classList.add('is-active');
+        card.style.setProperty('--ry', `${((x - .5) * 12).toFixed(2)}deg`);
+        card.style.setProperty('--rx', `${((.5 - y) * 12).toFixed(2)}deg`);
+        card.style.setProperty('--mx', `${(x * 100).toFixed(1)}%`);
+        card.style.setProperty('--my', `${(y * 100).toFixed(1)}%`);
+      });
+      grid.addEventListener('pointerover', event => {
+        const card = event.target.closest('.product-card');
+        if (card && !card.contains(event.relatedTarget)) brillar(card);
+      });
+      grid.addEventListener('pointerout', event => {
+        const card = event.target.closest('.product-card');
+        if (!card || card.contains(event.relatedTarget)) return;
+        card.classList.remove('is-active');
+        card.style.setProperty('--rx', '0deg');
+        card.style.setProperty('--ry', '0deg');
+      });
+    } else if ('IntersectionObserver' in window && !reduceMotion) {
+      const io = new IntersectionObserver(entries => entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        setTimeout(() => brillar(entry.target), 300);
+        io.unobserve(entry.target);
+      }), { threshold:.6 });
+      grid.querySelectorAll('.product-card').forEach(card => io.observe(card));
     }
 
-    activarRevealSuave();
-
-    const mobileLinks = document.querySelectorAll('.mobile-drawer-nav a');
-    const menuToggle = document.getElementById('menu-toggle');
-
-    mobileLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        menuToggle.checked = false;
-      });
-    });
+    renderPedido();
   </script>
+  <script src="recursos/pinverse.js"></script>
 </body>
 </html>

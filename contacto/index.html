@@ -3,1053 +3,186 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#ffffff" />
+  <meta name="theme-color" content="#01265a" />
   <meta name="description" content="Contacta a PINVERSE por WhatsApp para resolver dudas, consultar disponibilidad y hacer tu pedido de pines." />
   <title>PINVERSE · Contacto</title>
   <link rel="icon" type="image/png" href="../imagenes/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../recursos/pinverse.css" />
   <style>
-    :root{
-      --azul:#2f78bd;
-      --azul-oscuro:#244f82;
-      --azul-medio:#3f8ad1;
-      --azul-claro:#eaf3ff;
-      --texto:#1f1f1f;
-      --texto-fuerte:#223247;
-      --muted:#6d6d6d;
-      --muted-2:#718096;
-      --line:#e8e8e8;
-      --line-blue:rgba(36,79,130,.10);
-      --shadow:0 18px 40px rgba(22,34,57,.10);
-      --shadow-soft:0 10px 24px rgba(21,35,60,.06);
-      --shadow-card:0 16px 30px rgba(24,39,75,.08);
-      --verde:#1f7a5a;
-      --verde-oscuro:#166247;
-      --negro-suave:#24272c;
-      --gris-oscuro:#343942;
-    }
-
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-      font-family:"Segoe UI", Arial, sans-serif;
-    }
-
-    html{
-      scroll-behavior:smooth;
-    }
-
-    body{
-      background:
-        radial-gradient(circle at 12% 8%, rgba(47,120,189,.10), transparent 22%),
-        radial-gradient(circle at 88% 14%, rgba(47,120,189,.08), transparent 20%),
-        radial-gradient(circle at 50% 100%, rgba(36,79,130,.06), transparent 28%),
-        linear-gradient(180deg, #f8f7f3 0%, #f4f1eb 54%, #f2eee8 100%);
-      color:var(--texto);
-      overflow-x:hidden;
-    }
-
-    .container{
-      width:min(100%, 1400px);
-      margin:0 auto;
-      padding:0 18px 36px;
-    }
-
-    header{
-      background:rgba(255,255,255,.92);
-      backdrop-filter: blur(12px);
-      box-shadow:0 10px 24px rgba(20,35,60,.06);
-      border-bottom:1px solid rgba(36,79,130,.08);
-      position:relative;
-      z-index:30;
-    }
-
-    .navbar{
-      width:min(100%, 1400px);
-      margin:0 auto;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:28px;
-      padding:14px 24px;
-      min-height:110px;
-      position:relative;
-    }
-
-    .nav-left{
-      display:flex;
-      align-items:center;
-      gap:26px;
-      min-width:0;
-      flex:1;
-    }
-
-    .logo-box{
-      width:112px;
-      height:112px;
-      border:none;
-      background:transparent;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      overflow:hidden;
-      flex-shrink:0;
-      text-decoration:none;
-    }
-
-    .logo-box img{
-      width:100%;
-      height:100%;
-      object-fit:contain;
-      display:block;
-      filter:drop-shadow(0 6px 10px rgba(0,0,0,.06));
-      transform:scale(1.16);
-      transform-origin:center;
-      transition:transform .2s ease;
-    }
-
-    .logo-box:hover img,
-    .mobile-drawer-logo-link:hover img{
-      transform:scale(1.2);
-      cursor:pointer;
-    }
-
-    .menu-toggle{
-      display:none;
-    }
-
-    .menu-btn{
-      display:none;
-      width:46px;
-      height:46px;
-      border:none;
-      border-radius:14px;
-      background:#f2f2f2;
-      font-size:24px;
-      cursor:pointer;
-      align-items:center;
-      justify-content:center;
-      user-select:none;
-      flex-shrink:0;
-    }
-
-    .nav-bottom{
-      display:flex;
-      align-items:center;
-      justify-content:flex-start;
-      flex:1;
-      min-width:0;
-    }
-
-    .main-nav{
-      display:flex;
-      align-items:center;
-      justify-content:flex-start;
-      gap:34px;
-      flex-wrap:wrap;
-      width:100%;
-    }
-
-    .main-nav a{
-      text-decoration:none;
-      color:var(--texto-fuerte);
-      font-size:15px;
-      font-weight:800;
-      letter-spacing:.45px;
-      padding:8px 0;
-      transition:.25s ease;
-      position:relative;
-      white-space:nowrap;
-    }
-
-    .main-nav a::after{
-      content:"";
-      position:absolute;
-      left:0;
-      bottom:2px;
-      width:0;
-      height:3px;
-      border-radius:999px;
-      background:linear-gradient(135deg, var(--azul), var(--azul-oscuro));
-      transition:width .22s ease;
-    }
-
-    .main-nav a:hover{
-      color:var(--azul);
-    }
-
-    .main-nav a:hover::after{
-      width:100%;
-    }
-
-    .mobile-overlay{
-      display:none;
-    }
-
-    .mobile-drawer{
-      display:none;
-    }
-
-    .mobile-close{
-      display:none;
-    }
-
-    .mobile-drawer-logo-link{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-decoration:none;
-    }
-
-    .contact-hero{
-      margin-top:0;
-      min-height:330px;
-      background:
-        linear-gradient(90deg, rgba(16,24,38,.62) 0%, rgba(16,24,38,.38) 40%, rgba(16,24,38,.22) 100%),
-        linear-gradient(180deg, rgba(16,24,38,.18) 0%, rgba(16,24,38,.42) 100%),
-        url("../imagenes/banner-imagen-contacto.jpg") center/cover no-repeat;
-      color:#fff;
-      width:100vw;
-      margin-left:calc(50% - 50vw);
-      margin-right:calc(50% - 50vw);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      position:relative;
-      overflow:hidden;
-      box-shadow:var(--shadow);
-    }
-
-    .contact-hero::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        radial-gradient(circle at top left, rgba(255,255,255,.10), transparent 22%),
-        radial-gradient(circle at bottom right, rgba(255,255,255,.08), transparent 24%);
-      pointer-events:none;
-    }
-
-    .contact-hero-inner{
-      max-width:980px;
-      margin:0 auto;
-      position:relative;
-      z-index:1;
-      padding:44px 20px;
-    }
-
-    .contact-pill{
-      display:inline-block;
-      padding:9px 15px;
-      border-radius:999px;
-      background:rgba(255,255,255,.14);
-      backdrop-filter:blur(8px);
-      border:1px solid rgba(255,255,255,.16);
-      font-size:13px;
-      font-weight:800;
-      margin-bottom:18px;
-      text-transform:uppercase;
-      letter-spacing:.7px;
-    }
-
-    .contact-hero h1{
-      font-size:54px;
-      line-height:1;
-      margin-bottom:12px;
-      letter-spacing:-1.4px;
-      text-shadow:0 10px 24px rgba(0,0,0,.20);
-    }
-
-    .contact-hero p{
-      font-size:18px;
-      line-height:1.65;
-      max-width:780px;
-      margin:0 auto;
-      color:rgba(255,255,255,.94);
-      text-shadow:0 4px 14px rgba(0,0,0,.14);
-    }
-
-    .section-shell{
-      background:rgba(255,255,255,.84);
-      box-shadow:var(--shadow-soft);
-      border:1px solid rgba(36,79,130,.08);
-      backdrop-filter: blur(8px);
-      position:relative;
-      overflow:hidden;
-      border-radius:0;
-      width:100vw;
-      margin-left:calc(50% - 50vw);
-      margin-right:calc(50% - 50vw);
-      padding:0;
-    }
-
-    .contact-layout{
-      display:grid;
-      grid-template-columns:1.05fr .95fr;
-      min-height:100%;
-    }
-
-    .contact-left,
-    .contact-right{
-      padding:44px 42px;
-    }
-
-    .contact-left{
-      border-right:1px solid rgba(36,79,130,.08);
-      background:rgba(255,255,255,.72);
-    }
-
-    .contact-right{
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.88), rgba(255,255,255,.92)),
-        radial-gradient(circle at top right, rgba(47,120,189,.10), transparent 24%);
-      display:grid;
-      align-content:start;
-      gap:26px;
-    }
-
-    .contact-block{
-      display:grid;
-      gap:16px;
-    }
-
-    .contact-title{
-      font-size:42px;
-      line-height:1;
-      letter-spacing:-1px;
-      color:#1d2d40;
-    }
-
-    .contact-subtext{
-      color:var(--muted-2);
-      font-size:17px;
-      line-height:1.8;
-      max-width:760px;
-    }
-
-    .contact-line{
-      width:90px;
-      height:4px;
-      background:linear-gradient(135deg, var(--azul), var(--azul-oscuro));
-    }
-
-    .info-stack{
-      display:grid;
-      gap:0;
-      border-top:1px solid rgba(36,79,130,.10);
-      border-bottom:1px solid rgba(36,79,130,.10);
-    }
-
-    .info-row{
-      display:grid;
-      grid-template-columns:220px 1fr;
-      gap:24px;
-      padding:22px 0;
-      border-bottom:1px solid rgba(36,79,130,.08);
-    }
-
-    .info-row:last-child{
-      border-bottom:none;
-    }
-
-    .info-label{
-      font-size:15px;
-      font-weight:900;
-      color:#203247;
-      text-transform:uppercase;
-      letter-spacing:.5px;
-    }
-
-    .info-value{
-      color:#60758d;
-      font-size:16px;
-      line-height:1.8;
-    }
-
-    .info-value strong{
-      color:#1f3145;
-    }
-
-    .cta-row{
-      display:flex;
-      gap:14px;
-      flex-wrap:wrap;
-      padding-top:6px;
-    }
-
-    .whatsapp-btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      text-decoration:none;
-      background:#25D366;
-      color:#fff;
-      padding:16px 28px;
-      font-weight:900;
-      font-size:15px;
-      transition:.2s ease;
-      box-shadow:0 8px 16px rgba(37,211,102,.18);
-      border:none;
-    }
-
-    .whatsapp-btn:hover{
-      background:#1eb95a;
-      transform:translateY(-1px);
-    }
-
-    .ghost-note{
-      display:inline-flex;
-      align-items:center;
-      padding:16px 22px;
-      background:rgba(47,120,189,.06);
-      border:1px solid rgba(36,79,130,.10);
-      color:#5d738d;
-      font-size:14px;
-      font-weight:700;
-    }
-
-    .right-card{
-      border:1px solid rgba(36,79,130,.08);
-      background:rgba(255,255,255,.70);
-      padding:24px 24px 22px;
-      display:grid;
-      gap:12px;
-    }
-
-    .right-card h3{
-      font-size:28px;
-      line-height:1.08;
-      color:#1d2d40;
-      letter-spacing:-.5px;
-    }
-
-    .right-card p{
-      color:#667b93;
-      font-size:15px;
-      line-height:1.75;
-    }
-
-    .benefits-list{
-      display:grid;
-      gap:0;
-      border-top:1px solid rgba(36,79,130,.10);
-      border-bottom:1px solid rgba(36,79,130,.10);
-    }
-
-    .benefit-row{
-      display:grid;
-      grid-template-columns:190px 1fr;
-      gap:18px;
-      padding:18px 0;
-      border-bottom:1px solid rgba(36,79,130,.08);
-    }
-
-    .benefit-row:last-child{
-      border-bottom:none;
-    }
-
-    .benefit-title{
-      font-size:14px;
-      font-weight:900;
-      color:#203247;
-      text-transform:uppercase;
-      letter-spacing:.45px;
-    }
-
-    .benefit-text{
-      color:#60758d;
-      font-size:15px;
-      line-height:1.7;
-    }
-
-    .right-cta{
-      border:1px solid rgba(36,79,130,.08);
-      background:linear-gradient(135deg, rgba(47,120,189,.08), rgba(36,79,130,.04));
-      padding:26px 24px;
-      display:grid;
-      gap:10px;
-    }
-
-    .right-cta h3{
-      font-size:32px;
-      line-height:1.05;
-      color:#1d2d40;
-      letter-spacing:-.7px;
-    }
-
-    .right-cta p{
-      color:#60758d;
-      font-size:15px;
-      line-height:1.75;
-    }
-
-    footer{
-      margin-top:0;
-      background:rgba(255,255,255,.88);
-      border:1px solid rgba(36,79,130,.08);
-      font-size:13px;
-      line-height:1.5;
-      backdrop-filter: blur(8px);
-      text-align:center;
-      color:var(--muted);
-      padding:22px;
-      border-radius:0;
-      width:100vw;
-      margin-left:calc(50% - 50vw);
-      margin-right:calc(50% - 50vw);
-    }
-
-    .whatsapp-float{
-      position:fixed;
-      left:16px;
-      bottom:16px;
-      z-index:999;
-      width:64px;
-      height:64px;
-      border:none;
-      border-radius:50%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:#4bdc65;
-      box-shadow:
-        0 10px 24px rgba(75,220,101,.28),
-        0 6px 16px rgba(0,0,0,.10);
-      text-decoration:none;
-      transition:transform .22s ease, box-shadow .22s ease;
-      padding:0;
-    }
-
-    .whatsapp-float:hover{
-      transform:translateY(-2px) scale(1.03);
-      box-shadow:
-        0 14px 30px rgba(75,220,101,.34),
-        0 8px 18px rgba(0,0,0,.14);
-    }
-
-    .soft-reveal{
-      opacity:0;
-      transform:translateY(18px);
-      transition:opacity .65s ease, transform .65s cubic-bezier(.2,.72,.22,1);
-    }
-
-    .soft-reveal.is-visible{
-      opacity:1;
-      transform:translateY(0);
-    }
-
-    @media (prefers-reduced-motion:reduce){
-      .soft-reveal{
-        opacity:1;
-        transform:none;
-        transition:none;
-      }
-    }
-
-    .whatsapp-icon{
-      width:100%;
-      height:100%;
-      border-radius:50%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:0;
-      margin:0;
-      line-height:0;
-    }
-
-    .whatsapp-icon svg{
-      width:32px;
-      height:32px;
-      display:block;
-      fill:#fff;
-    }
-
-    @media (max-width:1199px){
-      .contact-hero h1{
-        font-size:46px;
-      }
-
-      .contact-layout{
-        grid-template-columns:1fr;
-      }
-
-      .contact-left{
-        border-right:none;
-        border-bottom:1px solid rgba(36,79,130,.08);
-      }
-    }
-
-    @media (max-width:991px){
-      .navbar{
-        min-height:auto;
-        flex-direction:column;
-        align-items:center;
-        justify-content:center;
-        gap:8px;
-        padding:12px 16px;
-      }
-
-      .nav-left{
-        width:100%;
-        justify-content:center;
-      }
-
-      .logo-box{
-        width:135px;
-        height:135px;
-      }
-
-      .nav-bottom{
-        width:100%;
-        justify-content:center;
-      }
-
-      .main-nav{
-        width:100%;
-        justify-content:center;
-        gap:22px;
-      }
-
-      .contact-hero{
-        width:100%;
-        margin-left:0;
-        margin-right:0;
-        min-height:280px;
-      }
-
-      .contact-hero h1{
-        font-size:40px;
-      }
-
-      .section-shell{
-        width:100%;
-        margin-left:0;
-        margin-right:0;
-      }
-
-      .contact-left,
-      .contact-right{
-        padding:30px 24px;
-      }
-
-      .contact-title{
-        font-size:36px;
-      }
-
-      .info-row,
-      .benefit-row{
-        grid-template-columns:1fr;
-        gap:8px;
-      }
-
-      footer{
-        width:100%;
-        margin-left:0;
-        margin-right:0;
-      }
-    }
-
+    .contact-phone{
+      display:inline-flex; align-items:center; gap:8px;
+      margin-top:12px;
+      font-family:var(--display); font-weight:700; font-size:22px; color:var(--sun);
+    }
+    .contact-place{ display:block; margin-top:4px; font-size:14px; font-weight:700; color:rgba(255,255,255,.65); }
     @media (max-width:640px){
-      .container{
-        padding:0 0 26px;
-      }
-
-      header{
-        overflow:visible;
-      }
-
-      .navbar{
-        min-height:128px;
-        padding:12px 18px;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        position:relative;
-      }
-
-      .nav-left{
-        width:100%;
-        min-height:104px;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        position:relative;
-      }
-
-      .logo-box{
-        width:138px;
-        height:138px;
-        margin:0 auto;
-      }
-
-      .menu-btn{
-        display:flex;
-        position:absolute;
-        left:4px;
-        top:50%;
-        transform:translateY(-50%);
-        width:48px;
-        height:48px;
-        border:none;
-        border-radius:12px;
-        background:transparent;
-        font-size:36px;
-        line-height:1;
-        cursor:pointer;
-        align-items:center;
-        justify-content:center;
-        z-index:60;
-        color:#1f1f1f;
-        padding:0;
-      }
-
-      .nav-bottom{
-        display:none;
-      }
-
-      .mobile-overlay{
-        display:block;
-        position:fixed;
-        inset:0;
-        background:rgba(14,20,30,.42);
-        opacity:0;
-        visibility:hidden;
-        pointer-events:none;
-        transition:opacity .28s ease, visibility .28s ease;
-        z-index:70;
-      }
-
-      .mobile-drawer{
-        display:flex;
-        flex-direction:column;
-        position:fixed;
-        top:0;
-        left:0;
-        width:min(82vw, 320px);
-        height:100dvh;
-        background:rgba(255,255,255,.98);
-        backdrop-filter:blur(10px);
-        box-shadow:18px 0 40px rgba(20,35,60,.18);
-        transform:translateX(-105%);
-        transition:transform .30s ease;
-        z-index:80;
-        padding:22px 18px 24px;
-      }
-
-      .mobile-drawer-head{
-        display:flex;
-        align-items:center;
-        justify-content:space-between;
-        gap:14px;
-        margin-bottom:22px;
-      }
-
-      .mobile-drawer-logo{
-        width:78px;
-        height:78px;
-        object-fit:contain;
-        display:block;
-      }
-
-      .mobile-close{
-        display:flex;
-        width:42px;
-        height:42px;
-        border:none;
-        border-radius:12px;
-        background:#f3f4f6;
-        color:#1f1f1f;
-        font-size:26px;
-        cursor:pointer;
-        align-items:center;
-        justify-content:center;
-      }
-
-      .mobile-drawer-nav{
-        display:flex;
-        flex-direction:column;
-        gap:6px;
-      }
-
-      .mobile-drawer-nav a{
-        text-decoration:none;
-        color:var(--texto-fuerte);
-        font-size:18px;
-        font-weight:800;
-        letter-spacing:.4px;
-        padding:14px 12px;
-        border-radius:14px;
-        transition:.2s ease;
-      }
-
-      .mobile-drawer-nav a:hover,
-      .mobile-drawer-nav a:active{
-        background:rgba(47,120,189,.08);
-        color:var(--azul-oscuro);
-      }
-
-      .menu-toggle:checked ~ .mobile-overlay{
-        opacity:1;
-        visibility:visible;
-        pointer-events:auto;
-      }
-
-      .menu-toggle:checked ~ .mobile-drawer{
-        transform:translateX(0);
-      }
-
-      .contact-hero{
-        min-height:230px;
-        background-position:center;
-      }
-
-      .contact-hero-inner{
-        padding:26px 16px;
-      }
-
-      .contact-pill{
-        font-size:11px;
-        padding:7px 12px;
-        margin-bottom:14px;
-      }
-
-      .contact-hero h1{
-        font-size:32px;
-        line-height:1;
-      }
-
-      .contact-hero p{
-        font-size:14px;
-        line-height:1.55;
-      }
-
-      .contact-left,
-      .contact-right{
-        padding:22px 14px;
-      }
-
-      .contact-title{
-        font-size:30px;
-      }
-
-      .contact-subtext,
-      .info-value,
-      .benefit-text,
-      .right-card p,
-      .right-cta p{
-        font-size:14px;
-      }
-
-      .contact-title,
-      .right-card h3,
-      .right-cta h3{
-        line-height:1.08;
-      }
-
-      .right-card h3{
-        font-size:24px;
-      }
-
-      .right-cta h3{
-        font-size:28px;
-      }
-
-      .whatsapp-btn,
-      .ghost-note{
-        width:100%;
-        text-align:center;
-      }
-
-      .cta-row{
-        display:grid;
-        grid-template-columns:1fr;
-      }
-
-      .whatsapp-float{
-        left:14px;
-        bottom:14px;
-        width:58px;
-        height:58px;
-      }
-
-      .whatsapp-icon svg{
-        width:29px;
-        height:29px;
-      }
-
-      footer{
-        padding:18px;
-        font-size:12px;
-      }
+      .contact-phone{ font-size:20px; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="navbar">
+  <input type="checkbox" id="menu-toggle" class="menu-toggle" aria-hidden="true" />
+  <label for="menu-toggle" class="mobile-overlay" aria-label="Cerrar menú"></label>
+  <aside class="mobile-drawer" aria-label="Menú móvil">
+    <div class="mobile-drawer-head">
+      <a href="../index.html" aria-label="Ir al inicio"><img src="../imagenes/logo.png" alt="PINVERSE" /></a>
+      <label for="menu-toggle" class="mobile-close" aria-label="Cerrar menú">×</label>
+    </div>
+    <nav class="mobile-drawer-nav">
+      <a href="../index.html">Inicio</a>
+      <a href="../catalogo/">Catálogo</a>
+      <a href="../catalogo/#promociones">Promociones</a>
+      <a href="../preguntas/">Preguntas frecuentes</a>
+      <a href="../contacto/" aria-current="page">Contacto</a>
+    </nav>
+  </aside>
+
+  <header class="header">
+    <div class="wrap nav">
       <div class="nav-left">
-        <label for="menu-toggle" class="menu-btn" aria-label="Abrir menú">☰</label>
-
-        <a href="../index.html" class="logo-box">
-          <img src="../imagenes/logo.png" alt="PINVERSE" onerror="this.style.display='none'; this.parentElement.innerHTML='Logo';">
+        <label for="menu-toggle" class="menu-btn" aria-label="Abrir menú">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+        </label>
+        <nav class="nav-links" aria-label="Navegación principal">
+          <a href="../index.html">Inicio</a>
+          <a href="../catalogo/">Catálogo</a>
+          <a href="../preguntas/">Preguntas</a>
+          <a href="../contacto/" aria-current="page">Contacto</a>
+        </nav>
+      </div>
+      <a href="../index.html" class="nav-logo" aria-label="Ir al inicio de PINVERSE"><img src="../imagenes/logo.png" alt="PINVERSE" /></a>
+      <div class="nav-right">
+        <a class="nav-cta" href="https://wa.me/573116821619?text=Hola%2C%20estoy%20visitando%20PINVERSE%20y%20quisiera%20recibir%20informaci%C3%B3n%20sobre%20los%20pines.%20%C2%BFMe%20pueden%20ayudar%3F" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.52 3.48A11.8 11.8 0 0 0 12.07 0C5.5 0 .15 5.35.15 11.92c0 2.1.55 4.15 1.59 5.95L0 24l6.31-1.65a11.9 11.9 0 0 0 5.76 1.47h.01c6.57 0 11.92-5.35 11.92-11.92 0-3.18-1.24-6.17-3.48-8.42Zm-8.45 18.3a9.9 9.9 0 0 1-5.05-1.39l-.36-.21-3.74.98 1-3.65-.23-.37a9.86 9.86 0 0 1-1.52-5.24c0-5.45 4.44-9.89 9.9-9.89 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.9 6.99c0 5.46-4.44 9.89-9.88 9.89Zm5.43-7.42c-.3-.15-1.77-.87-2.04-.96-.27-.1-.47-.15-.66.15-.2.3-.76.96-.93 1.16-.17.2-.34.22-.64.08-.3-.15-1.25-.46-2.38-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.34.45-.5.15-.17.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.66-.51h-.57c-.2 0-.52.08-.8.38-.27.3-1.04 1.02-1.04 2.49s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.48.71.31 1.26.49 1.69.63.71.23 1.36.2 1.88.12.57-.08 1.77-.72 2.02-1.42.25-.7.25-1.29.17-1.42-.08-.13-.27-.2-.57-.35Z"/></svg>
+          Ayuda
         </a>
-
-        <div class="nav-bottom">
-          <nav class="main-nav">
-            <a href="../index.html">INICIO</a>
-            <a href="../catalogo/">CATÁLOGO</a>
-            <a href="../preguntas/">PREGUNTAS FRECUENTES</a>
-            <a href="../contacto/">CONTACTO</a>
-          </nav>
-        </div>
       </div>
     </div>
   </header>
 
-  <input type="checkbox" id="menu-toggle" class="menu-toggle">
+  <main>
+    <section class="hero" style="--hero-pos:40%">
+      <div class="hero-bg" style="background-image:url('../imagenes/banner-imagen-contacto.jpg')" aria-hidden="true"></div>
+      <div class="wrap hero-content">
+        <h1><span class="hl">Contacto<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M3 14 C 50 4, 100 4, 197 12"/></svg></span></h1>
+        <p>Haz tu pedido o resuelve tus dudas. Te respondemos directo por WhatsApp.</p>
+      </div>
+    </section>
 
-  <label for="menu-toggle" class="mobile-overlay" aria-label="Cerrar menú"></label>
+    <section class="section wrap">
+      <div class="cta-card" data-reveal>
+        <div>
+          <h3>Escríbenos por WhatsApp</h3>
+          <p>Consulta disponibilidad, pregúntanos por varias referencias al mismo tiempo o pide recomendaciones según el estilo que buscas.</p>
+          <span class="contact-phone">+57 311 682 1619</span>
+          <span class="contact-place">📍 Cali, Colombia</span>
+        </div>
+        <a class="btn btn-whatsapp" href="https://wa.me/573116821619?text=Hola%2C%20quiero%20hacer%20un%20pedido%20en%20PINVERSE.%20%C2%BFMe%20ayudan%20con%20la%20disponibilidad%20y%20el%20proceso%20de%20compra%3F" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.52 3.48A11.8 11.8 0 0 0 12.07 0C5.5 0 .15 5.35.15 11.92c0 2.1.55 4.15 1.59 5.95L0 24l6.31-1.65a11.9 11.9 0 0 0 5.76 1.47h.01c6.57 0 11.92-5.35 11.92-11.92 0-3.18-1.24-6.17-3.48-8.42Zm-8.45 18.3a9.9 9.9 0 0 1-5.05-1.39l-.36-.21-3.74.98 1-3.65-.23-.37a9.86 9.86 0 0 1-1.52-5.24c0-5.45 4.44-9.89 9.9-9.89 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.9 6.99c0 5.46-4.44 9.89-9.88 9.89Zm5.43-7.42c-.3-.15-1.77-.87-2.04-.96-.27-.1-.47-.15-.66.15-.2.3-.76.96-.93 1.16-.17.2-.34.22-.64.08-.3-.15-1.25-.46-2.38-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.34.45-.5.15-.17.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.66-.51h-.57c-.2 0-.52.08-.8.38-.27.3-1.04 1.02-1.04 2.49s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.48.71.31 1.26.49 1.69.63.71.23 1.36.2 1.88.12.57-.08 1.77-.72 2.02-1.42.25-.7.25-1.29.17-1.42-.08-.13-.27-.2-.57-.35Z"/></svg>
+          Abrir WhatsApp
+        </a>
+      </div>
+    </section>
 
-  <aside class="mobile-drawer" aria-label="Menú móvil">
-    <div class="mobile-drawer-head">
-      <a href="../index.html" class="mobile-drawer-logo-link">
-        <img src="../imagenes/logo.png" alt="PINVERSE" class="mobile-drawer-logo">
-      </a>
+    <section class="section wrap">
+      <div class="section-head" data-reveal>
+        <div>
+          <span class="eyebrow">Así de fácil</span>
+          <h2>Cómo hacer tu pedido</h2>
+        </div>
+        <a class="link-arrow" href="../catalogo/">Ir al catálogo →</a>
+      </div>
+      <div class="steps" data-reveal>
+        <div class="step">
+          <span class="step-num">1</span>
+          <div>
+            <h3>Elige tus pines</h3>
+            <p>Explora el catálogo y agrega los que más te gusten a tu pedido.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num">2</span>
+          <div>
+            <h3>Envíanos tu pedido</h3>
+            <p>Lo mandas por WhatsApp con las referencias y el total ya calculado.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num">3</span>
+          <div>
+            <h3>Coordinamos la entrega</h3>
+            <p>Confirmamos disponibilidad y te ayudamos con el resto del proceso.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-      <label for="menu-toggle" class="mobile-close" aria-label="Cerrar menú">✕</label>
+    <section class="section wrap">
+      <div class="section-head" data-reveal>
+        <div>
+          <span class="eyebrow">Compra con confianza</span>
+          <h2>Información útil</h2>
+        </div>
+      </div>
+      <div class="info-grid" data-reveal>
+        <article class="info-card">
+          <span class="info-icon" aria-hidden="true">🧷</span>
+          <h3>Pedidos surtidos</h3>
+          <p>Puedes mezclar diferentes diseños en un mismo pedido.</p>
+        </article>
+        <article class="info-card">
+          <span class="info-icon" aria-hidden="true">🎁</span>
+          <h3>Empaque</h3>
+          <p>Cada pin incluye su bolsita para una presentación bonita y cuidada.</p>
+        </article>
+        <article class="info-card">
+          <span class="info-icon" aria-hidden="true">🚚</span>
+          <h3>Entregas</h3>
+          <p>Consulta las condiciones y opciones de entrega según tu pedido.</p>
+        </article>
+        <article class="info-card">
+          <span class="info-icon" aria-hidden="true">⚡</span>
+          <h3>Atención rápida</h3>
+          <p>Te ayudamos con disponibilidad, referencias y proceso de compra.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">PINVERSE</div>
+          <p>Pines con diseños para todos los gustos, pensados para acompañar tu estilo y darle un toque diferente a lo que llevas contigo.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Navegación</h3>
+          <a href="../index.html">Inicio</a>
+          <a href="../catalogo/">Catálogo</a>
+          <a href="../preguntas/">Preguntas frecuentes</a>
+          <a href="../contacto/">Contacto</a>
+        </div>
+        <div class="footer-col">
+          <h3>Compra</h3>
+          <a href="../catalogo/#promociones">Promociones</a>
+          <a href="../catalogo/#productos">Ver pines</a>
+          <a href="https://wa.me/573116821619?text=Hola%2C%20quiero%20hacer%20un%20pedido%20en%20PINVERSE.%20%C2%BFMe%20ayudan%20con%20la%20disponibilidad%20y%20el%20proceso%20de%20compra%3F" target="_blank" rel="noopener noreferrer">Pedir por WhatsApp</a>
+        </div>
+        <div class="footer-col">
+          <h3>Contacto</h3>
+          <a href="https://wa.me/573116821619?text=Hola%2C%20estoy%20visitando%20PINVERSE%20y%20quisiera%20hacer%20una%20consulta.%20%C2%BFMe%20pueden%20ayudar%3F" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <a href="../contacto/">Escríbenos</a>
+          <span>Cali, Colombia</span>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2026 PINVERSE · Cali, Colombia · Pines para llevar tu estilo contigo.</div>
     </div>
+  </footer>
 
-    <nav class="mobile-drawer-nav">
-      <a href="../index.html">INICIO</a>
-      <a href="../catalogo/">CATÁLOGO</a>
-      <a href="../preguntas/">PREGUNTAS FRECUENTES</a>
-      <a href="../contacto/">CONTACTO</a>
-    </nav>
-  </aside>
-
-  <div class="container">
-    <section class="contact-hero">
-      <div class="contact-hero-inner">
-        <span class="contact-pill">Atención directa</span>
-        <h1>CONTACTO</h1>
-        <p>Haz tu pedido, consulta disponibilidad o pregúntanos por varias referencias al mismo tiempo. Te respondemos directo por WhatsApp.</p>
-      </div>
-    </section>
-
-    <section class="section-shell">
-      <div class="contact-layout">
-        <div class="contact-left">
-          <div class="contact-block">
-            <div class="contact-line"></div>
-            <h2 class="contact-title">Escríbenos y te ayudamos con tu pedido</h2>
-            <p class="contact-subtext">Si ya viste pines que te gustaron en el catálogo, envíanos un mensaje con las referencias y te ayudamos con el pedido. Puedes preguntarnos por disponibilidad, cantidad mínima, entrega y recomendaciones según el estilo que buscas.</p>
-          </div>
-
-          <div class="info-stack">
-            <div class="info-row">
-              <div class="info-label">Pedido fácil</div>
-              <div class="info-value">Solo envíanos las referencias de los pines que te gusten y te ayudamos a organizar todo.</div>
-            </div>
-
-            <div class="info-row">
-              <div class="info-label">Atención directa</div>
-              <div class="info-value">La respuesta es personalizada para resolver dudas y confirmar tu compra rápidamente.</div>
-            </div>
-
-            <div class="info-row">
-              <div class="info-label">Compra con confianza</div>
-              <div class="info-value">Tus pines llegan listos para entregar o regalar, con una presentación cuidada y bonita.</div>
-            </div>
-          </div>
-
-          <div class="cta-row">
-            <a class="whatsapp-btn" href="https://wa.me/573116821619?text=Hola,%20quiero%20hacer%20un%20pedido%20en%20Pin%20Lab%20Co." target="_blank" rel="noopener noreferrer">
-              Ir a WhatsApp
-            </a>
-
-            <div class="ghost-note">Respuesta rápida por WhatsApp</div>
-          </div>
-        </div>
-
-        <div class="contact-right">
-          <article class="right-card">
-            <h3>Información útil</h3>
-            <p>Todo lo importante para que el cliente entienda fácilmente cómo funciona el proceso de compra, sin mostrar datos innecesarios en pantalla.</p>
-
-            <div class="benefits-list">
-              <div class="benefit-row">
-                <div class="benefit-title">Pedidos</div>
-                <div class="benefit-text">Compras a partir de 3 unidades. Pueden ser surtidas.</div>
-              </div>
-
-              <div class="benefit-row">
-                <div class="benefit-title">Empaque</div>
-                <div class="benefit-text">Cada pin incluye su bolsita de empaque para una presentación más bonita y cuidada.</div>
-              </div>
-
-              <div class="benefit-row">
-                <div class="benefit-title">Entregas</div>
-                <div class="benefit-text">Consulta por condiciones especiales de entrega y opciones disponibles según tu pedido.</div>
-              </div>
-
-              <div class="benefit-row">
-                <div class="benefit-title">Atención</div>
-                <div class="benefit-text">Respuesta rápida para ayudarte con disponibilidad, referencias y proceso de compra.</div>
-              </div>
-            </div>
-          </article>
-
-          <article class="right-cta">
-            <h3>¿Ya elegiste tus favoritos?</h3>
-            <p>Ve al catálogo, anota las referencias que más te gusten y escríbenos por WhatsApp para ayudarte con tu pedido de forma rápida, clara y segura.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <footer>
-      © 2026 PINVERSE · Cali, Colombia
-    </footer>
-  </div>
-
-  <a
-    class="whatsapp-float"
-    href="https://wa.me/573116821619?text=Hola,%20quiero%20informaci%C3%B3n%20sobre%20los%20pines%20de%20Pin%20Lab%20Co."
-    target="_blank" rel="noopener noreferrer"
-    aria-label="WhatsApp"
-  >
-    <span class="whatsapp-icon">
-      <svg viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-        <path fill="#ffffff" d="M20.52 3.48A11.8 11.8 0 0 0 12.07 0C5.5 0 .15 5.35.15 11.92c0 2.1.55 4.15 1.59 5.95L0 24l6.31-1.65a11.9 11.9 0 0 0 5.76 1.47h.01c6.57 0 11.92-5.35 11.92-11.92 0-3.18-1.24-6.17-3.48-8.42Zm-8.45 18.3h-.01a9.9 9.9 0 0 1-5.05-1.39l-.36-.21-3.74.98 1-3.65-.23-.37a9.86 9.86 0 0 1-1.52-5.24c0-5.45 4.44-9.89 9.9-9.89 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.9 6.99c0 5.46-4.44 9.89-9.88 9.89Zm5.43-7.42c-.3-.15-1.77-.87-2.04-.96-.27-.1-.47-.15-.66.15-.2.3-.76.96-.93 1.16-.17.2-.34.22-.64.08-.3-.15-1.25-.46-2.38-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.34.45-.5.15-.17.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.66-.51h-.57c-.2 0-.52.08-.8.38-.27.3-1.04 1.02-1.04 2.49s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.48.71.31 1.26.49 1.69.63.71.23 1.36.2 1.88.12.57-.08 1.77-.72 2.02-1.42.25-.7.25-1.29.17-1.42-.08-.13-.27-.2-.57-.35Z"/>
-      </svg>
-    </span>
-  </a>
-  <script>
-    function activarRevealSuave() {
-      const revealItems = document.querySelectorAll('.contact-hero, .contact-left, .contact-right');
-
-      if (!('IntersectionObserver' in window)) {
-        revealItems.forEach(item => item.classList.add('is-visible'));
-        return;
-      }
-
-      revealItems.forEach(item => item.classList.add('soft-reveal'));
-
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: .14, rootMargin: '0px 0px -40px 0px' });
-
-      revealItems.forEach(item => observer.observe(item));
-    }
-
-    activarRevealSuave();
-  </script>
+  <script src="../recursos/pinverse.js"></script>
 </body>
 </html>
