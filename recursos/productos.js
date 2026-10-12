@@ -12,7 +12,9 @@
      etiqueta: nuevo | mas-vendido | (vacío)
    ========================================================= */
 (function () {
-  const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSWQpLq4mQpiptw5xlwF-YdpQWtkusIBKPgCIUGBsRolL4FAlq4nWsKkXznhU7b0jXfUeNfIgZc870U/pub?gid=0&single=true&output=csv';
+  /* En pausa mientras se actualiza la hoja con la nueva numeración */
+  const SHEET_CSV_URL = '';
+  // const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSWQpLq4mQpiptw5xlwF-YdpQWtkusIBKPgCIUGBsRolL4FAlq4nWsKkXznhU7b0jXfUeNfIgZc870U/pub?gid=0&single=true&output=csv';
 
   /* Convierte el texto CSV en filas (respeta comillas, comas y saltos de línea dentro de celdas) */
   function parseCSV(texto) {
