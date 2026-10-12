@@ -397,6 +397,44 @@
     .suggest-add{ margin:0 6px 6px; padding:6px 0; border-radius:999px; background:var(--navy); color:#fff; font-size:12px; font-weight:900; }
 
     /* =========================
+       CELEBRACIÓN AL COMPLETAR EL COMBO
+       ========================= */
+    .combo-toast{
+      position:fixed; left:50%; bottom:96px; z-index:65;
+      transform:translate(-50%, 20px) scale(.9);
+      background:var(--sun); color:var(--navy);
+      font-family:var(--display); font-weight:800; font-size:16px;
+      padding:12px 20px; border-radius:999px;
+      box-shadow:0 14px 30px rgba(1,38,90,.25);
+      white-space:nowrap;
+      opacity:0; pointer-events:none;
+      transition:opacity .3s ease, transform .45s cubic-bezier(.2,.9,.25,1.3);
+    }
+    .combo-toast.is-visible{ opacity:1; transform:translate(-50%, 0) scale(1); }
+    .confeti{
+      position:fixed; z-index:66; pointer-events:none;
+      width:9px; height:14px; border-radius:2px;
+      will-change:transform, opacity;
+    }
+
+    /* =========================
+       BOTÓN VOLVER ARRIBA
+       ========================= */
+    .to-top{
+      position:fixed; right:16px; bottom:96px; z-index:55;
+      width:48px; height:48px; border-radius:50%;
+      display:grid; place-items:center;
+      background:var(--paper); color:var(--navy);
+      border:2px solid var(--line);
+      box-shadow:0 10px 24px rgba(1,38,90,.18);
+      opacity:0; transform:translateY(16px) scale(.8); pointer-events:none;
+      transition:opacity .3s ease, transform .35s var(--ease), background .2s, color .2s;
+    }
+    .to-top.is-visible{ opacity:1; transform:none; pointer-events:auto; }
+    .to-top:hover{ background:var(--navy); color:#fff; border-color:var(--navy); }
+    .to-top svg{ width:22px; height:22px; stroke:currentColor; fill:none; stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round; }
+
+    /* =========================
        RESPONSIVE DEL CATÁLOGO
        ========================= */
     @media (max-width:1024px){
@@ -415,6 +453,8 @@
       .combo-go{ padding:11px 12px; }
       .combo-go .label{ display:none; }
       .product-tag{ top:8px; right:8px; font-size:9.5px; padding:4px 7px; }
+      .combo-toast{ bottom:140px; font-size:14.5px; padding:11px 16px; }
+      .to-top{ right:12px; bottom:86px; width:44px; height:44px; }
       .zoom-hint{ width:28px; height:28px; right:8px; bottom:8px; }
       .zoom-hint svg{ width:14px; height:14px; }
 
@@ -604,6 +644,12 @@
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h8.88a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
       <span class="label">Ver pedido</span>
     </span>
+  </button>
+
+  <div class="combo-toast" id="comboToast" role="status" aria-live="polite"></div>
+
+  <button class="to-top" id="toTop" type="button" aria-label="Volver arriba">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
   </button>
 
   <div class="cart-overlay" id="cartOverlay"></div>
@@ -1451,7 +1497,60 @@
       void cartFloat.offsetWidth;
       cartFloat.classList.add('cart-pulse');
 
+      if (cartItems.length % 3 === 0) celebrarCombo();
+
       return true;
+    }
+
+    /* ---------- Celebración al completar un combo de 3 ---------- */
+    const comboToast = $('#comboToast');
+    let comboToastTimer = null;
+
+    function celebrarCombo() {
+      const promo = calcularPromo(obtenerProductosCarrito());
+      const combos = Math.floor(cartItems.length / 3);
+      comboToast.textContent = promo.descuento
+        ? `🎉 ¡Combo${combos > 1 ? 's' : ''} completo${combos > 1 ? 's' : ''}! Ahorraste ${formatoPrecio(promo.descuento)}`
+        : '🎉 ¡Combo completo!';
+      window.clearTimeout(comboToastTimer);
+      comboToast.classList.remove('is-visible');
+      void comboToast.offsetWidth;
+      comboToast.classList.add('is-visible');
+      comboToastTimer = window.setTimeout(() => comboToast.classList.remove('is-visible'), 2600);
+
+      if (!reduceMotion) lanzarConfeti();
+    }
+
+    function lanzarConfeti() {
+      const r = cartFloat.getBoundingClientRect();
+      const origenX = r.left + r.width / 2;
+      const origenY = r.top + 10;
+      const colores = ['#ffc93c', '#ff6b5b', '#38c9a6', '#6aa8ff', '#01265a', '#ffffff'];
+
+      for (let i = 0; i < 44; i++) {
+        const pieza = document.createElement('span');
+        pieza.className = 'confeti';
+        pieza.style.left = `${origenX}px`;
+        pieza.style.top = `${origenY}px`;
+        pieza.style.background = colores[i % colores.length];
+        if (i % 3 === 0) { pieza.style.borderRadius = '50%'; pieza.style.width = pieza.style.height = '9px'; }
+        document.body.appendChild(pieza);
+
+        const angulo = (-90 + (Math.random() * 120 - 60)) * Math.PI / 180;
+        const fuerza = 160 + Math.random() * 220;
+        const x = Math.cos(angulo) * fuerza;
+        const y = Math.sin(angulo) * fuerza;
+        const giro = (Math.random() * 720 - 360);
+        const duracion = 1100 + Math.random() * 700;
+
+        const anim = pieza.animate([
+          { transform:'translate(-50%, 0) rotate(0deg)', opacity:1 },
+          { transform:`translate(calc(-50% + ${x}px), ${y}px) rotate(${giro / 2}deg)`, opacity:1, offset:.45 },
+          { transform:`translate(calc(-50% + ${x * 1.25}px), ${y + 260}px) rotate(${giro}deg)`, opacity:0 }
+        ], { duration:duracion, easing:'cubic-bezier(.15,.7,.4,1)', fill:'forwards' });
+        anim.onfinish = anim.oncancel = () => pieza.remove();
+        window.setTimeout(() => pieza.remove(), duracion + 200);
+      }
     }
 
     function animarProductoHaciaCarrito(button, producto) {
@@ -1916,6 +2015,27 @@
 
       items.forEach(item => observer.observe(item));
     }
+
+    /* ---------- Botón volver arriba (lleva al buscador y las categorías) ---------- */
+    const toTop = $('#toTop');
+    let toTopPendiente = false;
+
+    function actualizarToTop() {
+      toTopPendiente = false;
+      const productosArriba = document.getElementById('productos').getBoundingClientRect().top;
+      toTop.classList.toggle('is-visible', productosArriba < -window.innerHeight * 1.2);
+    }
+
+    window.addEventListener('scroll', () => {
+      if (toTopPendiente) return;
+      toTopPendiente = true;
+      window.setTimeout(actualizarToTop, 120);
+    }, { passive:true });
+
+    toTop.addEventListener('click', () => {
+      document.getElementById('productos').scrollIntoView({ behavior:reduceMotion ? 'auto' : 'smooth', block:'start' });
+      searchInputPanel.blur();
+    });
 
     /* events */
     searchInputPanel.addEventListener('input', () => {
