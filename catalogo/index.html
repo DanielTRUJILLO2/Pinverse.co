@@ -473,6 +473,47 @@
       .suggest-name{ font-size:10.5px; }
       .suggest-add{ font-size:11px; }
     }
+
+    /* =========================================================
+       DETALLES DE MOVIMIENTO
+       ========================================================= */
+
+    /* 1. Encabezado que se esconde al bajar y vuelve al subir */
+    .header{ transition:transform .35s var(--ease); }
+    body.nav-oculto .header{ transform:translateY(-100%); }
+    .toolbar{ transition:top .35s var(--ease), box-shadow .3s; }
+    body.nav-oculto .toolbar{ top:0; }
+    body.toolbar-fija .toolbar{ box-shadow:0 12px 24px -20px rgba(1,38,90,.5); }
+
+    /* 2. Tarjetas que aparecen en cascada al entrar en pantalla */
+    .product-card.revelar{ opacity:0; transform:translateY(26px) scale(.97); }
+    .product-card.revelar.visible{ opacity:1; transform:none; transition:opacity .5s ease, transform .6s var(--ease); }
+
+    /* 3. Combos que entran uno tras otro + brillo en el favorito */
+    .combos .combo{ opacity:0; transform:translateY(18px) scale(.96); }
+    .combos.visible .combo{ opacity:1; transform:none; transition:opacity .45s ease, transform .55s cubic-bezier(.2,.9,.25,1.25); }
+    .combos.visible .combo:nth-child(2){ transition-delay:.09s; }
+    .combos.visible .combo:nth-child(3){ transition-delay:.18s; }
+    @media (hover:hover) and (min-width:641px){ .combos.visible .combo:hover{ transform:translateY(-6px); transition-delay:0s; } }
+    .combo.featured{ overflow:visible; }
+    .combo.featured .combo-shine{
+      position:absolute; inset:0; border-radius:inherit; overflow:hidden; pointer-events:none;
+    }
+    .combo.featured .combo-shine::after{
+      content:""; position:absolute; top:0; bottom:0; width:45%; left:-60%;
+      background:linear-gradient(105deg, transparent, rgba(255,255,255,.28), transparent);
+      transform:skewX(-18deg);
+      animation:comboShine 3.6s ease-in-out 1.2s infinite;
+    }
+    @keyframes comboShine{ 0%{ left:-60%; } 35%, 100%{ left:130%; } }
+
+    /* 4. Buscador con sugerencias escritas */
+    .search-box input::placeholder{ transition:color .2s; }
+
+    @media (prefers-reduced-motion:reduce){
+      .product-card.revelar, .combos .combo{ opacity:1; transform:none; }
+      .combo.featured .combo-shine::after{ animation:none; }
+    }
   </style>
 </head>
 <body>
@@ -543,6 +584,7 @@
           <div class="combo-price">$16.000</div>
         </div>
         <div class="combo featured">
+          <span class="combo-shine" aria-hidden="true"></span>
           <span class="combo-flag">⭐ Favorito</span>
           <div class="combo-pins"><span><img src="../imagenes/pin112.jpeg" alt="" /></span><span><img src="../imagenes/pin126.jpeg" alt="" /></span><span><img src="../imagenes/pin62.jpeg" alt="" /></span></div>
           <h3>3 pines</h3>
@@ -1144,11 +1186,9 @@
     function crearTarjeta(producto, index, animateFrom = 0) {
       const disponible = productoDisponible(producto);
       const agregado = estaEnCarrito(producto.id);
-      const shouldAnimate = index >= animateFrom;
-      const delay = shouldAnimate ? Math.min((index - animateFrom) * 40, 280) : 0;
 
       return `
-        <article class="product-card ${disponible ? '' : 'is-sold-out'} ${shouldAnimate ? 'product-card-enter' : ''}" style="animation-delay:${delay}ms">
+        <article class="product-card revelar ${disponible ? '' : 'is-sold-out'}">
           <div class="card-inner">
             <div class="image-area" data-view-id="${producto.id}" role="button" tabindex="0" aria-label="Ver ${escapeHTML(nombreCorto(producto.nombre))} en grande">
               <span class="product-ref">Ref. ${escapeHTML(producto.referencia)}</span>
@@ -1284,6 +1324,7 @@
       activarImagenes(productGrid);
       actualizarBotonesCarrito();
       observarBrillo();
+      observarReveal();
 
       $('#clearEmptyStateBtn')?.addEventListener('click', limpiarTodosLosFiltros);
       vigilarFinal();
@@ -1308,6 +1349,7 @@
       actualizarBotonVerMas();
       actualizarBotonesCarrito();
       observarBrillo();
+      observarReveal();
       vigilarFinal();
     }
 
@@ -1390,7 +1432,7 @@
       comboSlots.innerHTML = slots.join('') + `<span class="cart-float-count" id="cartFloatCount">${count}</span>`;
       comboMsg.innerHTML = mensajeCombo(count, promo);
       comboProgress.style.width = `${(enGrupo / 3) * 100}%`;
-      comboTotal.textContent = formatoPrecio(promo.total);
+      animarNumero(comboTotal, promo.total);
       cartFloat.classList.toggle('is-empty', count === 0);
       cartFloat.setAttribute('aria-label', count ? `Ver pedido: ${pluralPines(count)}, total ${formatoPrecio(promo.total)}` : 'Abrir carrito');
 
@@ -1442,7 +1484,7 @@
       cartMiniCount.textContent = pluralPines(total);
       cartClear.disabled = total === 0;
       cartWhatsapp.disabled = total === 0;
-      cartFinalPrice.textContent = formatoPrecio(promo.total);
+      animarNumero(cartFinalPrice, promo.total);
       cartPromoSummary.textContent = total
         ? `Promoción por cantidad: ${resumenPromo(promo)}.`
         : 'Agrega pines para calcular el total.';
@@ -1490,6 +1532,7 @@
       if (estaEnCarrito(productId)) return false;
 
       cartItems.push(Number(productId));
+      if (navigator.vibrate) navigator.vibrate(cartItems.length % 3 === 0 ? [18, 60, 28] : 14);
       guardarCarrito();
       renderCarrito();
 
@@ -2037,6 +2080,95 @@
       searchInputPanel.blur();
     });
 
+    /* ---------- Movimiento: tarjetas en cascada ---------- */
+    const reveladorTarjetas = ('IntersectionObserver' in window && !reduceMotion)
+      ? new IntersectionObserver(entries => {
+          let orden = 0;
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            entry.target.style.transitionDelay = `${(orden++ % 4) * 60}ms`;
+            entry.target.classList.add('visible');
+            reveladorTarjetas.unobserve(entry.target);
+          });
+        }, { rootMargin:'0px 0px -40px 0px', threshold:.12 })
+      : null;
+
+    function observarReveal() {
+      productGrid.querySelectorAll('.product-card.revelar:not(.visible):not([data-revelar])').forEach(card => {
+        card.dataset.revelar = '1';
+        if (reveladorTarjetas) reveladorTarjetas.observe(card);
+        else card.classList.add('visible');
+      });
+    }
+
+    /* ---------- Movimiento: combos que entran uno tras otro ---------- */
+    (function () {
+      const combos = document.querySelector('.combos');
+      if (!combos) return;
+      if (!('IntersectionObserver' in window) || reduceMotion) { combos.classList.add('visible'); return; }
+      const io = new IntersectionObserver(entries => {
+        if (!entries.some(e => e.isIntersecting)) return;
+        combos.classList.add('visible');
+        io.disconnect();
+      }, { threshold:.25 });
+      io.observe(combos);
+    })();
+
+    /* ---------- Movimiento: encabezado que se esconde al bajar ---------- */
+    let ultimoScroll = window.scrollY;
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      document.body.classList.toggle('toolbar-fija', document.querySelector('.toolbar').getBoundingClientRect().top <= 1);
+      if (Math.abs(y - ultimoScroll) < 6) return;
+      document.body.classList.toggle('nav-oculto', y > ultimoScroll && y > 260 && !document.body.classList.contains('is-locked'));
+      ultimoScroll = y;
+    }, { passive:true });
+
+    /* ---------- Movimiento: números que suben contando ---------- */
+    function animarNumero(elemento, valor) {
+      const anterior = Number(elemento.dataset.valor || 0);
+      elemento.dataset.valor = valor;
+      if (reduceMotion || anterior === valor) { elemento.textContent = formatoPrecio(valor); return; }
+      const inicio = performance.now();
+      const duracion = 450;
+      const paso = ahora => {
+        const t = Math.min((ahora - inicio) / duracion, 1);
+        const suave = 1 - Math.pow(1 - t, 3);
+        elemento.textContent = formatoPrecio(Math.round((anterior + (valor - anterior) * suave) / 100) * 100);
+        if (t < 1 && Number(elemento.dataset.valor) === valor) requestAnimationFrame(paso);
+        else if (t >= 1) elemento.textContent = formatoPrecio(valor);
+      };
+      requestAnimationFrame(paso);
+      /* Respaldo: el valor final siempre queda escrito */
+      window.setTimeout(() => { if (Number(elemento.dataset.valor) === valor) elemento.textContent = formatoPrecio(valor); }, duracion + 80);
+    }
+
+    /* ---------- Movimiento: el buscador escribe ejemplos solo ---------- */
+    function sugerenciasBuscador() {
+      if (reduceMotion) return;
+      const ejemplos = ['Snoopy', 'Yoshi', 'Stitch', 'gato', 'Harry Potter', 'Totoro', 'avión', 'Hello Kitty'];
+      const base = searchInputPanel.placeholder;
+      let i = 0;
+      const escribir = (palabra, n = 0) => {
+        if (document.activeElement === searchInputPanel || searchInputPanel.value) {
+          searchInputPanel.placeholder = base;
+          window.setTimeout(() => escribir(palabra, 0), 2500);
+          return;
+        }
+        searchInputPanel.placeholder = `Busca: ${palabra.slice(0, n)}`;
+        if (n < palabra.length) window.setTimeout(() => escribir(palabra, n + 1), 85);
+        else window.setTimeout(() => borrar(palabra, palabra.length), 1400);
+      };
+      const borrar = (palabra, n) => {
+        if (document.activeElement === searchInputPanel || searchInputPanel.value) { searchInputPanel.placeholder = base; window.setTimeout(() => escribir(ejemplos[i], 0), 2500); return; }
+        searchInputPanel.placeholder = `Busca: ${palabra.slice(0, n)}`;
+        if (n > 0) window.setTimeout(() => borrar(palabra, n - 1), 40);
+        else { i = (i + 1) % ejemplos.length; window.setTimeout(() => escribir(ejemplos[i], 0), 300); }
+      };
+      searchInputPanel.addEventListener('focus', () => { searchInputPanel.placeholder = base; });
+      window.setTimeout(() => escribir(ejemplos[0], 0), 2200);
+    }
+
     /* events */
     searchInputPanel.addEventListener('input', () => {
       actualizarEstadoBusqueda();
@@ -2218,6 +2350,7 @@
       cartItems = cargarCarrito();
       filteredProducts = [...productos];
       searchInputPanel.placeholder = `Busca entre ${productos.length} pines…`;
+      sugerenciasBuscador();
 
       renderCarrito();
       aplicarFiltros(true);
