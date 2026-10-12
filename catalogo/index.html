@@ -1758,15 +1758,23 @@
       document.body.classList.add('is-locked');
 
       const origen = rectTarjeta(id);
+      let anim = null;
       if (origen && !reduceMotion) {
+        try {
+          anim = viewerPanel.animate([fotogramaDesde(origen), FOTOGRAMA_FINAL], {
+            duration:480, easing:'cubic-bezier(.2,.9,.25,1.06)'
+          });
+        } catch (error) {
+          anim = null;
+        }
+      }
+      if (anim) {
         marcarAnimando(480);
-        const anim = viewerPanel.animate([fotogramaDesde(origen), FOTOGRAMA_FINAL], {
-          duration:480, easing:'cubic-bezier(.2,.9,.25,1.06)'
-        });
         window.setTimeout(() => viewer.classList.add('is-ready'), 180);
         anim.onfinish = anim.oncancel = finAnimacion;
       } else {
-        viewerPanel.animate([{ opacity:0, transform:'scale(.92)' }, { opacity:1, transform:'scale(1)' }], { duration:reduceMotion ? 1 : 260, easing:'ease-out' });
+        /* Entrada suave (también para quien activó "Reducir movimiento" en su celular) */
+        viewerPanel.animate([{ opacity:0, transform:'scale(.94)' }, { opacity:1, transform:'scale(1)' }], { duration:260, easing:'cubic-bezier(.2,.8,.2,1)' });
         viewer.classList.add('is-ready');
       }
       window.setTimeout(() => viewerPanel.focus({ preventScroll:true }), 80);
@@ -1802,7 +1810,7 @@
       const destino = desdeArrastre ? null : rectTarjeta(viewerId);
       let anim;
       if (reduceMotion) {
-        anim = viewerPanel.animate([{ opacity:1 }, { opacity:0 }], { duration:1, fill:'forwards' });
+        anim = viewerPanel.animate([{ opacity:1, transform:'scale(1)' }, { opacity:0, transform:'scale(.96)' }], { duration:200, easing:'ease-in', fill:'forwards' });
       } else if (destino) {
         quitarZoom();
         anim = viewerPanel.animate([{ ...FOTOGRAMA_FINAL, transform:actual }, fotogramaDesde(destino)], {
@@ -2145,7 +2153,6 @@
 
     /* ---------- Movimiento: el buscador escribe ejemplos solo ---------- */
     function sugerenciasBuscador() {
-      if (reduceMotion) return;
       const ejemplos = ['Snoopy', 'Yoshi', 'Stitch', 'gato', 'Harry Potter', 'Totoro', 'avión', 'Hello Kitty'];
       const base = searchInputPanel.placeholder;
       let i = 0;
